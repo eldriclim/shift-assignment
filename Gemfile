@@ -18,6 +18,17 @@ gem 'bootstrap_form'
 gem 'sass-rails', '>= 3.2'
 gem 'jquery-rails'
 gem 'devise'
+
+gem 'rspec-rails', '~> 3.6'
+gem 'factory_girl_rails'
+gem 'rails-controller-testing'
+gem 'headless'
+gem 'poltergeist'
+gem 'database_cleaner'
+
+
+
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
