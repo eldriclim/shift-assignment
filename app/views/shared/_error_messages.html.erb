@@ -1,0 +1,9 @@
+<% if @deliverer.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(@deliverer.errors.count, "error") %>.
+    </div>
+
+  </div>
+
+<% end %>

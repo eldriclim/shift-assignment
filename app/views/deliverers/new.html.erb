@@ -1,0 +1,33 @@
+<div class="container" id="sign-up-form">
+  <div class="row">
+
+
+    <div class="col-sm-offset-4 col-sm-4">
+      <h3>Create Deliverer</h3>
+
+      <%= bootstrap_form_for(@deliverer) do |f| %>
+
+        <%= render 'shared/error_messages' %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name,
+	           placeholder: 'name',
+	           class: 'form-control' %>
+
+        <%= f.label :phone %>
+        <%= f.text_field :phone,
+	           placeholder: 'phone',
+	           class: 'form-control' %>
+
+        <%= f.label :vehicle %>
+        <%= f.select :vehicle, [['Motorcycle',0], ['Bicycle',1], ['Scooter',2]], {} %>
+
+        <%= f.label :active %>
+        <%= f.check_box :active %>
+
+
+        <%= f.submit 'Create', class: 'btn sign-up-button' %>
+      <% end %>
+    </div>
+  </div>
+</div>
