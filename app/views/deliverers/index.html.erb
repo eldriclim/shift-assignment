@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+  <div class="col-md-offset-4 col-md-4">
+
+  <h1>All deliverers</h1>
+
+  <table>
+    <tr>
+      <td><strong>Name</strong></td>
+      <td><strong>Phone</strong></td>
+      <td><strong>Vehicle</strong></td>
+      <td><strong>Status</strong></td>
+    </tr>
+    <% @deliverers.each do |deliverer| %>
+      <tr>
+        <td><%= link_to deliverer.name, edit_deliverer_path(deliverer) %></td>
+        <td><%= deliverer.phone %></td>
+        <td><%= vehicle_helper deliverer.vehicle %></td>
+        <td><%= active_helper deliverer.active %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+</div>
+</div>
