@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   resources :deliverers
   resources :shifts
 
+  get '/home', to: 'pages#info'
+
 end

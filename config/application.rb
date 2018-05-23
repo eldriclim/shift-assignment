@@ -16,6 +16,6 @@ module Collabfield
     # -- all .rb files in that directory are automatically loaded.
 
 
-    config.action_controller.include_all_helpers = false
+    config.action_controller.include_all_helpers = true
   end
 end

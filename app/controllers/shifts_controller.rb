@@ -14,7 +14,7 @@ class ShiftsController < ApplicationController
   def create
     @shift = Shift.new(shift_params)
     if @shift.save
-      redirect_to shifts_path
+      redirect_to home_path
     else
       render 'new'
     end
@@ -27,7 +27,7 @@ class ShiftsController < ApplicationController
   def update
     @shift = Shift.find(params[:id])
     if @shift.update_attributes(shift_params)
-      redirect_to shifts_path
+      redirect_to home_path
     else
       render 'edit'
     end

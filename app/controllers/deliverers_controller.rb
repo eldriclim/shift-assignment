@@ -21,7 +21,7 @@ class DeliverersController < ApplicationController
     @deliverer = Deliverer.new(deliverer_params)
 
     if @deliverer.save
-      redirect_to deliverers_path
+      redirect_to home_path
       # redirect_to @deliverer
     else
       render 'new'
@@ -39,7 +39,7 @@ class DeliverersController < ApplicationController
     @deliverer = Deliverer.find(params[:id])
     debugger
     if @deliverer.update_attributes(deliverer_params)
-      redirect_to deliverers_path
+      redirect_to home_path
     else
       render 'edit'
     end
