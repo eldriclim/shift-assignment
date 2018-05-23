@@ -37,6 +37,7 @@ class DeliverersController < ApplicationController
   # PATCH /deliverers/#
   def update
     @deliverer = Deliverer.find(params[:id])
+    debugger
     if @deliverer.update_attributes(deliverer_params)
       redirect_to deliverers_path
     else
