@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   end
 
   resources :deliverers
+  resources :shifts
 
 end

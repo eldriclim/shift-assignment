@@ -1,0 +1,31 @@
+<div class="container" id="sign-up-form">
+  <div class="row">
+
+
+    <div class="col-sm-offset-4 col-sm-4">
+      <h3>Update Shift</h3>
+
+      <%= bootstrap_form_for(@shift) do |f| %>
+
+        <%= render 'shared/error_messages' %>
+
+
+        <%= f.label :start_time %>
+        <%= f.datetime_select :start_time,
+	              class: 'form-control' %>
+
+        <%= f.label :end_time %>
+        <%= f.datetime_select :end_time,
+ 	              class: 'form-control' %>
+
+        <%= f.label :max_count %>
+        <%= f.text_field :max_count,
+                placeholder: 'max',
+     	          class: 'form-control' %>
+
+
+        <%= f.submit 'Create', class: 'btn sign-up-button' %>
+      <% end %>
+    </div>
+  </div>
+</div>
