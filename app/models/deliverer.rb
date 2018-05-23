@@ -1,4 +1,6 @@
 class Deliverer < ApplicationRecord
+  has_many :assignment
+  has_many :shift, through: :assignment
 
   VAILD_PHONE_REGEX = /\d+/
 
