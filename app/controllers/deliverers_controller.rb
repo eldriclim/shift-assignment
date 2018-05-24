@@ -24,7 +24,10 @@ class DeliverersController < ApplicationController
       redirect_to home_path
       # redirect_to @deliverer
     else
-      render 'new'
+      errors = @deliverer.errors unless @deliverer.valid?
+
+      flash[:danger] = errors.full_messages.to_sentence
+      redirect_to new_deliverer_path
     end
   end
 
@@ -37,11 +40,13 @@ class DeliverersController < ApplicationController
   # PATCH /deliverers/#
   def update
     @deliverer = Deliverer.find(params[:id])
-    debugger
     if @deliverer.update_attributes(deliverer_params)
       redirect_to home_path
     else
-      render 'edit'
+      errors = @deliverer.errors unless @deliverer.valid?
+
+      flash[:danger] = errors.full_messages.to_sentence
+      redirect_to edit_deliverer_path
     end
   end
 

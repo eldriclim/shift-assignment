@@ -3,5 +3,5 @@ class Assignment < ApplicationRecord
   belongs_to :shift
 
   validates :deliverer_id,
-      uniqueness: { scope: :shift_id, message: "assignment already exist"}
+      uniqueness: { scope: :shift_id, message: "Assignment already exist"}
 end

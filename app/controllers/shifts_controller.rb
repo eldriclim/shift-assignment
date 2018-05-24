@@ -16,7 +16,10 @@ class ShiftsController < ApplicationController
     if @shift.save
       redirect_to home_path
     else
-      render 'new'
+      errors = @shift.errors unless @shift.valid?
+      
+      flash[:danger] = errors.full_messages.to_sentence
+      redirect_to new_shift_path
     end
   end
 
@@ -29,7 +32,10 @@ class ShiftsController < ApplicationController
     if @shift.update_attributes(shift_params)
       redirect_to home_path
     else
-      render 'edit'
+      errors = @shift.errors unless @shift.valid?
+
+      flash[:danger] = errors.full_messages.to_sentence
+      redirect_to edit_shift_path
     end
   end
 
