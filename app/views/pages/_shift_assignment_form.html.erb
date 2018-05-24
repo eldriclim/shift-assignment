@@ -1,0 +1,17 @@
+<div class="container" id="sign-up-form">
+  <div class="row">
+
+
+    <div class="col-sm-offset-4 col-sm-4">
+
+      <h3>Shifts Assignment</h3>
+
+      <%= bootstrap_form_for(@assignment) do |f| %>
+        <%= f.select :deliverer_id, @deliverers.map{ |d| ["#{d.id} - #{d.name}", d.id] } %>
+        <%= f.select :shift_id, @shifts.map{ |s| ["#{s.id} - #{s.start_time}", s.id] } %>
+
+        <%= f.submit 'Assign', class: 'btn sign-up-button' %>
+      <% end %>
+    </div>
+  </div>
+</div>

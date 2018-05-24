@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+  <div class="col-md-offset-4 col-md-4">
+
+    <% if @start.strftime("%d %B %Y") == @end.strftime("%d %B %Y") %>
+      <h1><strong>On </strong><%= @start.strftime("%d %B %Y") %></h1>
+    <% elsif %>
+      <h1>
+        <strong>From </strong><%= @start.strftime("%d %B %Y") %>
+        <strong> to </strong><%= @end.strftime("%d %B %Y") %>
+      </h1>
+    <% end %>
+
+  <table>
+    <tr>
+      <td><strong>ID</strong></td>
+      <td><strong>Start Time</strong></td>
+      <td><strong>End Time</strong></td>
+      <td><strong>Max Count</strong></td>
+    </tr>
+    <% @shifts.each do |shift| %>
+      <tr>
+        <td><%= shift.id %></td>
+        <td><%= link_to shift.start_time, edit_shift_path(shift) %></td>
+        <td><%= shift.end_time %></td>
+        <td><%= "#{shift.deliverer.count}/#{shift.max_count}" %></td>
+      </tr>
+      <% if shift.deliverer.count != 0 %>
+<tr>
+  <td></td>
+  <td>
+    <table>
+      <td><strong>ID</strong></td>
+      <td><strong>Name</strong></td>
+      <td><strong>Phone</strong></td>
+
+        <% shift.deliverer.each do |d| %>
+          <tr>
+            <td><%= d.id %></td>
+            <td><%= d.name %></td>
+            <td><%= d.phone %></td>
+          </tr>
+        <% end %>
+      </table>
+
+
+    </td>
+  </tr>
+      <% end %>
+    <% end %>
+  </table>
+
+</div>
+</div>
+</div>

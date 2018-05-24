@@ -7,7 +7,7 @@ class Shift < ApplicationRecord
   validates :end_time, presence: true
   validate :start_before_end
 
-  validates :max_count, presence: true
+  validates :max_count, presence: { message: "Max count field is empty" }
   validates_numericality_of :max_count,
       only_integer: true, message: "Max count has to be an integer"
   validates_numericality_of :max_count,

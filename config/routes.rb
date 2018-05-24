@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
-  root to: 'pages#index'
+  root to: 'pages#home'
 
   devise_scope :user do
     get 'login', to: 'devise/sessions#new'
@@ -16,5 +16,7 @@ Rails.application.routes.draw do
   get '/home', to: 'pages#home'
 
   post '/assignments', to: 'assignments#create'
+
+  post '/assignments/show', to: 'assignments#show'
 
 end
