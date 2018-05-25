@@ -10,7 +10,7 @@
         <%= f.select :deliverer_id, @deliverers.map{ |d| ["#{d.id} - #{d.name}", d.id] } %>
         <%= f.select :shift_id, @shifts.map{ |s| ["#{s.id} - #{s.start_time}", s.id] } %>
 
-        <%= f.submit 'Assign', class: 'btn sign-up-button' %>
+        <%= f.submit 'Assign Shift', class: 'btn sign-up-button' %>
       <% end %>
     </div>
   </div>
