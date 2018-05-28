@@ -1,15 +1,5 @@
 class DeliverersController < ApplicationController
 
-  # GET /deliverers
-  def index
-    @deliverers = Deliverer.all
-  end
-
-  # GET /deliverers/#
-  def show
-    @deliverer = Deliverer.find(params[:id])
-  end
-
   # GET /deliverers/new
   # page to add
   def new

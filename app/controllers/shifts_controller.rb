@@ -1,11 +1,4 @@
 class ShiftsController < ApplicationController
-  def index
-    @shifts = Shift.all
-  end
-
-  def show
-    @shift = Shift.find(params[:id])
-  end
 
   def new
     @shift = Shift.new
@@ -17,7 +10,7 @@ class ShiftsController < ApplicationController
       redirect_to home_path
     else
       errors = @shift.errors unless @shift.valid?
-      
+
       flash[:danger] = errors.full_messages.to_sentence
       redirect_to new_shift_path
     end
