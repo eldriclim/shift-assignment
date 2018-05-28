@@ -1,7 +1,6 @@
 class AssignmentsController < ApplicationController
 
   def create
-    debugger
     if params[:assignment].nil?
       flash[:danger] = "Please create some Deliverers and Shifts first."
       redirect_to home_path

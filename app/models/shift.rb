@@ -14,11 +14,12 @@ class Shift < ApplicationRecord
       greater_than_or_equal_to: 1, message: "Max count has to be greater than 0"
 
   def start_before_end
-    if end_time < start_time
-      errors.add(:start_time, "Start time cannot be after End time")
-    elsif end_time == start_time
-      errors.add(:start_time, "Start time and End time cannot be the same")
+    unless start_time.nil? || end_time.nil?
+      if end_time < start_time
+        errors.add(:start_time, "Start time cannot be after End time")
+      elsif end_time == start_time
+        errors.add(:start_time, "Start time and End time cannot be the same")
+      end
     end
-
   end
 end

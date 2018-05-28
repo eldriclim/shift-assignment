@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Assignment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  # Test association
+  it { is_expected.to belong_to(:deliverer) }
+  it { is_expected.to belong_to(:shift) }
+
+  # Test IDs
+  it { is_expected.to validate_uniqueness_of(:deliverer_id).scoped_to(:shift_id).
+    with_message("Assignment already exist") }
+
 end

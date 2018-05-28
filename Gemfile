@@ -19,6 +19,7 @@ gem 'sass-rails', '>= 3.2'
 gem 'jquery-rails'
 gem 'devise'
 
+gem 'shoulda-matchers', '~> 3.0'
 gem 'rspec-rails', '~> 3.6'
 gem 'factory_girl_rails'
 gem 'rails-controller-testing'
