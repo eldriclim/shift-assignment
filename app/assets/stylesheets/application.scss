@@ -16,6 +16,11 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+// Device uses alert-notice by default, which has been supersede by alert-success 
+.alert-notice {
+  @extend .alert-success;
+}
+
 // Variables
 @import "base/variables";
 
