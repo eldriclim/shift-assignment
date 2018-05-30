@@ -5,14 +5,13 @@ RSpec.describe DeliverersController, type: :controller do
   # Create user for login
   before(:each) do
     @user = FactoryGirl.create(:user)
+    sign_in @user
   end
 
   # Test new action
   describe "get #new" do
-    it "initialises a new shift" do
-      sign_in @user
+    it "initializes a new deliverer" do
       get :new
-
       expect(assigns(:deliverer)).to be_a_new(Deliverer)
     end
   end
@@ -22,9 +21,8 @@ RSpec.describe DeliverersController, type: :controller do
 
     context "with valid attributes" do
       it "creates new deliverer" do
-        sign_in @user
-
-        expect{ post :create,
+        expect{
+          post :create,
           params: { deliverer: FactoryGirl.attributes_for(:deliverer) }
         }.to change{ Deliverer.count }.by(1)
 
@@ -34,8 +32,6 @@ RSpec.describe DeliverersController, type: :controller do
 
     context "with invalid attributes" do
       it "redirects to #new with flash danger" do
-        sign_in @user
-
         expect{ post :create,
           params: {
             deliverer: {
@@ -58,7 +54,6 @@ RSpec.describe DeliverersController, type: :controller do
   describe "get #edit" do
 
     it "retrieves deliverer based on its ID" do
-      sign_in @user
       @deliverer = FactoryGirl.create(:deliverer)
 
       get :edit, params: { :id => @deliverer.id }
@@ -69,11 +64,12 @@ RSpec.describe DeliverersController, type: :controller do
 
   # Test update action
   describe "patch #update" do
+    before do
+      @deliverer = FactoryGirl.create(:deliverer)
+    end
 
     context "with valid attributes" do
       it "update deliverer's attributes" do
-        sign_in @user
-        @deliverer = FactoryGirl.create(:deliverer)
 
         patch :update, params: {
           :id => @deliverer.id,
@@ -86,21 +82,21 @@ RSpec.describe DeliverersController, type: :controller do
 
     context "with invalid attributes" do
       it "redirects to #edit and flash danger" do
-        sign_in @user
-        @deliverer = FactoryGirl.create(:deliverer)
 
-        patch :update, params: {
-          :id => @deliverer.id,
-          deliverer: {
-            name: "My Name",
-            vehicle: 1,
-            phone: "a",
-            active: false
+        patch :update,
+          params: {
+            :id => @deliverer.id,
+            deliverer: {
+              name: "My Name",
+              vehicle: 1,
+              phone: "a",
+              active: false
+            }
           }
-        }
 
         is_expected.to set_flash[:danger]
         is_expected.to redirect_to edit_deliverer_path
+
       end
     end
   end

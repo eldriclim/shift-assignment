@@ -44,7 +44,6 @@ class AssignmentsController < ApplicationController
     end
 
     @shifts = Shift.where(start_time: @start..@end).where(end_time: @start..@end)
-
   end
 
   def assignment_params
@@ -54,13 +53,9 @@ class AssignmentsController < ApplicationController
     params[:assignment][:shift_id]
   end
   def date_start_format(date_string)
-    "#{date_string['start_date(3i)']}-
-        #{date_string['start_date(2i)']}-
-        #{date_string['start_date(1i)']}"
+    "#{date_string['start_date(3i)']}-#{date_string['start_date(2i)']}-#{date_string['start_date(1i)']}"
   end
   def date_end_format(date_string)
-    "#{date_string['end_date(3i)']}-
-        #{date_string['end_date(2i)']}-
-        #{date_string['end_date(1i)']}"
+    "#{date_string['end_date(3i)']}-#{date_string['end_date(2i)']}-#{date_string['end_date(1i)']}"
   end
 end
