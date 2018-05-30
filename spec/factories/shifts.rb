@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :shift do
-    start_time "2018-05-23 10:00:00"
-    end_time "2018-05-23 12:00:00"
+    sequence(:start_time) { |n| (DateTime.parse("2018-05-23 10:00:00") + (n*2).hours).strftime("%Y-%m-%d %T") }
+    sequence(:end_time) { |n| (DateTime.parse("2018-05-23 12:00:00") + (n*2).hours).strftime("%Y-%m-%d %T") }
     max_count 1
   end
 end
