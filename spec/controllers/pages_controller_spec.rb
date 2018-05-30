@@ -34,6 +34,12 @@ RSpec.describe PagesController, type: :controller do
           expect(response.body).to match("#{d.vehicle_to_s}")
           expect(response.body).to match("#{d.active_to_s}")
         end
+        @shifts.each do |s|
+          expect(response.body).to match("#{s.id}")
+          expect(response.body).to match("#{s.start_time_to_s}")
+          expect(response.body).to match("#{s.end_time_to_s}")
+          expect(response.body).to match("#{s.deliverer.count}/#{s.max_count}")
+        end
       end
     end
   end

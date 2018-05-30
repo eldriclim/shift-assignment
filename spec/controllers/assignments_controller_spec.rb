@@ -160,7 +160,7 @@ RSpec.describe AssignmentsController, type: :controller do
           # Match Shift info
           expect(response.body).to match("#{@shift.start_time_to_s}")
           expect(response.body).to match("#{@shift.end_time_to_s}")
-          expect(response.body).to match("#{@shift.deliverer.count/@shift.max_count}")
+          expect(response.body).to match("#{@shift.deliverer.count}/#{@shift.max_count}")
 
           # Match Deliverer info within Shift
           expect(response.body).to match("#{@deliverer.id}")

@@ -23,7 +23,9 @@ RSpec.describe Deliverer, type: :model do
   it { is_expected.to validate_uniqueness_of(:phone).
     with_message("Phone already in used") }
 
-  
+
+  # Test instance methods
+
   subject { Deliverer.new }
 
   describe '#vehicle_to_s' do

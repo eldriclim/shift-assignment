@@ -44,4 +44,22 @@ RSpec.describe Shift, type: :model do
   it { is_expected.to validate_numericality_of(:max_count).is_greater_than(0).
     with_message("Max count has to be greater than 0") }
 
+  # Test instance methods
+
+  describe "#start_time_to_s" do
+    it "outputs start time" do
+      subject.start_time = DateTime.parse("2018-05-24 10:00:00")
+
+      expect(subject.start_time_to_s).to eq("2018-05-24 10:00:00")
+    end
+  end
+
+  describe "#end_time_to_s" do
+    it "outputs end time" do
+      subject.end_time = DateTime.parse("2018-05-24 10:00:00")
+
+      expect(subject.end_time_to_s).to eq("2018-05-24 10:00:00")
+    end
+  end
+
 end
