@@ -6,46 +6,16 @@
 
     <h1>All deliverers</h1>
 
-    <table>
-      <tr>
-        <td><strong>ID</strong></td>
-        <td><strong>Name</strong></td>
-        <td><strong>Phone</strong></td>
-        <td><strong>Vehicle</strong></td>
-        <td><strong>Status</strong></td>
-      </tr>
-      <% @deliverers.each do |deliverer| %>
-        <tr>
-          <td><%= deliverer.id %></td>
-          <td><%= link_to deliverer.name, edit_deliverer_path(deliverer) %></td>
-          <td><%= deliverer.phone %></td>
-          <td><%= vehicle_helper deliverer.vehicle %></td>
-          <td><%= active_helper deliverer.active %></td>
-        </tr>
-      <% end %>
-    </table>
+    <%= render 'deliverers_table' %>
+
     <br>
     <%= button_to "Create Deliverer", new_deliverer_path, :method => "get",
         class: "btn sign-up-button"%>
 
   <h1>All shifts</h1>
 
-  <table>
-    <tr>
-      <td><strong>ID</strong></td>
-      <td><strong>Start Time</strong></td>
-      <td><strong>End Time</strong></td>
-      <td><strong>Max Count</strong></td>
-    </tr>
-    <% @shifts.each do |shift| %>
-      <tr>
-        <td><%= shift.id %></td>
-        <td><%= link_to shift.start_time.asctime, edit_shift_path(shift) %></td>
-        <td><%= shift.end_time.asctime %></td>
-        <td><%= "#{shift.deliverer.count}/#{shift.max_count}" %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render 'shifts_table' %>
+
   <br>
   <%= button_to "Create Shift", new_shift_path, :method => "get",
       class: "btn sign-up-button"%>

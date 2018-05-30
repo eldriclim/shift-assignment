@@ -2,14 +2,9 @@
   <div class="row">
   <div class="col-md-offset-4 col-md-4">
 
-    <% if @start.to_date == @end.to_date %>
-      <h1><strong>On </strong><%= @start.strftime("%d %B %Y") %></h1>
-    <% elsif %>
-      <h1>
-        <strong>From </strong><%= @start.strftime("%d %B %Y") %>
-        <strong> to </strong><%= @end.strftime("%d %B %Y") %>
-      </h1>
-    <% end %>
+    <h1>
+      <%= print_date_range(@start, @end) %>
+    </h1>
 
   <table>
     <tr>

@@ -1,0 +1,18 @@
+<table>
+  <tr>
+    <td><strong>ID</strong></td>
+    <td><strong>Name</strong></td>
+    <td><strong>Phone</strong></td>
+    <td><strong>Vehicle</strong></td>
+    <td><strong>Status</strong></td>
+  </tr>
+  <% @deliverers.each do |deliverer| %>
+    <tr>
+      <td><%= deliverer.id %></td>
+      <td><%= link_to deliverer.name, edit_deliverer_path(deliverer) %></td>
+      <td><%= deliverer.phone %></td>
+      <td><%= vehicle_helper deliverer.vehicle %></td>
+      <td><%= active_helper deliverer.active %></td>
+    </tr>
+  <% end %>
+</table>
