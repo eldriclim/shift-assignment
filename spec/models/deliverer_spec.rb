@@ -23,40 +23,51 @@ RSpec.describe Deliverer, type: :model do
   it { is_expected.to validate_uniqueness_of(:phone).
     with_message("Phone already in used") }
 
+  
+  subject { Deliverer.new }
 
-    # describe '#vehicle_to_s' do
-    #   context 'input 0' do
-    #     it 'returns Motorbike' do
-    #       debugger
-    #       expect(helper.vehicle_helper(0)).to eq("Motorbike")
-    #     end
-    #   end
-    #
-    #   context 'input 1' do
-    #     it 'returns Bicycle' do
-    #       expect(helper.vehicle_helper(1)).to eq("Bicycle")
-    #     end
-    #   end
-    #
-    #   context 'input 2' do
-    #     it 'returns Scooter' do
-    #       expect(helper.vehicle_helper(2)).to eq("Scooter")
-    #     end
-    #   end
-    # end
-    # 
-    # describe '#active_helper' do
-    #   context 'input true' do
-    #     it 'returns Active' do
-    #       expect(helper.active_helper(true)).to eq("Active")
-    #     end
-    #   end
-    #
-    #   context 'input false' do
-    #     it 'returns Inactive' do
-    #       expect(helper.active_helper(false)).to eq("Inactive")
-    #     end
-    #   end
-    #
-    # end
+  describe '#vehicle_to_s' do
+    context 'when vehicle index 0' do
+      it 'returns Motorbike' do
+        subject.vehicle = 0
+
+        expect(subject.vehicle_to_s).to eq("Motorbike")
+      end
+    end
+
+    context 'when vehicle index 1' do
+      it 'returns Bicycle' do
+        subject.vehicle = 1
+
+        expect(subject.vehicle_to_s).to eq("Bicycle")
+      end
+    end
+
+    context 'when vehicle index 2' do
+      it 'returns Scooter' do
+        subject.vehicle = 2
+
+        expect(subject.vehicle_to_s).to eq("Scooter")
+      end
+    end
+  end
+
+  describe '#active_helper' do
+    context 'when active true' do
+      it 'returns Active' do
+        subject.active = true
+
+        expect(subject.active_to_s).to eq("Active")
+      end
+    end
+
+    context 'when active false' do
+      it 'returns Inactive' do
+        subject.active = false
+
+        expect(subject.active_to_s).to eq("Inactive")
+      end
+    end
+
+  end
 end
