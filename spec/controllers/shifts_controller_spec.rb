@@ -54,6 +54,7 @@ RSpec.describe ShiftsController, type: :controller do
       @shift = FactoryGirl.create(:shift)
 
       get :edit, params: { id: @shift.id }
+      
       expect(assigns(:shift)).to eq(@shift)
     end
   end

@@ -9,14 +9,16 @@ RSpec.describe PagesController, type: :controller do
   end
 
   describe "get #home" do
+
+    # Create sample data for display
     before do
       @deliverers = FactoryGirl.create_list(:deliverer, 3)
       @shifts = FactoryGirl.create_list(:shift, 3)
     end
 
     it "displays all Deliverers and Shifts" do
-
       get :home
+
       expect(assigns(:deliverers)).to eq(@deliverers)
       expect(assigns(:shifts)).to eq(@shifts)
       expect(assigns(:assignment)).to be_a_new(Assignment)
@@ -27,6 +29,8 @@ RSpec.describe PagesController, type: :controller do
     context "table views" do
       it "displays Deliverers and Shifts info" do
         get :home
+
+        # Identify Deliverers info in view
         @deliverers.each do |d|
           expect(response.body).to match("#{d.id}")
           expect(response.body).to match("#{d.name}")
@@ -34,6 +38,8 @@ RSpec.describe PagesController, type: :controller do
           expect(response.body).to match("#{d.vehicle_to_s}")
           expect(response.body).to match("#{d.active_to_s}")
         end
+
+        # Identify Shifts info in view
         @shifts.each do |s|
           expect(response.body).to match("#{s.id}")
           expect(response.body).to match("#{s.start_time_to_s}")

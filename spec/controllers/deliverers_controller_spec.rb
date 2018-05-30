@@ -12,6 +12,7 @@ RSpec.describe DeliverersController, type: :controller do
   describe "get #new" do
     it "initializes a new deliverer" do
       get :new
+
       expect(assigns(:deliverer)).to be_a_new(Deliverer)
     end
   end
@@ -52,11 +53,11 @@ RSpec.describe DeliverersController, type: :controller do
 
   # Test edit action
   describe "get #edit" do
-
     it "retrieves deliverer based on its ID" do
       @deliverer = FactoryGirl.create(:deliverer)
 
       get :edit, params: { :id => @deliverer.id }
+      
       expect(@deliverer).to eq(assigns(:deliverer))
 
     end

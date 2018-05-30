@@ -15,7 +15,6 @@ RSpec.describe AssignmentsController, type: :controller do
       @shift = FactoryGirl.create(:shift)
     end
 
-
     context "when no assignment param" do
       it "redirects to home_path and flashes danger" do
         post :create, params: {}
@@ -134,6 +133,7 @@ RSpec.describe AssignmentsController, type: :controller do
         @assignment = FactoryGirl.create(:assignment, deliverer_id: @deliverer.id, shift_id: @shift.id)
       end
 
+      # Render views to check for Deliverers and Shifts info
       render_views
 
       it "initializes shifts within range" do

@@ -12,7 +12,7 @@ class DeliverersController < ApplicationController
 
     if @deliverer.save
       redirect_to home_path
-      # redirect_to @deliverer
+
     else
       errors = @deliverer.errors unless @deliverer.valid?
 
@@ -42,6 +42,7 @@ class DeliverersController < ApplicationController
 
 
   private
+  
   def deliverer_params
     params.require(:deliverer).permit(:name, :phone, :vehicle, :active)
   end
