@@ -30,6 +30,13 @@ RSpec.describe PagesController, type: :controller do
       it "displays Deliverers and Shifts info" do
         get :home
 
+        # Check for view partials
+        expect(response).to render_template("pages/home")
+        expect(response).to render_template(partial: "pages/_deliverers_table")
+        expect(response).to render_template(partial: "pages/_shifts_table")
+        expect(response).to render_template(partial: "pages/_shift_assignment_form")
+        expect(response).to render_template(partial: "pages/_view_assignment_form")
+
         # Identify Deliverers info in view
         @deliverers.each do |d|
           expect(response.body).to match("#{d.id}")
