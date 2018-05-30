@@ -16,8 +16,8 @@
     <% @shifts.each do |shift| %>
       <tr>
         <td><%= shift.id %></td>
-        <td><%= link_to shift.start_time, edit_shift_path(shift) %></td>
-        <td><%= shift.end_time %></td>
+        <td><%= link_to shift.start_time_to_s, edit_shift_path(shift) %></td>
+        <td><%= shift.end_time_to_s %></td>
         <td><%= "#{shift.deliverer.count}/#{shift.max_count}" %></td>
       </tr>
       <% if shift.deliverer.count != 0 %>

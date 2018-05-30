@@ -21,6 +21,21 @@ RSpec.describe PagesController, type: :controller do
       expect(assigns(:shifts)).to eq(@shifts)
       expect(assigns(:assignment)).to be_a_new(Assignment)
     end
+
+    render_views
+
+    context "table views" do
+      it "displays Deliverers and Shifts info" do
+        get :home
+        @deliverers.each do |d|
+          expect(response.body).to match("#{d.id}")
+          expect(response.body).to match("#{d.name}")
+          expect(response.body).to match("#{d.phone}")
+          expect(response.body).to match("#{d.vehicle_to_s}")
+          expect(response.body).to match("#{d.active_to_s}")
+        end
+      end
+    end
   end
 
 end

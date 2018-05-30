@@ -22,4 +22,13 @@ class Shift < ApplicationRecord
       end
     end
   end
+
+  def start_time_to_s
+    start_time.strftime("%Y-%m-%d %T")
+  end
+
+  def end_time_to_s
+    end_time.strftime("%Y-%m-%d %T")
+  end
+
 end

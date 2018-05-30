@@ -42,7 +42,7 @@ class AssignmentsController < ApplicationController
       flash[:danger] = "Invalid date range!"
       redirect_to home_path
     end
-
+    
     @shifts = Shift.where(start_time: @start..@end).where(end_time: @start..@end)
   end
 

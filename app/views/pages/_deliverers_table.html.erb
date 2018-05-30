@@ -11,8 +11,8 @@
       <td><%= deliverer.id %></td>
       <td><%= link_to deliverer.name, edit_deliverer_path(deliverer) %></td>
       <td><%= deliverer.phone %></td>
-      <td><%= vehicle_helper deliverer.vehicle %></td>
-      <td><%= active_helper deliverer.active %></td>
+      <td><%= deliverer.vehicle_to_s %></td>
+      <td><%= deliverer.active_to_s %></td>
     </tr>
   <% end %>
 </table>

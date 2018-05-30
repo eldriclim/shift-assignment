@@ -130,6 +130,8 @@ RSpec.describe AssignmentsController, type: :controller do
     context "when valid date range" do
       before do
         @shift = FactoryGirl.create(:shift)
+        @deliverer = FactoryGirl.create(:deliverer)
+        @assignment = FactoryGirl.create(:assignment, deliverer_id: @deliverer.id, shift_id: @shift.id)
       end
 
       render_views
@@ -138,12 +140,12 @@ RSpec.describe AssignmentsController, type: :controller do
         post :show,
           params: {
             range1: {
-              "start_date(3i)" => "23",
+              "start_date(3i)" => "22",
               "start_date(2i)" => "5",
               "start_date(1i)" => "2018"
             },
             range2: {
-              "end_date(3i)" => "23",
+              "end_date(3i)" => "24",
               "end_date(2i)" => "5",
               "end_date(1i)" => "2018"
             }
@@ -152,9 +154,19 @@ RSpec.describe AssignmentsController, type: :controller do
           is_expected.not_to set_flash
 
           expect(response).to render_template("assignments/show")
-          expect(response.body).to match("<h1><strong>On </strong>23 May 2018</h1>")
-          expect(response.body).to match("2018-05-23 10:00:00")
-          expect(response.body).to match("2018-05-23 12:00:00")
+          expect(response.body).to match("22 May 2018")
+          expect(response.body).to match("24 May 2018")
+
+          # Match Shift info
+          expect(response.body).to match("#{@shift.start_time_to_s}")
+          expect(response.body).to match("#{@shift.end_time_to_s}")
+          expect(response.body).to match("#{@shift.deliverer.count/@shift.max_count}")
+
+          # Match Deliverer info within Shift
+          expect(response.body).to match("#{@deliverer.id}")
+          expect(response.body).to match("#{@deliverer.name}")
+          expect(response.body).to match("#{@deliverer.phone}")
+
 
       end
     end

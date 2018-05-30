@@ -24,47 +24,39 @@ RSpec.describe Deliverer, type: :model do
     with_message("Phone already in used") }
 
 
-
-
-
-  # describe "Deliverer model" do
-  #   subject { described_class.new(name: "Name", vehicle: 0, phone: 123) }
-  #
-  #   context "all attributes" do
-  #     it "has to be present" do
-  #       expect(subject).to be_valid
-  #     end
-  #   end
-  #
-  #   context "name attribute" do
-  #     it "has to be present" do
-  #       subject.name = nil
-  #       expect(subject).to_not be_valid
-  #     end
-  #
-  #     it "cannot be longer than 50 chars" do
-  #       subject.name = "Fiftyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
-  #       expect(subject).to_not be_valid
-  #     end
-  #   end
-  #
-  #   context "vehicle attribute" do
-  #     it "has to be present" do
-  #       subject.vehicle = nil
-  #       expect(subject).to_not be_valid
-  #     end
-  #   end
-  #
-  #   context "phone attribute" do
-  #     it "has to be present" do
-  #       subject.phone = nil
-  #       expect(subject).to_not be_valid
-  #     end
-  #
-  #     it "has to be an integer" do
-  #       subject.phone = "phone"
-  #       expect(subject).to_not be_valid
-  #     end
-  #   end
-  # end
+    # describe '#vehicle_to_s' do
+    #   context 'input 0' do
+    #     it 'returns Motorbike' do
+    #       debugger
+    #       expect(helper.vehicle_helper(0)).to eq("Motorbike")
+    #     end
+    #   end
+    #
+    #   context 'input 1' do
+    #     it 'returns Bicycle' do
+    #       expect(helper.vehicle_helper(1)).to eq("Bicycle")
+    #     end
+    #   end
+    #
+    #   context 'input 2' do
+    #     it 'returns Scooter' do
+    #       expect(helper.vehicle_helper(2)).to eq("Scooter")
+    #     end
+    #   end
+    # end
+    # 
+    # describe '#active_helper' do
+    #   context 'input true' do
+    #     it 'returns Active' do
+    #       expect(helper.active_helper(true)).to eq("Active")
+    #     end
+    #   end
+    #
+    #   context 'input false' do
+    #     it 'returns Inactive' do
+    #       expect(helper.active_helper(false)).to eq("Inactive")
+    #     end
+    #   end
+    #
+    # end
 end
