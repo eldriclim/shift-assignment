@@ -14,7 +14,7 @@
       <th><%= deliverer.id %></th>
       <td><%= link_to deliverer.name, edit_deliverer_path(deliverer) %></td>
       <td><%= deliverer.phone %></td>
-      <td><%= deliverer.vehicle_to_s %></td>
+      <td><%= deliverer.vehicle.capitalize %></td>
       <td><%= deliverer.active_to_s %></td>
     </tr>
   <% end %>

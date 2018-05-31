@@ -42,7 +42,7 @@ RSpec.describe PagesController, type: :controller do
           expect(response.body).to match("#{d.id}")
           expect(response.body).to match("#{d.name}")
           expect(response.body).to match("#{d.phone}")
-          expect(response.body).to match("#{d.vehicle_to_s}")
+          expect(response.body).to match("#{d.vehicle.capitalize}")
           expect(response.body).to match("#{d.active_to_s}")
         end
 

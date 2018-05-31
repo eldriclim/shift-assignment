@@ -9,18 +9,7 @@ class Deliverer < ApplicationRecord
       numericality: { only_integer: true, message: "Phone has to be an integer" },
       uniqueness: { message: "Phone already in used" }
 
-  def vehicle_to_s
-    case self.vehicle
-    when 0
-      "Motorbike"
-    when 1
-      "Bicycle"
-    when 2
-      "Scooter"
-    else
-      "ERROR"
-    end
-  end
+  enum vehicle: { motorbike: 0, bicycle: 1, scooter:2 }
 
   def active_to_s
     case self.active

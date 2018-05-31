@@ -28,32 +28,6 @@ RSpec.describe Deliverer, type: :model do
 
   subject { Deliverer.new }
 
-  describe '#vehicle_to_s' do
-    context 'when vehicle index 0' do
-      it 'returns Motorbike' do
-        subject.vehicle = 0
-
-        expect(subject.vehicle_to_s).to eq("Motorbike")
-      end
-    end
-
-    context 'when vehicle index 1' do
-      it 'returns Bicycle' do
-        subject.vehicle = 1
-
-        expect(subject.vehicle_to_s).to eq("Bicycle")
-      end
-    end
-
-    context 'when vehicle index 2' do
-      it 'returns Scooter' do
-        subject.vehicle = 2
-
-        expect(subject.vehicle_to_s).to eq("Scooter")
-      end
-    end
-  end
-
   describe '#active_helper' do
     context 'when active true' do
       it 'returns Active' do
