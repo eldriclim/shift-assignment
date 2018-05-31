@@ -1,27 +1,42 @@
 <div class="container">
-  <div class="row">
-  <div class="col-md-offset-4 col-md-4">
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
 
-    <%= render "shared/flash_messages" %>
+      <%= render "shared/flash_messages" %>
 
-    <h1>All deliverers</h1>
+      <h1>All deliverers</h1>
 
-    <%= render 'deliverers_table' %>
+      <%= render 'deliverers_table' %>
 
-    <br>
-    <%= button_to "Create Deliverer", new_deliverer_path, :method => "get",
+      <%= button_to "Create Deliverer", new_deliverer_path, :method => "get",
         class: "btn sign-up-button"%>
+    </div>
+  </div>
 
-  <h1>All shifts</h1>
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
+      <h1>All shifts</h1>
 
-  <%= render 'shifts_table' %>
+      <%= render 'shifts_table' %>
 
-  <br>
-  <%= button_to "Create Shift", new_shift_path, :method => "get",
-      class: "btn sign-up-button"%>
+      <%= button_to "Create Shift", new_shift_path, :method => "get",
+          class: "btn sign-up-button"%>
+
+    </div>
+  </div>
+
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
+      <%= render 'shift_assignment_form' %>
+    </div>
+  </div>
+
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
+      <%= render 'view_assignment_form' %>
+    </div>
+  </div>
+
+
+
 </div>
-</div>
-</div>
-
-<%= render 'shift_assignment_form' %>
-<%= render 'view_assignment_form' %>

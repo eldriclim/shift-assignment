@@ -1,14 +1,17 @@
-<table>
-  <tr>
-    <td><strong>ID</strong></td>
-    <td><strong>Name</strong></td>
-    <td><strong>Phone</strong></td>
-    <td><strong>Vehicle</strong></td>
-    <td><strong>Status</strong></td>
-  </tr>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Vehicle</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
   <% @deliverers.each do |deliverer| %>
     <tr>
-      <td><%= deliverer.id %></td>
+      <th><%= deliverer.id %></th>
       <td><%= link_to deliverer.name, edit_deliverer_path(deliverer) %></td>
       <td><%= deliverer.phone %></td>
       <td><%= deliverer.vehicle_to_s %></td>

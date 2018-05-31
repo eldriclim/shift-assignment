@@ -1,13 +1,17 @@
-<table>
-  <tr>
-    <td><strong>ID</strong></td>
-    <td><strong>Start Time</strong></td>
-    <td><strong>End Time</strong></td>
-    <td><strong>Max Count</strong></td>
-  </tr>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>ID</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Max Count</th>
+    </tr>
+  </thead>
+
+
   <% @shifts.each do |shift| %>
     <tr>
-      <td><%= shift.id %></td>
+      <th><%= shift.id %></th>
       <td><%= link_to shift.start_time_to_s, edit_shift_path(shift) %></td>
       <td><%= shift.end_time_to_s %></td>
       <td><%= "#{shift.deliverer.count}/#{shift.max_count}" %></td>
