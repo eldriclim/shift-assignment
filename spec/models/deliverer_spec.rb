@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Deliverer, type: :model do
 
   # Test association
-  it { is_expected.to have_many(:assignment) }
-  it { is_expected.to have_many(:shift).through(:assignment) }
+  it { is_expected.to have_many(:assignments) }
+  it { is_expected.to have_many(:shifts).through(:assignments) }
 
   # Test Name attribute
   it { is_expected.to validate_presence_of(:name).

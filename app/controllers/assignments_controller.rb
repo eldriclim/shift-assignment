@@ -13,7 +13,7 @@ class AssignmentsController < ApplicationController
     end
 
     @shift = Shift.find(shift_id)
-    if @shift.max_count == @shift.deliverer.count
+    if @shift.max_count == @shift.deliverers.count
       flash[:danger] = "Shift count has already maxed out!"
       redirect_to home_path
       return
@@ -42,7 +42,7 @@ class AssignmentsController < ApplicationController
       flash[:danger] = "Invalid date range!"
       redirect_to home_path
     end
-    
+
     @shifts = Shift.where(start_time: @start..@end).where(end_time: @start..@end)
   end
 

@@ -1,6 +1,6 @@
 class Deliverer < ApplicationRecord
-  has_many :assignment
-  has_many :shift, through: :assignment
+  has_many :assignments
+  has_many :shifts, through: :assignments
 
   validates :name, presence: { message: "Name field is empty" },
       length: { maximum: 50, message: "Name cannot be longer than 50 characters" }

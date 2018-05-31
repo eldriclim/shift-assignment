@@ -1,6 +1,6 @@
 class Shift < ApplicationRecord
-  has_many :assignment
-  has_many :deliverer, through: :assignment
+  has_many :assignments
+  has_many :deliverers, through: :assignments
 
   validates :start_time, presence: true,
       uniqueness: { scope: :end_time, message: "Shift already exist" }
