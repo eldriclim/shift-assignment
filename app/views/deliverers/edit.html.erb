@@ -20,7 +20,7 @@
 	           class: 'form-control' %>
 
         <%= f.label :vehicle %>
-        <%= f.select :vehicle, [['Motorcycle',0], ['Bicycle',1], ['Scooter',2]], {} %>
+        <%= f.select :vehicle, Deliverer.vehicles.keys.map { |w| [w.capitalize, w] } %>
 
         <%= f.label :active %>
         <%= f.check_box :active %>
