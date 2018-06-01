@@ -8,7 +8,7 @@ RSpec.describe PagesController, type: :controller do
     sign_in @user
   }
 
-  context "get #home" do
+  describe "get #home" do
 
     # Create sample data for display
     Given!(:deliverers) { FactoryGirl.create_list(:deliverer, 3) }

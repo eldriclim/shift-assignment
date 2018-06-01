@@ -9,14 +9,14 @@ RSpec.describe DeliverersController, type: :controller do
   }
 
   # Test new action
-  context "get #new" do
+  describe "get #new" do
     When { get :new }
 
     Then { expect(assigns(:deliverer)).to be_a_new(Deliverer) }
   end
 
   # Test create action
-  context "post #create" do
+  describe "post #create" do
 
     context "with valid attributes" do
       When {
@@ -50,7 +50,7 @@ RSpec.describe DeliverersController, type: :controller do
   end
 
   # Test edit action
-  context "get #edit" do
+  describe "get #edit" do
     Given!(:deliverer) { FactoryGirl.create(:deliverer) }
 
     When { get :edit, params: { :id => deliverer.id } }
