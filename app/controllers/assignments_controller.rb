@@ -2,33 +2,20 @@ class AssignmentsController < ApplicationController
 
   def create
     if params[:assignment].nil?
-      flash[:danger] = "Please create some Deliverers and Shifts first."
-      redirect_to home_path
-      return
-    elsif params[:assignment][:shift_id].nil? ||
-            params[:assignment][:deliverer_id].nil?
-      flash[:danger] = "Please create some Deliverers and Shifts first."
-      redirect_to home_path
-      return
-    end
-
-    @shift = Shift.find(shift_id)
-    if @shift.max_count == @shift.deliverers.count
-      flash[:danger] = "Shift count has already maxed out!"
-      redirect_to home_path
-      return
-    end
-
-    @assignment = Assignment.new(assignment_params)
-
-    if @assignment.save
-      flash[:success] = "A new assignment has been made!"
+      flash[:danger] = "No assignment received"
       redirect_to home_path
       return
     else
-      flash[:danger] = "Error in assigning shift!"
+
+      shift_assignment_service = ShiftAssignmentService.new(deliverer_id, shift_id)
+
+      if shift_assignment_service.perform
+        flash[:success] = shift_assignment_service.success
+      else
+        flash[:danger] = shift_assignment_service.errors
+      end
+
       redirect_to home_path
-      return
     end
   end
 
@@ -46,8 +33,8 @@ class AssignmentsController < ApplicationController
     @shifts = Shift.where(start_time: @start..@end).where(end_time: @start..@end)
   end
 
-  def assignment_params
-    params.require(:assignment).permit(:deliverer_id, :shift_id)
+  def deliverer_id
+    params[:assignment][:deliverer_id]
   end
   def shift_id
     params[:assignment][:shift_id]
