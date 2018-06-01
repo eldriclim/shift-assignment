@@ -16,7 +16,7 @@ class DeliverersController < ApplicationController
     else
       errors = @deliverer.errors unless @deliverer.valid?
 
-      flash[:danger] = errors.full_messages.to_sentence
+      flash[:danger] = errors.full_messages
       redirect_to new_deliverer_path
     end
   end
@@ -35,7 +35,7 @@ class DeliverersController < ApplicationController
     else
       errors = @deliverer.errors unless @deliverer.valid?
 
-      flash[:danger] = errors.full_messages.to_sentence
+      flash[:danger] = errors.full_messages
       redirect_to edit_deliverer_path
     end
   end
