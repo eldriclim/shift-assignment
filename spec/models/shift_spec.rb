@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Shift, type: :model do
   # Base setup for Shift
-  subject { described_class.new(
-    start_time: Date.today.at_beginning_of_day,
-    end_time: Date.today.at_end_of_day,
-    max_count: 10) }
+  Given!(:shift) {
+    described_class.new(
+      start_time: Date.today.at_beginning_of_day,
+      end_time: Date.today.at_end_of_day,
+      max_count: 10)
+  }
 
   # Test association
   it { is_expected.to have_many(:assignments) }
@@ -21,18 +23,22 @@ RSpec.describe Shift, type: :model do
 
   # Test Start-End time condition
   context "start and end time validation" do
-    it "is invalid when start and end time is the same" do
-      subject.end_time = Date.today.at_beginning_of_day
+    context "start and end time is the same" do
+      When {
+        shift.end_time = Date.today.at_beginning_of_day
+      }
 
-      expect(subject).to be_invalid
-      expect(subject.errors[:start_time]).to include("Start time and End time cannot be the same")
+      Then { expect(shift).to be_invalid }
+      And { expect(shift.errors[:start_time]).to include("Start time and End time cannot be the same") }
     end
 
-    it "is invalid when start time is after end time" do
-      subject.start_time = Date.tomorrow.at_beginning_of_day
+    context "start time is after end time" do
+      When {
+        shift.start_time = Date.tomorrow.at_beginning_of_day
+      }
 
-      expect(subject).to be_invalid
-      expect(subject.errors[:start_time]).to include("Start time cannot be after End time")
+      Then { expect(shift).to be_invalid }
+      And { expect(shift.errors[:start_time]).to include("Start time cannot be after End time") }
     end
   end
 
@@ -47,19 +53,19 @@ RSpec.describe Shift, type: :model do
   # Test instance methods
 
   describe "#start_time_to_s" do
-    it "outputs start time" do
-      subject.start_time = DateTime.parse("2018-05-24 10:00:00")
+    When {
+      shift.start_time = DateTime.parse("2018-05-24 10:00:00")
+    }
 
-      expect(subject.start_time_to_s).to eq("2018-05-24 10:00:00")
-    end
+    Then { expect(shift.start_time_to_s).to eq("2018-05-24 10:00:00") }
   end
 
   describe "#end_time_to_s" do
-    it "outputs end time" do
-      subject.end_time = DateTime.parse("2018-05-24 10:00:00")
+    When{
+      shift.end_time = DateTime.parse("2018-05-24 10:00:00")
+    }
 
-      expect(subject.end_time_to_s).to eq("2018-05-24 10:00:00")
-    end
+    Then { expect(shift.end_time_to_s).to eq("2018-05-24 10:00:00") }
   end
 
 end

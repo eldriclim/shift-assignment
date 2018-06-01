@@ -25,25 +25,20 @@ RSpec.describe Deliverer, type: :model do
 
 
   # Test instance methods
-
-  subject { Deliverer.new }
+  
+  Given!(:deliverer) { Deliverer.new }
 
   describe '#active_helper' do
     context 'when active true' do
-      it 'returns Active' do
-        subject.active = true
+      When { deliverer.active = true }
 
-        expect(subject.active_to_s).to eq("Active")
-      end
+      Then { expect(deliverer.active_to_s).to eq("Active") }
     end
 
     context 'when active false' do
-      it 'returns Inactive' do
-        subject.active = false
+      When { deliverer.active = false }
 
-        expect(subject.active_to_s).to eq("Inactive")
-      end
+      Then { expect(deliverer.active_to_s).to eq("Inactive") }
     end
-
   end
 end
