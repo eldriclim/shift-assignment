@@ -3,95 +3,83 @@ require 'rails_helper'
 RSpec.describe DeliverersController, type: :controller do
 
   # Create user for login
-  before(:each) do
+  Given {
     @user = FactoryGirl.create(:user)
     sign_in @user
-  end
+  }
 
   # Test new action
-  describe "get #new" do
-    it "initializes a new deliverer" do
-      get :new
+  context "get #new" do
+    When { get :new }
 
-      expect(assigns(:deliverer)).to be_a_new(Deliverer)
-    end
+    Then { expect(assigns(:deliverer)).to be_a_new(Deliverer) }
   end
 
   # Test create action
-  describe "post #create" do
+  context "post #create" do
 
     context "with valid attributes" do
-      it "creates new deliverer" do
-        expect{
-          post :create,
+      When {
+        post :create,
           params: { deliverer: FactoryGirl.attributes_for(:deliverer) },
           as: :json
-        }.to change{ Deliverer.count }.by(1)
+        }
 
-        is_expected.to redirect_to home_path
-      end
+      Then { expect(Deliverer.count).to eq 1 }
+      And { is_expected.to redirect_to home_path }
     end
 
     context "with invalid attributes" do
-      it "redirects to #new with flash danger" do
-        expect{
-          post :create,
-          params: {
-            deliverer: {
-              name: "My Name",
-              vehicle: 1,
-              phone: "a",
-              active: false
-            }
-          },
-          as: :json
-        }.to change{ Deliverer.count }.by(0)
+      When {
+        post :create,
+        params: {
+          deliverer: {
+            name: "My Name",
+            vehicle: 1,
+            phone: "a",
+            active: false
+          }
+        },
+        as: :json
+      }
 
-        is_expected.to set_flash[:danger]
-        is_expected.to redirect_to new_deliverer_path
-
-      end
+      Then { expect(Deliverer.count).to eq 0 }
+      And { is_expected.to set_flash[:danger] }
+      And { is_expected.to redirect_to new_deliverer_path }
     end
   end
 
   # Test edit action
-  describe "get #edit" do
-    it "retrieves deliverer based on its ID" do
-      @deliverer = FactoryGirl.create(:deliverer)
+  context "get #edit" do
+    Given!(:deliverer) { FactoryGirl.create(:deliverer) }
 
-      get :edit, params: { :id => @deliverer.id }
+    When { get :edit, params: { :id => deliverer.id } }
 
-      expect(@deliverer).to eq(assigns(:deliverer))
-
-    end
+    Then { expect(deliverer).to eq(assigns(:deliverer)) }
   end
 
   # Test update action
   describe "patch #update" do
-    before do
-      @deliverer = FactoryGirl.create(:deliverer)
-    end
+    Given!(:deliverer) { FactoryGirl.create(:deliverer) }
 
     context "with valid attributes" do
-      it "update deliverer's attributes" do
-
+      When {
         patch :update,
           params: {
-            :id => @deliverer.id,
+            :id => deliverer.id,
             deliverer: FactoryGirl.attributes_for(:deliverer)
           },
           as: :json
+      }
 
-        is_expected.to redirect_to home_path
-      end
+      Then { is_expected.to redirect_to home_path }
     end
 
     context "with invalid attributes" do
-      it "redirects to #edit and flash danger" do
-
+      When {
         patch :update,
           params: {
-            :id => @deliverer.id,
+            :id => deliverer.id,
             deliverer: {
               name: "My Name",
               vehicle: 1,
@@ -100,11 +88,10 @@ RSpec.describe DeliverersController, type: :controller do
             }
           },
           as: :json
+      }
 
-        is_expected.to set_flash[:danger]
-        is_expected.to redirect_to edit_deliverer_path
-
-      end
+      Then { is_expected.to set_flash[:danger] }
+      And { is_expected.to redirect_to edit_deliverer_path }
     end
   end
 end

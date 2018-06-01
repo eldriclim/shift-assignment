@@ -21,14 +21,12 @@ gem 'devise'
 
 gem 'shoulda-matchers', '~> 3.0'
 gem 'rspec-rails', '~> 3.6'
+gem 'rspec-given'
 gem 'factory_girl_rails'
 gem 'rails-controller-testing'
 gem 'headless'
 gem 'poltergeist'
 gem 'database_cleaner'
-
-
-
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
