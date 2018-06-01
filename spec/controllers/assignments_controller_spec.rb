@@ -23,19 +23,7 @@ RSpec.describe AssignmentsController, type: :controller do
       end
     end
 
-    context "when no deliverer_id in param" do
-      it "redirects to home_path and flashes danger" do
-        post :create, params: {
-          assignment: {
-            shift_id: @shift.id
-          }
-        }
-
-        is_expected.to set_flash[:danger]
-      end
-    end
-
-    context "when no shift_id in param" do
+    context "when assignment service failure" do
       it "redirects to home_path and flashes danger" do
         post :create, params: {
           assignment: {
@@ -44,10 +32,11 @@ RSpec.describe AssignmentsController, type: :controller do
         }
 
         is_expected.to set_flash[:danger]
+        is_expected.to redirect_to home_path
       end
     end
 
-    context "with valid attributes" do
+    context "when assignment service success" do
       it "creates a new assignment" do
         post :create,
           params: {
@@ -59,46 +48,7 @@ RSpec.describe AssignmentsController, type: :controller do
 
         is_expected.to set_flash[:success]
         is_expected.to redirect_to home_path
-      end
-    end
 
-    context "with invalid attributes" do
-      it "flash danger" do
-        post :create,
-          params: {
-            assignment: {
-              deliverer_id: -1,
-              shift_id: @shift.id
-            }
-          }
-
-        is_expected.to set_flash[:danger].to("Error in assigning shift!")
-        is_expected.to redirect_to home_path
-      end
-    end
-
-    context "when shift has maxed out" do
-      it "flash danger" do
-        # Initial insertion: 0/1 -> 1/1
-        post :create,
-          params: {
-            assignment: {
-              deliverer_id: @deliverer[0].id,
-              shift_id: @shift.id
-            }
-          }
-
-        # Insertion to an already maxed out shift
-        post :create,
-          params: {
-            assignment: {
-              deliverer_id: @deliverer[1].id,
-              shift_id: @shift.id
-            }
-          }
-
-        is_expected.to set_flash[:danger].to("Shift count has already maxed out!")
-        is_expected.to redirect_to home_path
       end
     end
   end

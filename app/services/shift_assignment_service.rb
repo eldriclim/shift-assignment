@@ -14,20 +14,19 @@ class ShiftAssignmentService
     # Terminate when variables are not found
     if @deliverer_id.nil? || @shift_id.nil?
       @errors << "Please create some Deliverers and Shifts first."
+      return false
     end
 
     # Check max count for Shift
     shift = Shift.find(shift_id)
     if shift.max_count == shift.deliverers.count
       @errors << "Shift count has already maxed out!"
+      return false
     end
 
     # Check if Shift already exist
     if Assignment.exists?(deliverer_id: @deliverer_id, shift_id: @shift_id)
       @errors << "Assignment already exist!"
-    end
-
-    if !@errors.empty?
       return false
     end
 
