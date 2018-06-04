@@ -3,22 +3,22 @@
 # Please check git history for our modifications
 
 AllCops:
-  Include:
-  - "**/*.gemspec"
-  - "**/*.podspec"
-  - "**/*.jbuilder"
-  - "**/*.rake"
-  - "**/*.opal"
-  - "**/Gemfile"
-  - "**/Rakefile"
-  - "**/Capfile"
-  - "**/Guardfile"
-  - "**/Podfile"
-  - "**/Thorfile"
-  - "**/Vagrantfile"
-  - "**/Berksfile"
-  - "**/Cheffile"
-  - "**/Vagabondfile"
+  # Include:
+  # - "**/*.gemspec"
+  # - "**/*.podspec"
+  # - "**/*.jbuilder"
+  # - "**/*.rake"
+  # - "**/*.opal"
+  # - "**/Gemfile"
+  # - "**/Rakefile"
+  # - "**/Capfile"
+  # - "**/Guardfile"
+  # - "**/Podfile"
+  # - "**/Thorfile"
+  # - "**/Vagrantfile"
+  # - "**/Berksfile"
+  # - "**/Cheffile"
+  # - "**/Vagabondfile"
   Exclude:
   - "lib/food_data/**"
   - "vendor/**/*"
@@ -640,7 +640,7 @@ Lint/AssignmentInCondition:
   Enabled: true
   AllowSafeAssignment: true
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   Description: Align ends correctly.
   Enabled: true
   EnforcedStyleAlignWith: keyword
@@ -648,7 +648,7 @@ Lint/EndAlignment:
   - keyword
   - variable
 
-Lint/DefEndAlignment:
+Layout/DefEndAlignment:
   Description: Align ends corresponding to defs correctly.
   Enabled: true
   EnforcedStyleAlignWith: start_of_line
@@ -1133,11 +1133,11 @@ Lint/AmbiguousRegexpLiteral:
     invocation without parenthesis.
   Enabled: false
 
-Lint/BlockAlignment:
+Layout/BlockAlignment:
   Description: Align block ends correctly.
   Enabled: true
 
-Lint/ConditionPosition:
+Layout/ConditionPosition:
   Description: Checks for condition placed in a confusing position relative to the
     keyword.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#same-line-condition
