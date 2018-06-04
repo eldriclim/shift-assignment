@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :deliverer do
-    name "My Name"
+    name 'My Name'
     vehicle 1
-    sequence(:phone) { |n| "#{(n+9000001)}"}
+    sequence(:phone) { |n| ((n + 9_000_001)).to_s }
     active false
   end
 end

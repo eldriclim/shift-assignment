@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, controllers: { registrations: 'registrations' }
   root to: 'pages#home'
 
   devise_scope :user do
@@ -10,13 +10,12 @@ Rails.application.routes.draw do
     get 'signup', to: 'devise/registrations#new'
   end
 
-  resources :deliverers, :only => [:new, :create, :edit, :update]
-  resources :shifts, :only => [:new, :create, :edit, :update]
+  resources :deliverers, only: %i[new create edit update]
+  resources :shifts, only: %i[new create edit update]
 
   get '/home', to: 'pages#home'
 
   post '/assignments', to: 'assignments#create'
 
   post '/assignments/show', to: 'assignments#show'
-
 end

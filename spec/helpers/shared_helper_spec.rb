@@ -1,21 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe SharedHelper, :type => :helper do
-
-  describe "#flash_ul" do
-    context "when message is array" do
-      Then {
+RSpec.describe SharedHelper, type: :helper do
+  describe '#flash_ul' do
+    context 'when message is array' do
+      Then do
         expect(
-          helper.flash_ul(["message1","message2","message3"])
-        ).to eq "<ul><li>message1</li><li>message2</li><li>message3</li></ul>"
-      }
+          helper.flash_ul(%w[message1 message2 message3])
+        ).to eq '<ul><li>message1</li><li>message2</li><li>message3</li></ul>'
+      end
     end
 
-    context "when message is a string" do
-      Then {
-        expect(helper.flash_ul("message")).to eq("message")
-      }
+    context 'when message is a string' do
+      Then do
+        expect(helper.flash_ul('message')).to eq('message')
+      end
     end
   end
-
 end
