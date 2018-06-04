@@ -53,14 +53,14 @@ RSpec.describe AssignmentsController, type: :controller do
         post :show,
              params: {
                range1: {
-                 'start_date(3i)' => '23',
-                 'start_date(2i)' => '5',
-                 'start_date(1i)' => '2018'
+                 'date(3i)' => '23',
+                 'date(2i)' => '5',
+                 'date(1i)' => '2018'
                },
                range2: {
-                 'end_date(3i)' => '22',
-                 'end_date(2i)' => '5',
-                 'end_date(1i)' => '2018'
+                 'date(3i)' => '22',
+                 'date(2i)' => '5',
+                 'date(1i)' => '2018'
                }
              }
       end
@@ -86,14 +86,14 @@ RSpec.describe AssignmentsController, type: :controller do
           post :show,
                params: {
                  range1: {
-                   'start_date(3i)' => '22',
-                   'start_date(2i)' => '5',
-                   'start_date(1i)' => '2018'
+                   'date(3i)' => '22',
+                   'date(2i)' => '5',
+                   'date(1i)' => '2018'
                  },
                  range2: {
-                   'end_date(3i)' => '24',
-                   'end_date(2i)' => '5',
-                   'end_date(1i)' => '2018'
+                   'date(3i)' => '24',
+                   'date(2i)' => '5',
+                   'date(1i)' => '2018'
                  }
                }
         end
@@ -117,6 +117,47 @@ RSpec.describe AssignmentsController, type: :controller do
         And { expect(response.body).to match(deliverer.name.to_s) }
         And { expect(response.body).to match(deliverer.phone.to_s) }
       end
+    end
+
+    context '#date_range' do
+      Given!(:date1_hash) do
+        {
+          'date(3i)' => 23,
+          'date(2i)' => 0o5,
+          'date(1i)' => 2018
+        }
+      end
+      Given!(:date2_hash) do
+        {
+          'date(3i)' => 24,
+          'date(2i)' => 0o5,
+          'date(1i)' => 2018
+        }
+      end
+
+      When(:date1) do
+        Time.zone.parse(
+          "#{date1_hash['date(3i)']}-#{date1_hash['date(2i)']}-#{date1_hash['date(1i)']}"
+        )
+      end
+      When(:date2) do
+        Time.zone.parse(
+          "#{date2_hash['date(3i)']}-#{date2_hash['date(2i)']}-#{date2_hash['date(1i)']}"
+        )
+      end
+
+      Then do
+        expect(controller.date_range(date1_hash, date2_hash)).to(
+          eq(date1.at_beginning_of_day..date2.at_end_of_day)
+        )
+      end
+    end
+
+    context '#retrieve_shift_in_range' do
+      Given!(:shift) { FactoryGirl.create(:shift) }
+      Given!(:range) { shift.start_time..shift.end_time }
+
+      Then { expect(controller.retrieve_shift_in_range(range)).to include(shift) }
     end
   end
 end

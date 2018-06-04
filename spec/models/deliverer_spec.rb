@@ -7,14 +7,14 @@ RSpec.describe Deliverer, type: :model do
 
   # Test Name attribute
   it {
-    is_expected.to validate_presence_of(:name)
-      .with_message('Name field is empty')
+    is_expected.to validate_presence_of(:name).
+      with_message('Name field is empty')
   }
 
   it {
     is_expected.to(
-      validate_length_of(:name).is_at_most(50)
-      .with_message('Name cannot be longer than 50 characters')
+      validate_length_of(:name).is_at_most(50).
+        with_message('Name cannot be longer than 50 characters')
     )
   }
 
@@ -23,20 +23,20 @@ RSpec.describe Deliverer, type: :model do
 
   # Test Phone attribute
   it {
-    is_expected.to validate_presence_of(:phone)
-      .with_message('Phone field is empty')
+    is_expected.to validate_presence_of(:phone).
+      with_message('Phone field is empty')
   }
 
   it {
     is_expected.to(
-      validate_numericality_of(:phone).only_integer
-       .with_message('Phone has to be an integer')
+      validate_numericality_of(:phone).only_integer.
+        with_message('Phone has to be an integer')
     )
   }
 
   it {
-    is_expected.to validate_uniqueness_of(:phone)
-      .with_message('Phone already in used')
+    is_expected.to validate_uniqueness_of(:phone).
+      with_message('Phone already in used')
   }
 
   # Test instance methods

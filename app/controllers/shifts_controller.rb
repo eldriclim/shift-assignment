@@ -1,5 +1,4 @@
 class ShiftsController < ApplicationController
-
   def new
     @shift = Shift.new
   end
@@ -22,7 +21,7 @@ class ShiftsController < ApplicationController
 
   def update
     @shift = Shift.find(params[:id])
-    if @shift.update_attributes(shift_params)
+    if @shift.update(shift_params)
       redirect_to home_path
     else
       errors = @shift.errors unless @shift.valid?

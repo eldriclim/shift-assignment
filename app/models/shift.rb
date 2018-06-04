@@ -31,4 +31,7 @@ class Shift < ApplicationRecord
     end_time.strftime("%Y-%m-%d %T")
   end
 
+  def max?
+    self.max_count == self.deliverers.count
+  end
 end

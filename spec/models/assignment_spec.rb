@@ -8,8 +8,8 @@ RSpec.describe Assignment, type: :model do
   # Test IDs
   it {
     is_expected.to(
-      validate_uniqueness_of(:deliverer_id).scoped_to(:shift_id)
-        .with_message('Assignment already exist')
+      validate_uniqueness_of(:deliverer_id).scoped_to(:shift_id).
+        with_message('Assignment already exist')
     )
   }
 end

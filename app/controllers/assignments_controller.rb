@@ -1,10 +1,7 @@
 class AssignmentsController < ApplicationController
-
   def create
     if params[:assignment].nil?
-      flash[:danger] = "No assignment received"
-      redirect_to home_path
-      return
+      flash[:danger] = 'No assignment received'
     else
 
       shift_assignment_service = ShiftAssignmentService.new(deliverer_id, shift_id)
@@ -14,35 +11,50 @@ class AssignmentsController < ApplicationController
       else
         flash[:danger] = shift_assignment_service.errors
       end
-
-      redirect_to home_path
     end
+
+    redirect_to home_path
   end
 
+  # rubocop:disable Metrics/AbcSize
   def show
-    @start = Date.parse(date_start_format(params[:range1])) if params[:range1]
-    @end = Date.parse(date_end_format(params[:range2])) if params[:range2]
-    @start = @start.at_beginning_of_day
-    @end = @end.at_end_of_day
-
-    if @start > @end
-      flash[:danger] = "Invalid date range!"
+    if params[:range1].nil? && params[:range2].nil?
+      flash[:danger] = 'Missing date input!'
       redirect_to home_path
     end
 
-    @shifts = Shift.where(start_time: @start..@end).where(end_time: @start..@end)
+    @range = date_range(params[:range1], params[:range2])
+
+    if @range.max == nil
+      flash[:danger] = 'Invalid date range!'
+      redirect_to home_path
+    end
+
+    @shifts = retrieve_shift_in_range(@range)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def deliverer_id
     params[:assignment][:deliverer_id]
   end
+
   def shift_id
     params[:assignment][:shift_id]
   end
-  def date_start_format(date_string)
-    "#{date_string['start_date(3i)']}-#{date_string['start_date(2i)']}-#{date_string['start_date(1i)']}"
+
+  def date_format(date_string)
+    "#{date_string['date(3i)']}-#{date_string['date(2i)']}" +
+      "-#{date_string['date(1i)']}"
   end
-  def date_end_format(date_string)
-    "#{date_string['end_date(3i)']}-#{date_string['end_date(2i)']}-#{date_string['end_date(1i)']}"
+
+  def date_range(date1, date2)
+    date_from = Date.parse(date_format(date1)).at_beginning_of_day
+    date_to = Date.parse(date_format(date2)).at_end_of_day
+
+    date_from..date_to
+  end
+
+  def retrieve_shift_in_range(range)
+    Shift.where(start_time: range).where(end_time: range)
   end
 end

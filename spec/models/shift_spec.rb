@@ -76,6 +76,19 @@ RSpec.describe Shift, type: :model do
   }
 
   # Test instance methods
+  describe '#max' do
+    Given!(:shift) { FactoryGirl.create(:shift) }
+
+    context 'when shift not maxed' do
+      Then { expect(shift.max?).to eq(false) }
+    end
+
+    context 'when shift maxed' do
+      When { Shift.any_instance.stub_chain(:deliverers, :count).and_return(2) }
+
+      Then { expect(shift.max?).to eq(true) }
+    end
+  end
 
   describe '#start_time_to_s' do
     When do

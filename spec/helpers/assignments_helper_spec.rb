@@ -7,7 +7,7 @@ RSpec.describe AssignmentsHelper, type: :helper do
 
     context 'when start and end is the same day' do
       Then do
-        expect(helper.print_date_range(date1, date1).to_s).to(
+        expect(helper.print_date_range(date1..date1).to_s).to(
           eq('<strong>On </strong>23 May 2018')
         )
       end
@@ -15,7 +15,7 @@ RSpec.describe AssignmentsHelper, type: :helper do
 
     context 'when start and end is one different days' do
       Then do
-        expect(helper.print_date_range(date1, date2).to_s).to(
+        expect(helper.print_date_range(date1..date2).to_s).to(
           eq('<strong>From </strong>23 May 2018' +
             '<strong> to </strong>24 May 2018')
         )
