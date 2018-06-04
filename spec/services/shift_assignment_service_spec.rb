@@ -27,8 +27,9 @@ RSpec.describe ShiftAssignmentService do
       And { expect(service_shift_nil.perform).to eq(false) }
 
       And do
-        expect(service_shift_nil.errors).to
-        include('Please create some Deliverers and Shifts first.')
+        expect(service_shift_nil.errors).to(
+          include('Please create some Deliverers and Shifts first.')
+        )
       end
     end
 
@@ -49,8 +50,9 @@ RSpec.describe ShiftAssignmentService do
       Then { expect(service3.perform).to eq(false) }
 
       And do
-        expect(service3.errors).to
-        include('Shift count has already maxed out!')
+        expect(service3.errors).to(
+          include('Shift count has already maxed out!')
+        )
       end
     end
 
@@ -69,8 +71,9 @@ RSpec.describe ShiftAssignmentService do
       Then { expect(service_erroneous.perform).to eq(false) }
 
       And do
-        expect(service_erroneous.errors).to
-        include('Error in assigning shift!')
+        expect(service_erroneous.errors).to(
+          include('Error in assigning shift!')
+        )
       end
     end
 
@@ -78,8 +81,9 @@ RSpec.describe ShiftAssignmentService do
       Then { expect(service1.perform).to eq(true) }
 
       And do
-        expect(service1.success).to
-        include('A new assignment has been made!')
+        expect(service1.success).to(
+          include('A new assignment has been made!')
+        )
       end
     end
   end

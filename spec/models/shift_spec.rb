@@ -4,8 +4,8 @@ RSpec.describe Shift, type: :model do
   # Base setup for Shift
   Given!(:shift) do
     described_class.new(
-      start_time: Date.today.at_beginning_of_day,
-      end_time: Date.today.at_end_of_day,
+      start_time: Time.zone.today.at_beginning_of_day,
+      end_time: Time.zone.today.at_end_of_day,
       max_count: 10
     )
   end
@@ -18,8 +18,8 @@ RSpec.describe Shift, type: :model do
   it { is_expected.to validate_presence_of(:start_time) }
   it {
     is_expected.to(
-      validate_uniqueness_of(:start_time).scoped_to(:end_time)
-        .with_message('Shift already exist')
+      validate_uniqueness_of(:start_time).scoped_to(:end_time).
+        with_message('Shift already exist')
     )
   }
 
@@ -30,7 +30,7 @@ RSpec.describe Shift, type: :model do
   context 'start and end time validation' do
     context 'start and end time is the same' do
       When do
-        shift.end_time = Date.today.at_beginning_of_day
+        shift.end_time = Time.zone.today.at_beginning_of_day
       end
 
       Then { expect(shift).to be_invalid }
@@ -43,7 +43,7 @@ RSpec.describe Shift, type: :model do
 
     context 'start time is after end time' do
       When do
-        shift.start_time = Date.tomorrow.at_beginning_of_day
+        shift.start_time = Time.zone.tomorrow.at_beginning_of_day
       end
 
       Then { expect(shift).to be_invalid }
@@ -58,20 +58,20 @@ RSpec.describe Shift, type: :model do
 
   # Test Max count
   it {
-    is_expected.to validate_presence_of(:max_count)
-      .with_message('Max count field is empty')
+    is_expected.to validate_presence_of(:max_count).
+      with_message('Max count field is empty')
   }
   it {
     is_expected.to(
-      validate_numericality_of(:max_count).only_integer
-        .with_message('Max count has to be an integer')
+      validate_numericality_of(:max_count).only_integer.
+        with_message('Max count has to be an integer')
     )
   }
 
   it {
     is_expected.to(
-      validate_numericality_of(:max_count).is_greater_than(0)
-        .with_message('Max count has to be greater than 0')
+      validate_numericality_of(:max_count).is_greater_than(0).
+        with_message('Max count has to be greater than 0')
     )
   }
 
@@ -79,7 +79,7 @@ RSpec.describe Shift, type: :model do
 
   describe '#start_time_to_s' do
     When do
-      shift.start_time = Time.parse('2018-05-24 10:00:00')
+      shift.start_time = Time.zone.parse('2018-05-24 10:00:00')
     end
 
     Then { expect(shift.start_time_to_s).to eq('2018-05-24 10:00:00') }
@@ -87,7 +87,7 @@ RSpec.describe Shift, type: :model do
 
   describe '#end_time_to_s' do
     When do
-      shift.end_time = Time.parse('2018-05-24 10:00:00')
+      shift.end_time = Time.zone.parse('2018-05-24 10:00:00')
     end
 
     Then { expect(shift.end_time_to_s).to eq('2018-05-24 10:00:00') }
