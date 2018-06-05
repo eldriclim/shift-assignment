@@ -1,14 +1,15 @@
 module AssignmentsHelper
   # rubocop:disable Metrics/AbcSize
+  # :reek:DuplicateMethodCall
   def print_date_range(range)
-    d1 = range.begin.to_date
-    d2 = range.end.to_date
+    date_to = range.begin.to_date
+    date_from = range.end.to_date
 
-    if d1 == d2
-      bold('On ') + date_output(d1)
+    if date_to == date_from
+      bold('On ') + date_output(date_to)
     else
-      bold('From ') + date_output(d1) +
-        bold(' to ') + date_output(d2)
+      bold('From ') + date_output(date_to) +
+        bold(' to ') + date_output(date_from)
     end
   end
   # rubocop:enable Metrics/AbcSize

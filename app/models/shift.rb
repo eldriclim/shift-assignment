@@ -18,6 +18,7 @@ class Shift < ApplicationRecord
               message: 'Max count has to be greater than 0'
             }
 
+  # :reek:NilCheck
   def start_before_end
     if start_time.nil? || end_time.nil?
       return

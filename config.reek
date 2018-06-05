@@ -1,0 +1,59 @@
+### Generic smell configuration
+
+# You can disable smells completely
+
+IrresponsibleModule:
+  enabled: false # The class name should explain itself in most of the case.
+                 # But you are free to add comment if that adds value.
+
+PrimaDonnaMethod:
+  enabled: false  # bang! method has a different meaning in Rails convention.
+
+# You can use filters to silence Reek warnings.
+# Either because you simply disagree with Reek (we are not the police) or
+# because you want to fix this at a later point in time.
+
+# NestedIterators:
+#   exclude:
+#     - "MyWorker#self.class_method"
+#     - "AnotherWorker#instance_method"
+
+# A lot of smells allow fine tuning their configuration. You can look up all available options
+# in the corresponding smell documentation in /docs. In most cases you probably can just go
+# with the defaults as documented in defaults.reek.
+
+UtilityFunction:
+  public_methods_only: true
+
+### Directory specific configuration
+
+# You can configure smells on a per-directory base.
+
+"app/controllers":
+  NestedIterators:
+    max_allowed_nesting: 2
+  InstanceVariableAssumption:
+    enabled: false
+  UnusedPrivateMethod:
+    enabled: false
+"app/helpers":
+  UtilityFunction:
+    enabled: false
+
+"app/mailers":
+  InstanceVariableAssumption:
+    enabled: false
+
+"lib":
+  IrresponsibleModule:
+    enabled: true
+
+"spec":
+  UtilityFunction:
+    enabled: false
+
+### Excluding directories
+
+# Directories below will not be scanned at all
+
+#exclude_paths:

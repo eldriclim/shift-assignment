@@ -8,9 +8,10 @@ class ShiftAssignmentService
     @success = []
   end
 
+  # :reek:TooManyStatements
   def perform
     # Terminate when variables are not found
-    if @deliverer_id.nil? || @shift_id.nil?
+    if @deliverer_id.empty? || @shift_id.empty?
       @errors << 'Please create some Deliverers and Shifts first.'
       return false
     end

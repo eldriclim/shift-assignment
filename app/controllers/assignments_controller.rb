@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
   def create
-    if params[:assignment].nil?
+    if !params.has_key?(:assignment)
       flash[:danger] = 'No assignment received'
     else
 
@@ -17,8 +17,11 @@ class AssignmentsController < ApplicationController
   end
 
   # rubocop:disable Metrics/AbcSize
+  # :reek:TooManyStatements
+  # :reek:NilCheck
+  # :reek:DuplicateMethodCall
   def show
-    if params[:range1].nil? && params[:range2].nil?
+    if !params.has_key?(:range1) && !params.has_key?(:range2)
       flash[:danger] = 'Missing date input!'
       redirect_to home_path
     end
@@ -42,18 +45,21 @@ class AssignmentsController < ApplicationController
     params[:assignment][:shift_id]
   end
 
+  # :reek:UtilityFunction
   def date_format(date_string)
     "#{date_string['date(3i)']}-#{date_string['date(2i)']}" +
       "-#{date_string['date(1i)']}"
   end
 
-  def date_range(date1, date2)
-    date_from = Date.parse(date_format(date1)).at_beginning_of_day
-    date_to = Date.parse(date_format(date2)).at_end_of_day
+  # :reek:UtilityFunction
+  def date_range(date_from, date_to)
+    time_from = Date.parse(date_format(date_from)).at_beginning_of_day
+    time_to = Date.parse(date_format(date_to)).at_end_of_day
 
-    date_from..date_to
+    time_from..time_to
   end
 
+  # :reek:UtilityFunction
   def retrieve_shift_in_range(range)
     Shift.where(start_time: range).where(end_time: range)
   end
