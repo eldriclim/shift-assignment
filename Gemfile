@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
@@ -17,17 +16,6 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bootstrap_form'
 gem 'sass-rails', '>= 3.2'
 gem 'jquery-rails'
-gem 'devise'
-
-gem 'shoulda-matchers', '~> 3.0'
-gem 'rspec-rails', '~> 3.6'
-gem 'rspec-given'
-gem 'factory_girl_rails'
-gem 'rails-controller-testing'
-gem 'headless'
-gem 'poltergeist'
-gem 'database_cleaner'
-
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -46,6 +34,15 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# Added for project
+gem 'devise'
+gem 'shoulda-matchers', '~> 3.0'
+gem 'rspec-rails', '~> 3.6'
+gem 'rspec-given'
+gem 'factory_girl_rails'
+gem 'database_cleaner'
+gem 'rails-controller-testing'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -66,3 +63,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+ruby '2.3.0'
