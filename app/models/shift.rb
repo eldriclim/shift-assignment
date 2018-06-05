@@ -40,6 +40,6 @@ class Shift < ApplicationRecord
   end
 
   def max?
-    max_count == deliverers.count
+    max_count <= deliverers.count
   end
 end
