@@ -24,7 +24,8 @@ RSpec.describe DeliverersController, type: :controller do
       it "creates new deliverer" do
         expect{
           post :create,
-          params: { deliverer: FactoryGirl.attributes_for(:deliverer) }
+          params: { deliverer: FactoryGirl.attributes_for(:deliverer) },
+          as: :json
         }.to change{ Deliverer.count }.by(1)
 
         is_expected.to redirect_to home_path
@@ -33,7 +34,8 @@ RSpec.describe DeliverersController, type: :controller do
 
     context "with invalid attributes" do
       it "redirects to #new with flash danger" do
-        expect{ post :create,
+        expect{
+          post :create,
           params: {
             deliverer: {
               name: "My Name",
@@ -41,7 +43,8 @@ RSpec.describe DeliverersController, type: :controller do
               phone: "a",
               active: false
             }
-          }
+          },
+          as: :json
         }.to change{ Deliverer.count }.by(0)
 
         is_expected.to set_flash[:danger]
@@ -57,7 +60,7 @@ RSpec.describe DeliverersController, type: :controller do
       @deliverer = FactoryGirl.create(:deliverer)
 
       get :edit, params: { :id => @deliverer.id }
-      
+
       expect(@deliverer).to eq(assigns(:deliverer))
 
     end
@@ -72,10 +75,12 @@ RSpec.describe DeliverersController, type: :controller do
     context "with valid attributes" do
       it "update deliverer's attributes" do
 
-        patch :update, params: {
-          :id => @deliverer.id,
-          deliverer: FactoryGirl.attributes_for(:deliverer)
-        }
+        patch :update,
+          params: {
+            :id => @deliverer.id,
+            deliverer: FactoryGirl.attributes_for(:deliverer)
+          },
+          as: :json
 
         is_expected.to redirect_to home_path
       end
@@ -93,7 +98,8 @@ RSpec.describe DeliverersController, type: :controller do
               phone: "a",
               active: false
             }
-          }
+          },
+          as: :json
 
         is_expected.to set_flash[:danger]
         is_expected.to redirect_to edit_deliverer_path

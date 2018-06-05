@@ -1,6 +1,6 @@
 class Deliverer < ApplicationRecord
-  has_many :assignment
-  has_many :shift, through: :assignment
+  has_many :assignments
+  has_many :shifts, through: :assignments
 
   validates :name, presence: { message: "Name field is empty" },
       length: { maximum: 50, message: "Name cannot be longer than 50 characters" }
@@ -9,18 +9,7 @@ class Deliverer < ApplicationRecord
       numericality: { only_integer: true, message: "Phone has to be an integer" },
       uniqueness: { message: "Phone already in used" }
 
-  def vehicle_to_s
-    case self.vehicle
-    when 0
-      "Motorbike"
-    when 1
-      "Bicycle"
-    when 2
-      "Scooter"
-    else
-      "ERROR"
-    end
-  end
+  enum vehicle: { motorbike: 0, bicycle: 1, scooter:2 }
 
   def active_to_s
     case self.active

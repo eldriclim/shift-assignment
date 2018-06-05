@@ -42,7 +42,7 @@ RSpec.describe PagesController, type: :controller do
           expect(response.body).to match("#{d.id}")
           expect(response.body).to match("#{d.name}")
           expect(response.body).to match("#{d.phone}")
-          expect(response.body).to match("#{d.vehicle_to_s}")
+          expect(response.body).to match("#{d.vehicle.capitalize}")
           expect(response.body).to match("#{d.active_to_s}")
         end
 
@@ -51,7 +51,7 @@ RSpec.describe PagesController, type: :controller do
           expect(response.body).to match("#{s.id}")
           expect(response.body).to match("#{s.start_time_to_s}")
           expect(response.body).to match("#{s.end_time_to_s}")
-          expect(response.body).to match("#{s.deliverer.count}/#{s.max_count}")
+          expect(response.body).to match("#{s.deliverers.count}/#{s.max_count}")
         end
       end
     end

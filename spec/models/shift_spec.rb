@@ -8,8 +8,8 @@ RSpec.describe Shift, type: :model do
     max_count: 10) }
 
   # Test association
-  it { is_expected.to have_many(:assignment) }
-  it { is_expected.to have_many(:deliverer).through(:assignment) }
+  it { is_expected.to have_many(:assignments) }
+  it { is_expected.to have_many(:deliverers).through(:assignments) }
 
   # Test Start time attribute
   it { is_expected.to validate_presence_of(:start_time) }

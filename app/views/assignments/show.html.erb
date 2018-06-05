@@ -21,10 +21,10 @@
             <th><%= shift.id %></th>
             <td><%= link_to shift.start_time_to_s, edit_shift_path(shift) %></td>
             <td><%= shift.end_time_to_s %></td>
-            <td><%= "#{shift.deliverer.count}/#{shift.max_count}" %></td>
+            <td><%= "#{shift.deliverers.count}/#{shift.max_count}" %></td>
           </tr>
 
-          <% if shift.deliverer.count != 0 %>
+          <% if shift.deliverers.count != 0 %>
             <tr>
               <th></th>
               <th>Deliverer ID</th>
@@ -32,7 +32,7 @@
               <th>Phone</th>
             </tr>
 
-            <% shift.deliverer.each do |d| %>
+            <% shift.deliverers.each do |d| %>
               <tr>
                 <td></td>
                 <td><%= d.id %></td>
