@@ -19,7 +19,7 @@ class ShiftAssignmentService
 
     # Check max count for Shift
     shift = Shift.find(shift_id)
-    if shift.max_count == shift.deliverers.count
+    if shift.max_count <= shift.deliverers.count
       @errors << "Shift count has already maxed out!"
       return false
     end

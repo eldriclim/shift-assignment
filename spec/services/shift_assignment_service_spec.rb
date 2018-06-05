@@ -6,8 +6,6 @@ RSpec.describe ShiftAssignmentService do
     before do
       @deliverers = FactoryGirl.create_list(:deliverer,3)
       @shift = FactoryGirl.create(:shift)
-
-      @service1 = ShiftAssignmentService.new(@deliverers[0].id, @shift.id)
     end
 
     subject { ShiftAssignmentService.new }
@@ -33,12 +31,19 @@ RSpec.describe ShiftAssignmentService do
     context "when Shift is already maxed out" do
       before do
         # Setup services to be assigned
-        @service2 = ShiftAssignmentService.new(@deliverers[1].id, @shift.id)
         @service3 = ShiftAssignmentService.new(@deliverers[2].id, @shift.id)
 
         # Max out Shift: 0/2 -> 2/2
-        @service1.perform
-        @service2.perform
+        @service1 = FactoryGirl.create(
+          :assignment,
+          deliverer_id: @deliverers[0].id,
+          shift_id: @shift.id
+        )
+        @service2 = FactoryGirl.create(
+          :assignment,
+          deliverer_id: @deliverers[1].id,
+          shift_id: @shift.id
+        )
       end
 
       it "adds to error" do
@@ -50,6 +55,7 @@ RSpec.describe ShiftAssignmentService do
     context "when Assignment already exist" do
       before do
         # Add pre-existing service
+        @service1 = ShiftAssignmentService.new(@deliverers[0].id, @shift.id)
         @service1.perform
       end
 
@@ -73,6 +79,9 @@ RSpec.describe ShiftAssignmentService do
     end
 
     context "when successful" do
+      before do
+        @service1 = ShiftAssignmentService.new(@deliverers[0].id, @shift.id)
+      end
       it "adds to success" do
         expect(@service1.perform).to eq(true)
         expect(@service1.success).to include("A new assignment has been made!")
