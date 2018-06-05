@@ -1,3 +1,8 @@
 language: ruby
 rvm:
   - 2.3.0-p0
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database shiftassignment_test;' -U postgres
