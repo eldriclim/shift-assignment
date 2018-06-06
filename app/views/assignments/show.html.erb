@@ -1,48 +1,35 @@
 <div class="container">
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
+
+      <h3>View Assignment</h3>
+
+      <%= bootstrap_form_for(:search, :url => assignments_search_path, :remote => true) do |f| %>
+
+        <table>
+          <tr>
+            <td><strong>From</strong></td>
+            <td><strong>To</strong></td>
+          </tr>
+          <tr>
+            <td><%= date_select 'range1', 'date', :order => [:day, :month, :year] %></td>
+            <td><%= date_select 'range2', 'date', :order => [:day, :month, :year] %></td>
+          </tr>
+        </table>
+
+        <%= f.submit 'Search', class: 'btn sign-up-button' %>
+      <% end %>
+    </div>
+  </div>
+
+
+
   <div class="row">
     <div class="col-md-offset-2 col-md-8">
 
-      <h1>
-        <%= print_date_range(@range) %>
-      </h1>
-
-      <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th>Shift ID</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Max Count</th>
-          </tr>
-        </thead>
-
-        <% @shifts.each do |shift| %>
-          <tr>
-            <th><%= shift.id %></th>
-            <td><%= link_to shift.start_time_to_s, edit_shift_path(shift) %></td>
-            <td><%= shift.end_time_to_s %></td>
-            <td><%= "#{shift.deliverers.count}/#{shift.max_count}" %></td>
-          </tr>
-
-          <% if shift.deliverers.count != 0 %>
-            <tr>
-              <th></th>
-              <th>Deliverer ID</th>
-              <th>Name</th>
-              <th>Phone</th>
-            </tr>
-
-            <% shift.deliverers.each do |d| %>
-              <tr>
-                <td></td>
-                <td><%= d.id %></td>
-                <td><%= d.name %></td>
-                <td><%= d.phone %></td>
-              </tr>
-            <% end %>
-          <% end %>
-        <% end %>
-      </table>
+      <div id="table">
+        <%= render :partial => 'assignment_table' %>
+      </div>
 
     </div>
   </div>

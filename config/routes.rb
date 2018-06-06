@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: 'registrations' }
   root to: 'pages#home'
+  get '/home', to: 'pages#home'
+
+  devise_for :users, controllers: { registrations: 'registrations' }
 
   devise_scope :user do
     get 'login', to: 'devise/sessions#new'
@@ -13,11 +15,13 @@ Rails.application.routes.draw do
   resources :deliverers, only: %i[show new create edit update]
   resources :shifts, only: %i[show new create edit update]
 
-  get '/home', to: 'pages#home'
+  get '/assignments/show', to: 'assignments#show'
+
+  get '/assignments/new', to: 'assignments#new'
+
+  post '/assignments/search', to: 'assignments#search'
 
   post '/assignments', to: 'assignments#create'
 
   post '/assignments/show', to: 'assignments#show'
-
-  get '/test', to: 'pages#test'
 end

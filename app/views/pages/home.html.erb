@@ -2,38 +2,46 @@
   <div class="row bottom-buffer">
     <div class="col-md-offset-2 col-md-8">
 
-      <%= render "shared/flash_messages" %>
+      <div class="panel-group top-buffer">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Deliverer</strong>
+          </div>
+          <div class="panel-body">
+              <ul>
+                <li><a href="deliverers/show">View all</a></li>
+                <li><a href="deliverers/new">Create deliverer</a></li>
+              </ul>
+          </div>
+        </div>
 
-      <h1>All deliverers</h1>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Shift</strong>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><a href="shifts/show">View all</a></li>
+              <li><a href="shifts/new">Create shift</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Assignment</strong>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><a href="/assignments/show">View all</a></li>
+              <li><a href="assignments/new">Create assignment</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
 
-      <%= button_to "Create Deliverer", new_deliverer_path, :method => "get",
-        class: "btn sign-up-button"%>
+
     </div>
   </div>
-
-  <div class="row bottom-buffer">
-    <div class="col-md-offset-2 col-md-8">
-      <h1>All shifts</h1>
-
-      <%= button_to "Create Shift", new_shift_path, :method => "get",
-          class: "btn sign-up-button"%>
-
-    </div>
-  </div>
-
-  <div class="row bottom-buffer">
-    <div class="col-md-offset-2 col-md-8">
-      <%= render 'shift_assignment_form' %>
-    </div>
-  </div>
-
-  <div class="row bottom-buffer">
-    <div class="col-md-offset-2 col-md-8">
-      <%= render 'view_assignment_form' %>
-    </div>
-  </div>
-
-
-
 </div>

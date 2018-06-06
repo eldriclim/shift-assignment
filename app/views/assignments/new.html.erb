@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
+
+      <h3>Shifts Assignment</h3>
+
+      <%= bootstrap_form_for(@assignment) do |f| %>
+        <%= f.select :deliverer_id, @deliverers.map{ |d| ["#{d.id} - #{d.name} - #{d.phone}", d.id] } %>
+        <%= f.select :shift_id,
+          @shifts.map{ |s|
+            ["#{s.id} - #{s.start_time_to_s} (#{s.deliverers.count}/#{s.max_count})", s.id]
+          }
+        %>
+
+        <%= f.submit 'Assign Shift', class: 'btn sign-up-button' %>
+      <% end %>
+    </div>
+  </div>
+</div>
