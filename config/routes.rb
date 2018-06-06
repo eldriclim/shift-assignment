@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   post '/assignments', to: 'assignments#create'
 
   post '/assignments/show', to: 'assignments#show'
+
+  get '/test', to: 'pages#test'
 end

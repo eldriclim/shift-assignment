@@ -4,4 +4,8 @@ class PagesController < ApplicationController
     @shifts = Shift.all
     @assignment = Assignment.new
   end
+
+  def test
+    render 'home_new'
+  end
 end
