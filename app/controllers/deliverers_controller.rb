@@ -1,4 +1,9 @@
 class DeliverersController < ApplicationController
+  # GET /deliverers/show
+  def show
+    @deliverers = Deliverer.all
+  end
+
   # GET /deliverers/new
   # page to add
   def new

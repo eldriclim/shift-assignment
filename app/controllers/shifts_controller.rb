@@ -1,4 +1,8 @@
 class ShiftsController < ApplicationController
+  def show
+    @shifts = Shift.all
+  end
+
   def new
     @shift = Shift.new
   end

@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     get 'signup', to: 'devise/registrations#new'
   end
 
-  resources :deliverers, only: %i[new create edit update]
-  resources :shifts, only: %i[new create edit update]
+  resources :deliverers, only: %i[show new create edit update]
+  resources :shifts, only: %i[show new create edit update]
 
   get '/home', to: 'pages#home'
 
