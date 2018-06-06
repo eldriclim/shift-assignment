@@ -12,8 +12,8 @@ Rails.application.routes.draw do
     get 'signup', to: 'devise/registrations#new'
   end
 
-  resources :deliverers, only: %i[show new create edit update]
-  resources :shifts, only: %i[show new create edit update]
+  resources :deliverers, only: %i[index new create edit update]
+  resources :shifts, only: %i[index new create edit update]
 
   get '/assignments/show', to: 'assignments#show'
 
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   post '/assignments/search', to: 'assignments#search'
 
-  post '/assignments', to: 'assignments#create'
+  post '/assignments/create', to: 'assignments#create'
 
   post '/assignments/show', to: 'assignments#show'
 end

@@ -1,11 +1,4 @@
 class AssignmentsController < ApplicationController
-  def search
-    show
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def new
     @deliverers = Deliverer.order(name: :asc, phone: :asc).all
     @shifts = Shift.order(start_time: :asc).all
@@ -21,12 +14,13 @@ class AssignmentsController < ApplicationController
 
       if shift_assignment_service.perform
         flash[:success] = shift_assignment_service.success
+
       else
         flash[:danger] = shift_assignment_service.errors
       end
     end
 
-    redirect_to home_path
+    redirect_to assignments_new_path
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -42,12 +36,22 @@ class AssignmentsController < ApplicationController
 
     if @range.max == nil
       flash[:danger] = 'Invalid date range!'
-      redirect_to home_path
+      redirect_to assignments_show_path
     end
 
     @shifts = retrieve_shift_in_range(@range)
   end
   # rubocop:enable Metrics/AbcSize
+
+  # Load Javascript to re-render partial
+  def search
+    # Filter list of assignments
+    show
+
+    respond_to do |format|
+      format.js
+    end
+  end
 
   def deliverer_id
     params[:assignment][:deliverer_id]

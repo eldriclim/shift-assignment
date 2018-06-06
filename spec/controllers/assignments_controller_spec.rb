@@ -7,6 +7,18 @@ RSpec.describe AssignmentsController, type: :controller do
     sign_in @user
   end
 
+  # Test new action
+  describe 'get #new' do
+    Given { FactoryGirl.create_list(:deliverer, 3) }
+    Given { FactoryGirl.create_list(:shift, 3) }
+
+    When { get :new }
+
+    Then { expect(assigns(:deliverers).count).to eq 3 }
+    And { expect(assigns(:shifts).count).to eq 3 }
+    And { expect(assigns(:assignment)).to be_a_new(Assignment) }
+  end
+
   # Test create action
   describe 'post #create' do
     Given!(:deliverer) { FactoryGirl.create_list(:deliverer, 2) }
@@ -14,7 +26,9 @@ RSpec.describe AssignmentsController, type: :controller do
 
     context 'when no assignment param' do
       When { post :create, params: {} }
+
       Then { is_expected.to set_flash[:danger] }
+      And { is_expected.to redirect_to assignments_new_path }
     end
 
     context 'when assignment service failure' do
@@ -27,7 +41,7 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       Then { is_expected.to set_flash[:danger] }
-      And { is_expected.to redirect_to home_path }
+      And { is_expected.to redirect_to assignments_new_path }
     end
 
     context 'when assignment service success' do
@@ -42,7 +56,7 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       Then { is_expected.to set_flash[:success] }
-      And { is_expected.to redirect_to home_path }
+      And { is_expected.to redirect_to assignments_new_path }
     end
   end
 
@@ -66,7 +80,7 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       Then { is_expected.to set_flash[:danger].to('Invalid date range!') }
-      And { is_expected.to redirect_to home_path }
+      And { is_expected.to redirect_to assignments_show_path }
     end
 
     context 'when valid date range' do
@@ -117,47 +131,68 @@ RSpec.describe AssignmentsController, type: :controller do
         And { expect(response.body).to match(deliverer.name.to_s) }
         And { expect(response.body).to match(deliverer.phone.to_s) }
       end
-    end
 
-    context '#date_range' do
-      Given!(:date1_hash) do
-        {
-          'date(3i)' => 23,
-          'date(2i)' => 0o5,
-          'date(1i)' => 2018
-        }
-      end
-      Given!(:date2_hash) do
-        {
-          'date(3i)' => 24,
-          'date(2i)' => 0o5,
-          'date(1i)' => 2018
-        }
-      end
+      context 'when no date specified' do
+        When { post :show, params: {} }
 
-      When(:date1) do
-        Time.zone.parse(
-          "#{date1_hash['date(3i)']}-#{date1_hash['date(2i)']}-#{date1_hash['date(1i)']}"
-        )
-      end
-      When(:date2) do
-        Time.zone.parse(
-          "#{date2_hash['date(3i)']}-#{date2_hash['date(2i)']}-#{date2_hash['date(1i)']}"
-        )
-      end
-
-      Then do
-        expect(controller.date_range(date1_hash, date2_hash)).to(
-          eq(date1.at_beginning_of_day..date2.at_end_of_day)
-        )
+        Then { is_expected.not_to set_flash }
+        And { expect(response).to render_template('assignments/show') }
+        And { expect(response.body).to match(Time.zone.today.strftime('%d %B %Y')) }
       end
     end
+  end
 
-    context '#retrieve_shift_in_range' do
-      Given!(:shift) { FactoryGirl.create(:shift) }
-      Given!(:range) { shift.start_time..shift.end_time }
+  # Test search action
+  context 'post #search' do
+    When { post :search, params: {}, format: 'js' }
 
-      Then { expect(controller.retrieve_shift_in_range(range)).to include(shift) }
+    # Render views to check js file
+    render_views
+
+    Then do
+      # Check js with regex
+      expect(response.body).to match(/^\$\('#table'\)\.html\(".+"\);$/)
     end
+  end
+
+  context '#date_range' do
+    Given!(:date1_hash) do
+      {
+        'date(3i)' => 23,
+        'date(2i)' => 0o5,
+        'date(1i)' => 2018
+      }
+    end
+    Given!(:date2_hash) do
+      {
+        'date(3i)' => 24,
+        'date(2i)' => 0o5,
+        'date(1i)' => 2018
+      }
+    end
+
+    When(:date1) do
+      Time.zone.parse(
+        "#{date1_hash['date(3i)']}-#{date1_hash['date(2i)']}-#{date1_hash['date(1i)']}"
+      )
+    end
+    When(:date2) do
+      Time.zone.parse(
+        "#{date2_hash['date(3i)']}-#{date2_hash['date(2i)']}-#{date2_hash['date(1i)']}"
+      )
+    end
+
+    Then do
+      expect(controller.date_range(date1_hash, date2_hash)).to(
+        eq(date1.at_beginning_of_day..date2.at_end_of_day)
+      )
+    end
+  end
+
+  context '#retrieve_shift_in_range' do
+    Given!(:shift) { FactoryGirl.create(:shift) }
+    Given!(:range) { shift.start_time..shift.end_time }
+
+    Then { expect(controller.retrieve_shift_in_range(range)).to include(shift) }
   end
 end

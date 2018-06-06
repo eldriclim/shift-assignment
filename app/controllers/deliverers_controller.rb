@@ -1,6 +1,6 @@
 class DeliverersController < ApplicationController
   # GET /deliverers/show
-  def show
+  def index
     @deliverers = Deliverer.all
   end
 
@@ -15,7 +15,9 @@ class DeliverersController < ApplicationController
     @deliverer = Deliverer.new(deliverer_params)
 
     if @deliverer.save
-      redirect_to home_path
+      flash[:success] = 'Successfully created a new deliverer!'
+
+      redirect_to deliverers_path
 
     else
       errors = @deliverer.errors unless @deliverer.valid?
@@ -35,7 +37,9 @@ class DeliverersController < ApplicationController
   def update
     @deliverer = Deliverer.find(params[:id])
     if @deliverer.update(deliverer_params)
-      redirect_to home_path
+      flash[:success] = 'Successfully updated a deliverer!'
+
+      redirect_to deliverers_path
     else
       errors = @deliverer.errors unless @deliverer.valid?
 

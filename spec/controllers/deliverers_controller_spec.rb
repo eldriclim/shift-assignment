@@ -7,6 +7,43 @@ RSpec.describe DeliverersController, type: :controller do
     sign_in @user
   end
 
+  # Test show action
+  describe 'get #index' do
+    # Create sample data for display
+    Given!(:deliverers) { FactoryGirl.create_list(:deliverer, 3) }
+
+    context 'retrieving models' do
+      When { get :index }
+
+      Then { expect(assigns(:deliverers)).to eq(deliverers) }
+    end
+
+    # Render views to check for Deliverers info
+    render_views
+
+    context 'table views' do
+      When { get :index }
+
+      # Check for view partials
+      Then { expect(response).to render_template('deliverers/index') }
+
+      And do
+        expect(response).to render_template(partial: '_deliverers_table')
+      end
+
+      # Identify Deliverers info in view
+      And do
+        deliverers.each do |d|
+          expect(response.body).to match(d.id.to_s)
+          expect(response.body).to match(d.name.to_s)
+          expect(response.body).to match(d.phone.to_s)
+          expect(response.body).to match(d.vehicle.capitalize.to_s)
+          expect(response.body).to match(d.active_to_s.to_s)
+        end
+      end
+    end
+  end
+
   # Test new action
   describe 'get #new' do
     When { get :new }
@@ -24,7 +61,7 @@ RSpec.describe DeliverersController, type: :controller do
       end
 
       Then { expect(Deliverer.count).to eq 1 }
-      And { is_expected.to redirect_to home_path }
+      And { is_expected.to redirect_to deliverers_path }
     end
 
     context 'with invalid attributes' do
@@ -68,7 +105,7 @@ RSpec.describe DeliverersController, type: :controller do
               as: :json
       end
 
-      Then { is_expected.to redirect_to home_path }
+      Then { is_expected.to redirect_to deliverers_path }
     end
 
     context 'with invalid attributes' do

@@ -1,14 +1,12 @@
 <div class="container">
   <div class="row">
-
-
     <div class="col-md-offset-2 col-md-8">
-      <h3>Create Deliverer</h3>
 
-      <%= bootstrap_form_for(@deliverer) do |f| %>
+      <h3>Create Deliverer</h3>
 
       <%= render "shared/flash_messages" %>
 
+      <%= bootstrap_form_for(@deliverer) do |f| %>
 
         <%= f.label :name %>
         <%= f.text_field :name,

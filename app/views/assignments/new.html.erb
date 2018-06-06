@@ -4,7 +4,9 @@
 
       <h3>Shifts Assignment</h3>
 
-      <%= bootstrap_form_for(@assignment) do |f| %>
+      <%= render "shared/flash_messages" %>
+
+      <%= bootstrap_form_for(@assignment, :url => assignments_create_path) do |f| %>
         <%= f.select :deliverer_id, @deliverers.map{ |d| ["#{d.id} - #{d.name} - #{d.phone}", d.id] } %>
         <%= f.select :shift_id,
           @shifts.map{ |s|
