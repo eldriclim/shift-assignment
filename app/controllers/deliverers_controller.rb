@@ -11,6 +11,7 @@ class DeliverersController < ApplicationController
   end
 
   # POST /deliverers
+  # :reek:TooManyStatements
   def create
     @deliverer = Deliverer.new(deliverer_params)
 
@@ -23,6 +24,7 @@ class DeliverersController < ApplicationController
       errors = @deliverer.errors unless @deliverer.valid?
 
       flash[:danger] = errors.full_messages
+
       redirect_to new_deliverer_path
     end
   end
@@ -34,8 +36,10 @@ class DeliverersController < ApplicationController
   end
 
   # PATCH /deliverers/#
+  # :reek:TooManyStatements
   def update
     @deliverer = Deliverer.find(params[:id])
+
     if @deliverer.update(deliverer_params)
       flash[:success] = 'Successfully updated a deliverer!'
 
@@ -44,6 +48,7 @@ class DeliverersController < ApplicationController
       errors = @deliverer.errors unless @deliverer.valid?
 
       flash[:danger] = errors.full_messages
+
       redirect_to edit_deliverer_path
     end
   end

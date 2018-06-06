@@ -7,6 +7,7 @@ class ShiftsController < ApplicationController
     @shift = Shift.new
   end
 
+  # :reek:TooManyStatements
   def create
     @shift = Shift.new(shift_params)
     if @shift.save
@@ -24,6 +25,7 @@ class ShiftsController < ApplicationController
     @shift = Shift.find(params[:id])
   end
 
+  # :reek:TooManyStatements
   def update
     @shift = Shift.find(params[:id])
     if @shift.update(shift_params)
@@ -33,6 +35,7 @@ class ShiftsController < ApplicationController
       errors = @shift.errors unless @shift.valid?
 
       flash[:danger] = errors.full_messages
+
       redirect_to edit_shift_path
     end
   end
