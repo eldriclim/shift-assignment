@@ -1,5 +1,4 @@
 class DeliverersController < ApplicationController
-
   # GET /deliverers/new
   # page to add
   def new
@@ -30,7 +29,7 @@ class DeliverersController < ApplicationController
   # PATCH /deliverers/#
   def update
     @deliverer = Deliverer.find(params[:id])
-    if @deliverer.update_attributes(deliverer_params)
+    if @deliverer.update(deliverer_params)
       redirect_to home_path
     else
       errors = @deliverer.errors unless @deliverer.valid?
@@ -40,13 +39,9 @@ class DeliverersController < ApplicationController
     end
   end
 
-
   private
 
   def deliverer_params
     params.require(:deliverer).permit(:name, :phone, :vehicle, :active)
   end
-
-
-
 end

@@ -1,43 +1,42 @@
 require 'rails_helper'
 
 RSpec.describe ShiftsController, type: :controller do
-
   # Create user for login
-  Given {
+  Given do
     @user = FactoryGirl.create(:user)
     sign_in @user
-  }
+  end
 
   # Test new action
-  describe "get #new" do
+  describe 'get #new' do
     When { get :new }
     Then { expect(assigns(:shift)).to be_a_new(Shift) }
   end
 
   # Test create action
-  describe "post #create" do
-    context "with valid attributes" do
-      When {
+  describe 'post #create' do
+    context 'with valid attributes' do
+      When do
         post :create,
-        params: { shift: FactoryGirl.attributes_for(:shift) }
-      }
+             params: { shift: FactoryGirl.attributes_for(:shift) }
+      end
 
       Then { expect(Shift.count).to eq 1 }
 
       And { is_expected.to redirect_to home_path }
     end
 
-    context "with invalid attributes" do
-      When {
+    context 'with invalid attributes' do
+      When do
         post :create,
-        params: {
-          shift: {
-            start_time: "2018-05-23 10:00:00",
-            end_time: "2018-05-23 12:00:00",
-            max_count: "a"
-          }
-        }
-      }
+             params: {
+               shift: {
+                 start_time: '2018-05-23 10:00:00',
+                 end_time: '2018-05-23 12:00:00',
+                 max_count: 'a'
+               }
+             }
+      end
 
       Then { expect(Shift.count).to eq 0 }
       And { is_expected.to set_flash[:danger] }
@@ -46,7 +45,7 @@ RSpec.describe ShiftsController, type: :controller do
   end
 
   # Test edit action
-  describe "get #edit" do
+  describe 'get #edit' do
     Given!(:shift) { FactoryGirl.create(:shift) }
 
     When { get :edit, params: { id: shift.id } }
@@ -55,33 +54,33 @@ RSpec.describe ShiftsController, type: :controller do
   end
 
   # Test update action
-  context "patch #update" do
+  context 'patch #update' do
     Given(:shift) { FactoryGirl.create(:shift) }
 
-    context "with valid attributes" do
-      When {
+    context 'with valid attributes' do
+      When do
         patch :update,
-          params: {
-            id: shift.id,
-            shift: FactoryGirl.attributes_for(:shift)
-          }
-      }
+              params: {
+                id: shift.id,
+                shift: FactoryGirl.attributes_for(:shift)
+              }
+      end
 
       Then { is_expected.to redirect_to home_path }
     end
 
-    context "with invalid attributes" do
-      When {
+    context 'with invalid attributes' do
+      When do
         patch :update,
-          params: {
-            id: shift.id,
-              shift: {
-                start_time: "2018-05-23 10:00:00",
-                end_time: "2018-05-23 12:00:00",
-                max_count: "a"
-            }
-          }
-      }
+              params: {
+                id: shift.id,
+                shift: {
+                  start_time: '2018-05-23 10:00:00',
+                  end_time: '2018-05-23 12:00:00',
+                  max_count: 'a'
+                }
+              }
+      end
 
       Then { is_expected.to set_flash[:danger] }
       And { is_expected.to redirect_to edit_shift_path }

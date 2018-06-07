@@ -1,0 +1,24 @@
+verify_signatures: false
+CommitMsg:
+  CapitalizedMessage:
+    enabled: true
+  SingleLineSubject:
+    enabled: true
+  TextWidth:
+    enabled: true
+    max_subject_width: 80
+  ALL:
+    on_warn: fail
+PreCommit:
+  ALL:
+    on_warn: fail
+  Reek:
+    enabled: true
+  RuboCop:
+    enabled: true
+  TrailingWhitespace:
+    enabled: true
+  BundleCheck:
+    enabled: true
+  ALL:
+    problem_on_unmodified_line: warn
