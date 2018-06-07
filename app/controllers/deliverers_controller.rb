@@ -1,6 +1,7 @@
 class DeliverersController < ApplicationController
-  # GET /deliverers/show
+  # GET /deliverers/index
   def index
+    @deliverer = Deliverer.new
     @deliverers = Deliverer.all
   end
 

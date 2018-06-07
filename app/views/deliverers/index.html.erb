@@ -6,8 +6,48 @@
 
       <h1>All deliverers</h1>
 
-      <%= render 'deliverers_table' %>
-
     </div>
   </div>
+
+  <div class="row bottom-buffer">
+
+    <%= bootstrap_form_for(@deliverer, url: deliverers_search_path, remote: true ) do |f| %>
+      <div class="col-md-offset-2 col-md-2">
+        <%= f.text_field :name, placeholder: 'Name' %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.text_field :phone, placeholder: 'Phone' %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.select :vehicle,
+              Deliverer.vehicles.keys.map { |w|
+                [w.capitalize, w]
+              }.unshift(["Vehicle", "vehicle"])
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.select :active,
+              Deliverer.statuses.keys.map { |w|
+                [w.capitalize, Deliverer.statuses[w]]
+              }.unshift(["Status", "none"])
+        %>
+      </div>
+
+      <div class="col-md-offset-2 col-md-8">
+        <%= f.submit 'Filter', class: 'btn sign-up-button' %>
+      </div>
+    <% end %>
+
+  </div>
+
+
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
+      <%= render 'deliverers_table' %>
+    </div>
+  </div>
+
 </div>

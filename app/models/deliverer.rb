@@ -10,6 +10,7 @@ class Deliverer < ApplicationRecord
                     uniqueness: { message: 'Phone already in used' }
 
   enum vehicle: { motorbike: 0, bicycle: 1, scooter: 2 }
+  enum status: { active: true, inactive: false }
 
   def active_to_s
     case active
