@@ -44,7 +44,8 @@ gem 'rspec-given'
 gem 'factory_girl_rails'
 gem 'database_cleaner'
 gem 'rails-controller-testing'
-gem 'coveralls'
+gem 'coveralls', require: false
+gem 'ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
