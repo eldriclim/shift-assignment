@@ -7,7 +7,9 @@ RSpec.describe Assignment, type: :model do
   it { is_expected.to belong_to(:shift) }
 
   # Test IDs
-  it { is_expected.to validate_uniqueness_of(:deliverer_id).scoped_to(:shift_id).
-    with_message("Assignment already exist") }
+  it {
+    is_expected.to validate_uniqueness_of(:deliverer_id).scoped_to(:shift_id).
+      with_message("Assignment already exist") 
+  }
 
 end

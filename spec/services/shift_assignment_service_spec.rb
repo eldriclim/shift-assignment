@@ -3,89 +3,56 @@ require 'rails_helper'
 RSpec.describe ShiftAssignmentService do
 
   describe "#perform" do
-    before do
-      @deliverers = FactoryGirl.create_list(:deliverer,3)
-      @shift = FactoryGirl.create(:shift)
-    end
-
-    subject { ShiftAssignmentService.new }
+    Given!(:deliverers) { FactoryGirl.create_list(:deliverer,3) }
+    Given!(:shift) { FactoryGirl.create(:shift) }
 
     context "when deliverer or shift id is nil" do
-      before do
-        # Setup erroneous services
-        @service_deliverer_nil = ShiftAssignmentService.new(nil, @shift.id)
-        @service_shift_nil = ShiftAssignmentService.new(@deliverers[0].id, nil)
-      end
+      # Setup erroneous services
+      Given!(:service_deliverer_nil) { ShiftAssignmentService.new(nil, shift.id) }
+      Given!(:service_shift_nil) { ShiftAssignmentService.new(deliverers[0].id, nil) }
 
-      it "adds to errors" do
+      Then { expect(service_deliverer_nil.perform).to eq(false) }
+      And { expect(service_deliverer_nil.errors).to include("Please create some Deliverers and Shifts first.") }
 
-        expect(@service_deliverer_nil.perform).to eq(false)
-        expect(@service_deliverer_nil.errors).to include("Please create some Deliverers and Shifts first.")
-
-        expect(@service_shift_nil.perform).to eq(false)
-        expect(@service_shift_nil.errors).to include("Please create some Deliverers and Shifts first.")
-
-      end
+      And { expect(service_shift_nil.perform).to eq(false) }
+      And { expect(service_shift_nil.errors).to include("Please create some Deliverers and Shifts first.") }
     end
 
     context "when Shift is already maxed out" do
-      before do
-        # Setup services to be assigned
-        @service3 = ShiftAssignmentService.new(@deliverers[2].id, @shift.id)
+      # Setup services to be assigned
+      Given!(:service3) { ShiftAssignmentService.new(deliverers[2].id, shift.id) }
 
-        # Max out Shift: 0/2 -> 2/2
-        @service1 = FactoryGirl.create(
-          :assignment,
-          deliverer_id: @deliverers[0].id,
-          shift_id: @shift.id
-        )
-        @service2 = FactoryGirl.create(
-          :assignment,
-          deliverer_id: @deliverers[1].id,
-          shift_id: @shift.id
-        )
-      end
+      # Max out Shift: 0/2 -> 2/2
+      When { FactoryGirl.create(:assignment, deliverer_id: deliverers[0].id, shift_id: shift.id) }
+      When { FactoryGirl.create(:assignment, deliverer_id: deliverers[1].id, shift_id: shift.id) }
 
-      it "adds to error" do
-        expect(@service3.perform).to eq(false)
-        expect(@service3.errors).to include("Shift count has already maxed out!")
-      end
+      Then { expect(service3.perform).to eq(false) }
+      And { expect(service3.errors).to include("Shift count has already maxed out!") }
     end
 
     context "when Assignment already exist" do
-      before do
-        # Add pre-existing service
-        @service1 = ShiftAssignmentService.new(@deliverers[0].id, @shift.id)
-        @service1.perform
-      end
+      # Add pre-existing service
+      Given!(:service1) { ShiftAssignmentService.new(deliverers[0].id, shift.id) }
 
-      it "adds to error" do
-        expect(@service1.perform).to eq(false)
-        expect(@service1.errors).to include("Assignment already exist!")
-      end
+      When { service1.perform }
+
+      Then { expect(service1.perform).to eq(false) }
+      And { expect(service1.errors).to include("Assignment already exist!") }
     end
 
     context "when error in saving" do
-      before do
-        # Setup erroneous services
-        @service_erroneous = ShiftAssignmentService.new(-1, @shift.id)
-      end
+      # Setup erroneous services
+      Given!(:service_erroneous) { ShiftAssignmentService.new(-1, shift.id) }
 
-      it "adds to error" do
-        expect(@service_erroneous.perform).to eq(false)
-        expect(@service_erroneous.errors).to include("Error in assigning shift!")
-
-      end
+      Then { expect(service_erroneous.perform).to eq(false) }
+      And { expect(service_erroneous.errors).to include("Error in assigning shift!") }
     end
 
     context "when successful" do
-      before do
-        @service1 = ShiftAssignmentService.new(@deliverers[0].id, @shift.id)
-      end
-      it "adds to success" do
-        expect(@service1.perform).to eq(true)
-        expect(@service1.success).to include("A new assignment has been made!")
-      end
+      Given!(:service1) { ShiftAssignmentService.new(deliverers[0].id, shift.id) }
+
+      Then { expect(service1.perform).to eq(true) }
+      And { expect(service1.success).to include("A new assignment has been made!") }
     end
   end
 
