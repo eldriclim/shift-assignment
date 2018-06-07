@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   end
 
   resources :deliverers, only: %i[index new create edit update]
+  get '/deliverers/search', to: 'deliverers#search'
+
   resources :shifts, only: %i[index new create edit update]
 
   resources :assignments, only: %i[index new create]

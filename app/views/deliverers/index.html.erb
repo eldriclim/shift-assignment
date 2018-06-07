@@ -11,29 +11,27 @@
 
   <div class="row bottom-buffer">
 
-    <%= bootstrap_form_for(@deliverer, url: deliverers_search_path, remote: true ) do |f| %>
+    <%= search_form_for @query, url: deliverers_search_path, remote: true do |f| %>
       <div class="col-md-offset-2 col-md-2">
-        <%= f.text_field :name, placeholder: 'Name' %>
+        <%= f.text_field :name_cont, placeholder: 'Name', class: 'form-control' %>
       </div>
 
       <div class="col-md-2">
-        <%= f.text_field :phone, placeholder: 'Phone' %>
+        <%= f.text_field :phone_cont, placeholder: 'Phone', class: 'form-control' %>
       </div>
 
       <div class="col-md-2">
-        <%= f.select :vehicle,
+        <%= f.select :vehicle_eq,
               Deliverer.vehicles.keys.map { |w|
                 [w.capitalize, w]
-              }.unshift(["Vehicle", "vehicle"])
-        %>
+              }.unshift(["Vehicle", ""]), { :include_blank => false }, :class => "form-control" %>
       </div>
 
       <div class="col-md-2">
-        <%= f.select :active,
+        <%= f.select :active_eq,
               Deliverer.statuses.keys.map { |w|
                 [w.capitalize, Deliverer.statuses[w]]
-              }.unshift(["Status", "none"])
-        %>
+              }.unshift(["Status", ""]), { :include_blank => false }, :class => "form-control" %>
       </div>
 
       <div class="col-md-offset-2 col-md-8">
@@ -46,7 +44,9 @@
 
   <div class="row bottom-buffer">
     <div class="col-md-offset-2 col-md-8">
-      <%= render 'deliverers_table' %>
+      <div id="table">
+        <%= render 'deliverers_table' %>
+      </div>
     </div>
   </div>
 
