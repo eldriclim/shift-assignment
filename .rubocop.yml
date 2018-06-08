@@ -1276,3 +1276,7 @@ Lint/Void:
 Rails/Delegate:
   Description: Prefer delegate method for delegations.
   Enabled: false
+
+Bundler/OrderedGems:
+  Description: Gems within groups in the Gemfile should be alphabetically sorted.
+  Enabled: false
