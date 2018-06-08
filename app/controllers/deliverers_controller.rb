@@ -16,13 +16,6 @@ class DeliverersController < ApplicationController
     @query.sorts = 'id asc' if @query.sorts.empty?
 
     @deliverers = @query.result(distinct: true)
-    # if check_search_condition(params)
-    #   flash[danger] = 'Invalid input!'
-    #   redirect_to deliverers_path
-    # end
-    #
-    # service = DeliverersFilterService.new(params[:deliverer])
-    # @deliverers = service.perform
   end
 
   # GET /deliverers/new
