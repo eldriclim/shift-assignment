@@ -175,7 +175,7 @@ RSpec.describe AssignmentsController, type: :controller do
     end
   end
 
-  context '#retrieve_shift_in_range' do
+  describe '#retrieve_shift_in_range' do
     Given!(:shift) { FactoryGirl.create(:shift) }
     Given!(:range) { shift.start_time..shift.end_time }
 

@@ -5,7 +5,7 @@ class DeliverersController < ApplicationController
     @query = Deliverer.ransack(params[:query])
 
     @deliverer = Deliverer.new
-    @deliverers = Deliverer.all
+    @deliverers = Deliverer.all.order('id ASC')
   end
 
   # GET /deliverers/search

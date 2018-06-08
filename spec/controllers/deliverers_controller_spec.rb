@@ -44,6 +44,66 @@ RSpec.describe DeliverersController, type: :controller do
     end
   end
 
+  # Test search action
+  describe 'get #search' do
+    Given!(:deliverers) { FactoryGirl.create_list(:deliverer, 15) }
+    Given!(:deliverer_to_search) do
+      FactoryGirl.create(:deliverer,
+                         name: 'Bobby Lee',
+                         phone: 123,
+                         vehicle: 2,
+                         active: true)
+    end
+
+    context 'when query is blank' do
+      When do
+        get :search, params: {
+          query: {
+            name_cont: '',
+            phone_cont: '',
+            vehicle_eq: '',
+            active_eq: ''
+          }
+        }, format: 'js', xhr: true
+      end
+
+      Then { expect(assigns(:deliverers).length).to eq 16 }
+    end
+
+    context 'when query contains name partial' do
+      When { get :search, params: { query: { name_cont: 'le' } }, format: 'js', xhr: true }
+
+      Then { expect(assigns(:deliverers).length).to eq 1 }
+    end
+    context 'when query contains phone partial' do
+      When { get :search, params: { query: { phone_cont: '23' } }, format: 'js', xhr: true }
+
+      Then { expect(assigns(:deliverers).length).to eq 1 }
+    end
+
+    context 'when query contains vehicle value' do
+      When { get :search, params: { query: { vehicle_eq: 2 } }, format: 'js', xhr: true }
+
+      Then { expect(assigns(:deliverers).length).to eq 1 }
+    end
+
+    context 'when query contains active value' do
+      When { get :search, params: { query: { active_eq: 'true' } }, format: 'js', xhr: true }
+
+      Then { expect(assigns(:deliverers).length).to eq 1 }
+    end
+
+    context 'check received response' do
+      When { get :search, params: {}, format: 'js', xhr: true }
+
+      # Render views to check js file
+      render_views
+
+      # Check js with regex
+      Then { expect(response.body).to match(/^\$\('#table'\)\.html\(".+"\);$/) }
+    end
+  end
+
   # Test new action
   describe 'get #new' do
     When { get :new }
