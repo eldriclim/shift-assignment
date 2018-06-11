@@ -16,6 +16,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bootstrap_form'
 gem 'sass-rails', '>= 3.2'
 gem 'jquery-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -43,6 +44,7 @@ gem 'rspec-given'
 gem 'factory_girl_rails'
 gem 'database_cleaner'
 gem 'rails-controller-testing'
+gem 'coveralls'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
