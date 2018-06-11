@@ -19,8 +19,5 @@
     </tr>
   <% end %>
 </table>
-<%= link_to_next_page @deliverers, 'Next Page' %>
-<%= link_to_prev_page @deliverers, 'Previous Page' %>
-<%= rel_next_prev_link_tags @deliverers %>
 
-<%= page_entries_info @deliverers %>
+<%= paginate @deliverers, window: 1, left: 1, right: 1 %>
