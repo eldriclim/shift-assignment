@@ -28,7 +28,7 @@ RSpec.describe AssignmentsController, type: :controller do
       When { post :create, params: {} }
 
       Then { is_expected.to set_flash[:danger] }
-      And { is_expected.to redirect_to assignments_new_path }
+      And { is_expected.to redirect_to new_assignment_path }
     end
 
     context 'when assignment service failure' do
@@ -41,7 +41,7 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       Then { is_expected.to set_flash[:danger] }
-      And { is_expected.to redirect_to assignments_new_path }
+      And { is_expected.to redirect_to new_assignment_path }
     end
 
     context 'when assignment service success' do
@@ -56,31 +56,31 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       Then { is_expected.to set_flash[:success] }
-      And { is_expected.to redirect_to assignments_new_path }
+      And { is_expected.to redirect_to new_assignment_path }
     end
   end
 
-  # Test show action
-  describe 'post #show' do
+  # Test index action
+  describe 'get #index' do
     context 'when invalid date range' do
       When do
-        post :show,
-             params: {
-               range1: {
-                 'date(3i)' => '23',
-                 'date(2i)' => '5',
-                 'date(1i)' => '2018'
-               },
-               range2: {
-                 'date(3i)' => '22',
-                 'date(2i)' => '5',
-                 'date(1i)' => '2018'
-               }
-             }
+        get :index,
+            params: {
+              range1: {
+                'date(3i)' => '23',
+                'date(2i)' => '5',
+                'date(1i)' => '2018'
+              },
+              range2: {
+                'date(3i)' => '22',
+                'date(2i)' => '5',
+                'date(1i)' => '2018'
+              }
+            }
       end
 
       Then { is_expected.to set_flash[:danger].to('Invalid date range!') }
-      And { is_expected.to redirect_to assignments_show_path }
+      And { is_expected.to redirect_to assignments_path }
     end
 
     context 'when valid date range' do
@@ -97,23 +97,22 @@ RSpec.describe AssignmentsController, type: :controller do
 
       context 'initializes shifts within range' do
         When do
-          post :show,
-               params: {
-                 range1: {
-                   'date(3i)' => '22',
-                   'date(2i)' => '5',
-                   'date(1i)' => '2018'
-                 },
-                 range2: {
-                   'date(3i)' => '24',
-                   'date(2i)' => '5',
-                   'date(1i)' => '2018'
-                 }
-               }
+          get :index, params: {
+            range1: {
+              'date(3i)' => '22',
+              'date(2i)' => '5',
+              'date(1i)' => '2018'
+            },
+            range2: {
+              'date(3i)' => '24',
+              'date(2i)' => '5',
+              'date(1i)' => '2018'
+            }
+          }
         end
 
         Then { is_expected.not_to set_flash }
-        And { expect(response).to render_template('assignments/show') }
+        And { expect(response).to render_template('assignments/index') }
         And { expect(response.body).to match('22 May 2018') }
         And { expect(response.body).to match('24 May 2018') }
 
@@ -133,25 +132,12 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       context 'when no date specified' do
-        When { post :show, params: {} }
+        When { get :index, params: {} }
 
         Then { is_expected.not_to set_flash }
-        And { expect(response).to render_template('assignments/show') }
+        And { expect(response).to render_template('assignments/index') }
         And { expect(response.body).to match(Time.zone.today.strftime('%d %B %Y')) }
       end
-    end
-  end
-
-  # Test search action
-  context 'post #search' do
-    When { post :search, params: {}, format: 'js' }
-
-    # Render views to check js file
-    render_views
-
-    Then do
-      # Check js with regex
-      expect(response.body).to match(/^\$\('#table'\)\.html\(".+"\);$/)
     end
   end
 
