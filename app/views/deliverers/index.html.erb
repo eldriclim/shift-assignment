@@ -50,7 +50,7 @@
     </div>
   </div>
 
-  <div class="row bottom-buffer">
+  <div class="row">
     <div class="col-md-offset-2 col-md-8">
       <div id="paginator-info">
         <%= page_entries_info @deliverers %>
@@ -61,7 +61,7 @@
   <div class="row bottom-buffer">
     <div class="col-md-offset-2 col-md-8">
       <div id="paginator">
-        <%= paginate @deliverers, window: 1, left: 1, right:1, :remote => true %>
+        <%= paginate @deliverers, window: 1, left: 1, right:1 %>
       </div>
     </div>
   </div>

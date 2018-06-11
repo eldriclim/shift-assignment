@@ -1,3 +1,0 @@
-$('#table').html("<%= escape_javascript(render :partial => 'deliverers_table') %>");
-$('#paginator-info').html('<%= page_entries_info @deliverers %>');
-$('#paginator').html('<%= escape_javascript(paginate @deliverers, window: 1, left: 1, right:1, :remote => true) %>');

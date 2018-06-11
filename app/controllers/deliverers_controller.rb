@@ -63,5 +63,4 @@ class DeliverersController < ApplicationController
   def deliverer_params
     params.require(:deliverer).permit(:name, :phone, :vehicle, :active)
   end
-
 end
