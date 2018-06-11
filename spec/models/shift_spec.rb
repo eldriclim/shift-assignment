@@ -84,7 +84,11 @@ RSpec.describe Shift, type: :model do
     end
 
     context 'when shift maxed' do
-      When { Shift.any_instance.stub_chain(:deliverers, :count).and_return(2) }
+      When do
+        allow_any_instance_of(Shift).to(
+          receive_message_chain(:deliverers, :count).and_return(2)
+        )
+      end
 
       Then { expect(shift.max?).to eq(true) }
     end

@@ -1153,7 +1153,7 @@ Style/PredicateName:
   NamePrefixBlacklist:
   - is_
   Exclude:
-  - "/Users/bruce/Projects/HB-Backend/spec/**/*"
+  - "spec/**/*"
 
 # Supports --auto-correct
 Style/Proc:

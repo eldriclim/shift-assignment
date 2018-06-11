@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe NavigationHelper, type: :helper do
   context 'signed in user' do
-    Given { helper.stub(:user_signed_in?).and_return(true) }
+    Given { allow(helper).to receive(:user_signed_in?).and_return(true) }
 
     context '#collapsible_links_partial_path' do
       Then do
@@ -14,7 +14,7 @@ RSpec.describe NavigationHelper, type: :helper do
   end
 
   context 'non-signed in user' do
-    Given { helper.stub(:user_signed_in?).and_return(false) }
+    Given { allow(helper).to receive(:user_signed_in?).and_return(false) }
 
     context '#collapsible_links_partial_path' do
       Then do

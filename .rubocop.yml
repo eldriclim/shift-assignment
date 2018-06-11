@@ -20,11 +20,8 @@ AllCops:
   # - "**/Cheffile"
   # - "**/Vagabondfile"
   Exclude:
-  - "lib/food_data/**"
-  - "vendor/**/*"
   - "db/schema.rb"
   - "tmp/**/*"
-  - "lib/locale_middleware.rb"
   DisplayCopNames: false
   StyleGuideCopsOnly: false
   DisabledByDefault: false
@@ -1241,8 +1238,6 @@ Lint/UnusedMethodArgument:
   Description: Checks for unused method arguments.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars
   Enabled: true
-  Exclude:
-    - 'app/services/elasticsearch/v2/service.rb'
 
 Lint/UnreachableCode:
   Description: Unreachable code.
