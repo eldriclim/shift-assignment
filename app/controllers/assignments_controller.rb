@@ -20,15 +20,15 @@ class AssignmentsController < ApplicationController
       end
     end
 
-    redirect_to assignments_new_path
+    redirect_to new_assignment_path
   end
 
   # rubocop:disable Metrics/AbcSize
   # :reek:TooManyStatements
   # :reek:NilCheck
   # :reek:DuplicateMethodCall
-  def show
-    @range = if !params.has_key?(:range1) && !params.has_key?(:range2)
+  def index
+    @range = if !params.has_key?(:range1) || !params.has_key?(:range2)
                Time.zone.today.at_beginning_of_day..Time.zone.today.at_end_of_day
              else
                date_range(params[:range1], params[:range2])
@@ -36,22 +36,12 @@ class AssignmentsController < ApplicationController
 
     if @range.max == nil
       flash[:danger] = 'Invalid date range!'
-      redirect_to assignments_show_path
+      redirect_to assignments_path
     end
 
     @shifts = retrieve_shift_in_range(@range)
   end
   # rubocop:enable Metrics/AbcSize
-
-  # Load Javascript to re-render partial
-  def search
-    # Filter list of assignments
-    show
-
-    respond_to do |format|
-      format.js
-    end
-  end
 
   def deliverer_id
     params[:assignment][:deliverer_id]

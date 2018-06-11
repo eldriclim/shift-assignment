@@ -15,13 +15,5 @@ Rails.application.routes.draw do
   resources :deliverers, only: %i[index new create edit update]
   resources :shifts, only: %i[index new create edit update]
 
-  get '/assignments/show', to: 'assignments#show'
-
-  get '/assignments/new', to: 'assignments#new'
-
-  post '/assignments/search', to: 'assignments#search'
-
-  post '/assignments/create', to: 'assignments#create'
-
-  post '/assignments/show', to: 'assignments#show'
+  resources :assignments, only: %i[index new create]
 end
