@@ -4,6 +4,18 @@ class DeliverersController < ApplicationController
   def index
     @query = Deliverer.ransack(params[:query])
 
+<<<<<<< HEAD
+=======
+    @deliverer = Deliverer.new
+    @deliverers = Deliverer.all.order('id ASC').page(params[:page]).per(1)
+  end
+
+  # GET /deliverers/search
+  # :reek:DuplicateMethodCall
+  # :reek:UncommunicativeVariableName
+  def search
+    @query = Deliverer.ransack(params[:query])
+>>>>>>> Setup paginate structure with kaminari
     @query.sorts = 'id asc' if @query.sorts.empty?
     @deliverers = @query.result(distinct: true)
 
