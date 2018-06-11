@@ -65,16 +65,4 @@ class DeliverersController < ApplicationController
     params.require(:deliverer).permit(:name, :phone, :vehicle, :active)
   end
 
-  def check_search_condition(params)
-    return false if params.has_key?(:deliverer)
-
-    deliverer_params = params[:deliverer]
-
-    if !deliverer_params.has_key?(:name) || !deliverer_params.has_key?(:phone) ||
-       !deliverer_params.has_key?(:vehicle) || !deliverer_params.has_key?(:active)
-      false
-    else
-      true
-    end
-  end
 end
