@@ -4,18 +4,10 @@ class DeliverersController < ApplicationController
   def index
     @query = Deliverer.ransack(params[:query])
 
-    @deliverer = Deliverer.new
-    @deliverers = Deliverer.all.order('id ASC')
-  end
-
-  # GET /deliverers/search
-  # :reek:DuplicateMethodCall
-  # :reek:UncommunicativeVariableName
-  def search
-    @query = Deliverer.ransack(params[:query])
     @query.sorts = 'id asc' if @query.sorts.empty?
-
     @deliverers = @query.result(distinct: true)
+
+    @deliverer = Deliverer.new
   end
 
   # GET /deliverers/new

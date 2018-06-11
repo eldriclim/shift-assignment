@@ -11,7 +11,7 @@
 
   <div class="row bottom-buffer">
 
-    <%= search_form_for @query, url: deliverers_search_path, remote: true do |f| %>
+    <%= search_form_for @query, url: deliverers_path, method: :get do |f| %>
       <div class="col-md-offset-2 col-md-2">
         <%= f.text_field :name_cont, placeholder: 'Name', class: 'form-control' %>
       </div>
@@ -22,15 +22,15 @@
 
       <div class="col-md-2">
         <%= f.select :vehicle_eq,
-              Deliverer.vehicles.keys.map { |w|
-                [w.capitalize, w]
+              Deliverer.vehicles.keys.map { |k|
+                [k.capitalize, Deliverer.vehicles[k]]
               }.unshift(["Vehicle", ""]), { :include_blank => false }, :class => "form-control" %>
       </div>
 
       <div class="col-md-2">
         <%= f.select :active_eq,
-              Deliverer.statuses.keys.map { |w|
-                [w.capitalize, Deliverer.statuses[w]]
+              Deliverer.statuses.keys.map { |k|
+                [k.capitalize, Deliverer.statuses[k]]
               }.unshift(["Status", ""]), { :include_blank => false }, :class => "form-control" %>
       </div>
 
