@@ -84,11 +84,11 @@ RSpec.describe AssignmentsController, type: :controller do
     end
 
     context 'when valid date range' do
-      Given!(:shift) { FactoryGirl.create(:shift) }
+      Given!(:shifts) { FactoryGirl.create_list(:shift, 26) }
       Given!(:deliverer) { FactoryGirl.create(:deliverer) }
       Given!(:assignment) do
         FactoryGirl.create(
-          :assignment, deliverer_id: deliverer.id, shift_id: shift.id
+          :assignment, deliverer_id: deliverer.id, shift_id: shifts[0].id
         )
       end
 
@@ -117,11 +117,12 @@ RSpec.describe AssignmentsController, type: :controller do
         And { expect(response.body).to match('24 May 2018') }
 
         # Match Shift info
-        And { expect(response.body).to match(shift.start_time_to_s.to_s) }
-        And { expect(response.body).to match(shift.end_time_to_s.to_s) }
+        And { expect(response.body).to match(shifts[0].id.to_s) }
+        And { expect(response.body).to match(shifts[0].start_time_to_s.to_s) }
+        And { expect(response.body).to match(shifts[0].end_time_to_s.to_s) }
         And do
           expect(response.body).to match(
-            "#{shift.deliverers.count}/#{shift.max_count}"
+            "#{shifts[0].deliverers.count}/#{shifts[0].max_count}"
           )
         end
 
@@ -129,6 +130,34 @@ RSpec.describe AssignmentsController, type: :controller do
         And { expect(response.body).to match(deliverer.id.to_s) }
         And { expect(response.body).to match(deliverer.name.to_s) }
         And { expect(response.body).to match(deliverer.phone.to_s) }
+      end
+
+      context 'check for page 2' do
+        # Larger search range to cover all 26 Shifts
+        When do
+          get :index, params: {
+            range1: {
+              'date(3i)' => '22',
+              'date(2i)' => '5',
+              'date(1i)' => '2017'
+            },
+            range2: {
+              'date(3i)' => '24',
+              'date(2i)' => '5',
+              'date(1i)' => '2019'
+            },
+            page: 2
+          }
+        end
+
+        # Check for the 26th shift on the second page, since limit is 25
+        Then { expect(assigns(:shifts).count).to eq 1 }
+        And { expect(response).to render_template('assignments/index') }
+
+        # Match Shift info
+        And { expect(response.body).to match(shifts[25].id.to_s) }
+        And { expect(response.body).to match(shifts[25].start_time_to_s.to_s) }
+        And { expect(response.body).to match(shifts[25].end_time_to_s.to_s) }
       end
 
       context 'when no date specified' do

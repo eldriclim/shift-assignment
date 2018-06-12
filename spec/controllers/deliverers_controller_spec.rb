@@ -10,13 +10,7 @@ RSpec.describe DeliverersController, type: :controller do
   # Test index action
   describe 'get #index' do
     # Create sample data for display
-    Given!(:deliverers) { FactoryGirl.create_list(:deliverer, 3) }
-
-    context 'retrieving models' do
-      When { get :index }
-
-      Then { expect(assigns(:deliverers)).to eq(deliverers) }
-    end
+    Given!(:deliverers) { FactoryGirl.create_list(:deliverer, 26) }
 
     # Render views to check for Deliverers info
     render_views
@@ -27,13 +21,14 @@ RSpec.describe DeliverersController, type: :controller do
       # Check for view partials
       Then { expect(response).to render_template('deliverers/index') }
 
-      And do
-        expect(response).to render_template(partial: '_deliverers_table')
-      end
+      And { expect(response).to render_template(partial: '_deliverers_table') }
 
       # Identify Deliverers info in view
       And do
-        deliverers.each do |d|
+        deliverers.each_with_index do |d, index|
+          # Since default page limit is 25
+          break if index == 25
+
           expect(response.body).to match(d.id.to_s)
           expect(response.body).to match(d.name.to_s)
           expect(response.body).to match(d.phone.to_s)
@@ -41,6 +36,27 @@ RSpec.describe DeliverersController, type: :controller do
           expect(response.body).to match(d.active_to_s.to_s)
         end
       end
+    end
+
+    context 'check for page 2' do
+      When do
+        get :index, params: {
+          page: 2
+        }
+      end
+
+      # Check for the 26th deliverer on the second page, since limit is 25
+      Then { expect(assigns(:deliverers).count).to eq 1 }
+
+      And { expect(response).to render_template('deliverers/index') }
+      And { expect(response).to render_template(partial: '_deliverers_table') }
+
+      # Match Deliverer info
+      And { expect(response.body).to match(deliverers[25].id.to_s) }
+      And { expect(response.body).to match(deliverers[25].name.to_s) }
+      And { expect(response.body).to match(deliverers[25].phone.to_s) }
+      And { expect(response.body).to match(deliverers[25].vehicle.capitalize.to_s) }
+      And { expect(response.body).to match(deliverers[25].active_to_s.to_s) }
     end
   end
 

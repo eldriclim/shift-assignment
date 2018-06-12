@@ -10,13 +10,7 @@ RSpec.describe ShiftsController, type: :controller do
   # Test index action
   describe 'get #index' do
     # Create sample data for display
-    Given!(:shifts) { FactoryGirl.create_list(:shift, 3) }
-
-    context 'retrieving models' do
-      When { get :index }
-
-      Then { expect(assigns(:shifts)).to eq(shifts) }
-    end
+    Given!(:shifts) { FactoryGirl.create_list(:shift, 26) }
 
     # Render views to check for Shifts info
     render_views
@@ -27,18 +21,43 @@ RSpec.describe ShiftsController, type: :controller do
       # Check for view partials
       Then { expect(response).to render_template('shifts/index') }
 
-      And do
-        expect(response).to render_template(partial: 'shifts/_shifts_table')
-      end
+      And { expect(response).to render_template(partial: 'shifts/_shifts_table') }
 
       # Identify Shifts info in view
       And do
-        shifts.each do |s|
+        shifts.each_with_index do |s, index|
+          # Since default page limit is 25
+          break if index == 25
+
           expect(response.body).to match(s.id.to_s)
           expect(response.body).to match(s.start_time_to_s.to_s)
           expect(response.body).to match(s.end_time_to_s.to_s)
           expect(response.body).to match("#{s.deliverers.count}/#{s.max_count}")
         end
+      end
+    end
+
+    context 'check for page 2' do
+      When do
+        get :index, params: {
+          page: 2
+        }
+      end
+
+      # Check for the 26th shift on the second page, since limit is 25
+      Then { expect(assigns(:shifts).count).to eq 1 }
+
+      And { expect(response).to render_template('shifts/index') }
+      And { expect(response).to render_template(partial: 'shifts/_shifts_table') }
+
+      # Match Shift info
+      And { expect(response.body).to match(shifts[25].id.to_s) }
+      And { expect(response.body).to match(shifts[25].start_time_to_s.to_s) }
+      And { expect(response.body).to match(shifts[25].end_time_to_s.to_s) }
+      And do
+        expect(response.body).to match(
+          "#{shifts[25].deliverers.count}/#{shifts[25].max_count}"
+        )
       end
     end
   end
