@@ -10,4 +10,35 @@
 
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-offset-2 col-md-6">
+      <%= page_entries_info @shifts %>
+    </div>
+
+    <div class="col-md-2">
+      <%= form_tag shifts_path, method: :get, id: 'limit_form' do %>
+        <label>Per Page</label>
+
+        <%= select_tag :limit, options_for_select([3, 25, 50, 100], selected: @limit) %>
+        <%= hidden_field_tag 'query', params['query'] %>
+
+      <% end %>
+
+      <script type="text/javascript" >
+        $(function(){
+          $('#limit').change(
+            function() {
+              $('#limit_form').submit();
+          });
+        });
+      </script>
+    </div>
+  </div>
+
+  <div class="row bottom-buffer">
+    <div class="col-md-offset-2 col-md-8">
+      <%= paginate @shifts, window: 1, left: 1, right:1 %>
+    </div>
+  </div>
 </div>

@@ -1,3 +1,4 @@
+# :reek:TooManyInstanceVariables
 class AssignmentsController < ApplicationController
   def new
     @deliverers = Deliverer.order(name: :asc, phone: :asc).all
@@ -40,8 +41,14 @@ class AssignmentsController < ApplicationController
     end
 
     @shifts = retrieve_shift_in_range(@range)
+
+    @limit = set_page_limit(params)
+
+    @shifts = @shifts.order('start_time ASC').page(params[:page]).per(@limit)
   end
   # rubocop:enable Metrics/AbcSize
+
+  private
 
   def deliverer_id
     params[:assignment][:deliverer_id]
@@ -68,5 +75,13 @@ class AssignmentsController < ApplicationController
   # :reek:UtilityFunction
   def retrieve_shift_in_range(range)
     Shift.where(start_time: range).where(end_time: range)
+  end
+
+  def set_page_limit(params)
+    if params.has_key?(:limit)
+      params[:limit]
+    else
+      25
+    end
   end
 end

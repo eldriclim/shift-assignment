@@ -1,6 +1,8 @@
 class ShiftsController < ApplicationController
   def index
-    @shifts = Shift.all
+    @limit = set_page_limit(params)
+
+    @shifts = Shift.all.order('start_time ASC').page(params[:page]).per(@limit)
   end
 
   def new
@@ -44,5 +46,13 @@ class ShiftsController < ApplicationController
 
   def shift_params
     params.require(:shift).permit(:start_time, :end_time, :max_count)
+  end
+
+  def set_page_limit(params)
+    if params.has_key?(:limit)
+      params[:limit]
+    else
+      25
+    end
   end
 end
