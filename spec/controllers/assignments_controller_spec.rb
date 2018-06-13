@@ -146,7 +146,8 @@ RSpec.describe AssignmentsController, type: :controller do
               'date(2i)' => '5',
               'date(1i)' => '2019'
             },
-            page: 2
+            page: 2,
+            limit: 25
           }
         end
 

@@ -40,7 +40,8 @@ RSpec.describe ShiftsController, type: :controller do
     context 'check for page 2' do
       When do
         get :index, params: {
-          page: 2
+          page: 2,
+          limit: 25
         }
       end
 
