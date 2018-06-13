@@ -41,7 +41,6 @@ class AssignmentsController < ApplicationController
 
   def destroy
     unassign = Assignment.find(params[:id])
-    debugger
 
     if unassign.destroy
       flash[:success] = 'Successfully undo an assignment'
