@@ -7,6 +7,42 @@ RSpec.describe ShiftsController, type: :controller do
     sign_in @user
   end
 
+  # Test index action
+  describe 'get #index' do
+    # Create sample data for display
+    Given!(:shifts) { FactoryGirl.create_list(:shift, 3) }
+
+    context 'retrieving models' do
+      When { get :index }
+
+      Then { expect(assigns(:shifts)).to eq(shifts) }
+    end
+
+    # Render views to check for Shifts info
+    render_views
+
+    context 'table views' do
+      When { get :index }
+
+      # Check for view partials
+      Then { expect(response).to render_template('shifts/index') }
+
+      And do
+        expect(response).to render_template(partial: 'shifts/_shifts_table')
+      end
+
+      # Identify Shifts info in view
+      And do
+        shifts.each do |s|
+          expect(response.body).to match(s.id.to_s)
+          expect(response.body).to match(s.start_time_to_s.to_s)
+          expect(response.body).to match(s.end_time_to_s.to_s)
+          expect(response.body).to match("#{s.deliverers.count}/#{s.max_count}")
+        end
+      end
+    end
+  end
+
   # Test new action
   describe 'get #new' do
     When { get :new }
@@ -22,8 +58,8 @@ RSpec.describe ShiftsController, type: :controller do
       end
 
       Then { expect(Shift.count).to eq 1 }
-
-      And { is_expected.to redirect_to home_path }
+      And { is_expected.to set_flash[:success] }
+      And { is_expected.to redirect_to shifts_path }
     end
 
     context 'with invalid attributes' do
@@ -66,7 +102,8 @@ RSpec.describe ShiftsController, type: :controller do
               }
       end
 
-      Then { is_expected.to redirect_to home_path }
+      Then { is_expected.to set_flash[:success] }
+      And { is_expected.to redirect_to shifts_path }
     end
 
     context 'with invalid attributes' do

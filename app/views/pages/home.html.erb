@@ -1,42 +1,58 @@
 <div class="container">
-  <div class="row bottom-buffer">
+
+  <div class="row">
     <div class="col-md-offset-2 col-md-8">
+
+      <h2>Shift Assignment Dashboard</h2>
 
       <%= render "shared/flash_messages" %>
 
-      <h1>All deliverers</h1>
-
-      <%= render 'deliverers_table' %>
-
-      <%= button_to "Create Deliverer", new_deliverer_path, :method => "get",
-        class: "btn sign-up-button"%>
     </div>
   </div>
 
   <div class="row bottom-buffer">
     <div class="col-md-offset-2 col-md-8">
-      <h1>All shifts</h1>
 
-      <%= render 'shifts_table' %>
+      <div class="panel-group top-buffer">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Deliverer</strong>
+          </div>
+          <div class="panel-body">
+              <ul>
+                <li><a href="deliverers">View all</a></li>
+                <li><a href="deliverers/new">Create deliverer</a></li>
+              </ul>
+          </div>
+        </div>
 
-      <%= button_to "Create Shift", new_shift_path, :method => "get",
-          class: "btn sign-up-button"%>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Shift</strong>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><a href="shifts">View all</a></li>
+              <li><a href="shifts/new">Create shift</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Assignment</strong>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><a href="assignments">View all</a></li>
+              <li><a href="assignments/new">Create assignment</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
 
     </div>
   </div>
-
-  <div class="row bottom-buffer">
-    <div class="col-md-offset-2 col-md-8">
-      <%= render 'shift_assignment_form' %>
-    </div>
-  </div>
-
-  <div class="row bottom-buffer">
-    <div class="col-md-offset-2 col-md-8">
-      <%= render 'view_assignment_form' %>
-    </div>
-  </div>
-
-
-
 </div>

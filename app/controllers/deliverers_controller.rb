@@ -1,4 +1,9 @@
 class DeliverersController < ApplicationController
+  # GET /deliverers/show
+  def index
+    @deliverers = Deliverer.all
+  end
+
   # GET /deliverers/new
   # page to add
   def new
@@ -6,16 +11,20 @@ class DeliverersController < ApplicationController
   end
 
   # POST /deliverers
+  # :reek:TooManyStatements
   def create
     @deliverer = Deliverer.new(deliverer_params)
 
     if @deliverer.save
-      redirect_to home_path
+      flash[:success] = 'Successfully created a new deliverer!'
+
+      redirect_to deliverers_path
 
     else
       errors = @deliverer.errors unless @deliverer.valid?
 
       flash[:danger] = errors.full_messages
+
       redirect_to new_deliverer_path
     end
   end
@@ -27,14 +36,19 @@ class DeliverersController < ApplicationController
   end
 
   # PATCH /deliverers/#
+  # :reek:TooManyStatements
   def update
     @deliverer = Deliverer.find(params[:id])
+
     if @deliverer.update(deliverer_params)
-      redirect_to home_path
+      flash[:success] = 'Successfully updated a deliverer!'
+
+      redirect_to deliverers_path
     else
       errors = @deliverer.errors unless @deliverer.valid?
 
       flash[:danger] = errors.full_messages
+
       redirect_to edit_deliverer_path
     end
   end

@@ -1,0 +1,50 @@
+<h1>
+  <%= print_date_range(@range) %>
+</h1>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>Shift ID</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Max Count</th>
+    </tr>
+  </thead>
+
+  <% @shifts.each do |shift| %>
+    <tr>
+      <th><%= shift.id %></th>
+      <td><%= link_to shift.start_time_to_s, edit_shift_path(shift) %></td>
+      <td><%= shift.end_time_to_s %></td>
+      <td><%= "#{shift.deliverers.count}/#{shift.max_count}" %></td>
+    </tr>
+
+    <% if shift.deliverers.count != 0 %>
+      <tr>
+        <td></td>
+
+        <td colspan="3">
+          <table style="width:300px">
+            <tr>
+              <th>Deliverer ID</th>
+              <th>Name</th>
+              <th>Phone</th>
+            </tr>
+            <% shift.deliverers.each do |d| %>
+              <tr>
+                <td><%= d.id %></td>
+                <td><%= d.name %></td>
+                <td><%= d.phone %></td>
+              </tr>
+            <% end %>
+          </table>
+
+
+        </td>
+      </tr>
+
+
+    <% end %>
+  <% end %>
+</table>

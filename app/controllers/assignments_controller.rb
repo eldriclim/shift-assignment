@@ -1,4 +1,10 @@
 class AssignmentsController < ApplicationController
+  def new
+    @deliverers = Deliverer.order(name: :asc, phone: :asc).all
+    @shifts = Shift.order(start_time: :asc).all
+    @assignment = Assignment.new
+  end
+
   def create
     if !params.has_key?(:assignment)
       flash[:danger] = 'No assignment received'
@@ -8,29 +14,29 @@ class AssignmentsController < ApplicationController
 
       if shift_assignment_service.perform
         flash[:success] = shift_assignment_service.success
+
       else
         flash[:danger] = shift_assignment_service.errors
       end
     end
 
-    redirect_to home_path
+    redirect_to new_assignment_path
   end
 
   # rubocop:disable Metrics/AbcSize
   # :reek:TooManyStatements
   # :reek:NilCheck
   # :reek:DuplicateMethodCall
-  def show
-    if !params.has_key?(:range1) && !params.has_key?(:range2)
-      flash[:danger] = 'Missing date input!'
-      redirect_to home_path
-    end
-
-    @range = date_range(params[:range1], params[:range2])
+  def index
+    @range = if !params.has_key?(:range1) || !params.has_key?(:range2)
+               Time.zone.today.at_beginning_of_day..Time.zone.today.at_end_of_day
+             else
+               date_range(params[:range1], params[:range2])
+             end
 
     if @range.max == nil
       flash[:danger] = 'Invalid date range!'
-      redirect_to home_path
+      redirect_to assignments_path
     end
 
     @shifts = retrieve_shift_in_range(@range)

@@ -1,12 +1,18 @@
 class ShiftsController < ApplicationController
+  def index
+    @shifts = Shift.all
+  end
+
   def new
     @shift = Shift.new
   end
 
+  # :reek:TooManyStatements
   def create
     @shift = Shift.new(shift_params)
     if @shift.save
-      redirect_to home_path
+      flash[:success] = 'Successfully created a new shift!'
+      redirect_to shifts_path
     else
       errors = @shift.errors unless @shift.valid?
 
@@ -19,14 +25,17 @@ class ShiftsController < ApplicationController
     @shift = Shift.find(params[:id])
   end
 
+  # :reek:TooManyStatements
   def update
     @shift = Shift.find(params[:id])
     if @shift.update(shift_params)
-      redirect_to home_path
+      flash[:success] = 'Successfully updated a shift!'
+      redirect_to shifts_path
     else
       errors = @shift.errors unless @shift.valid?
 
       flash[:danger] = errors.full_messages
+
       redirect_to edit_shift_path
     end
   end

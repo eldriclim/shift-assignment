@@ -76,7 +76,7 @@ RSpec.describe Shift, type: :model do
   }
 
   # Test instance methods
-  describe '#max' do
+  describe '#max?' do
     Given!(:shift) { FactoryGirl.create(:shift) }
 
     context 'when shift not maxed' do
