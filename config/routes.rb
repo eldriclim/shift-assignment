@@ -15,9 +15,5 @@ Rails.application.routes.draw do
   resources :deliverers, only: %i[index new create edit update]
   resources :shifts, only: %i[index new create edit update]
 
-  resources :assignments, only: %i[index new create destroy] do
-    collection do
-      get 'delete'
-    end
-  end
+  resources :assignments, only: %i[index new create destroy]
 end

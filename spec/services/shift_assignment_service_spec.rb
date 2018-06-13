@@ -18,7 +18,7 @@ RSpec.describe ShiftAssignmentService do
 
       And do
         expect(service_deliverer_nil.errors).to(
-          include('Please create some Deliverers and Shifts first.')
+          include('Please specify a Deliverer and Shift.')
         )
       end
 
@@ -26,7 +26,7 @@ RSpec.describe ShiftAssignmentService do
 
       And do
         expect(service_shift_nil.errors).to(
-          include('Please create some Deliverers and Shifts first.')
+          include('Please specify a Deliverer and Shift.')
         )
       end
     end

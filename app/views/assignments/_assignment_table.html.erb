@@ -36,6 +36,14 @@
                 <td><%= d.id %></td>
                 <td><%= d.name %></td>
                 <td><%= d.phone %></td>
+                <td>
+                  <%=
+                    link_to "Delete",
+                      assignment_path(Assignment.where(shift_id: shift.id, deliverer_id: d.id).first.id, range1: @range.begin, range2: @range.end),
+                      class:"label label-danger",
+                      method: :delete
+                  %>
+               </td>
               </tr>
             <% end %>
           </table>

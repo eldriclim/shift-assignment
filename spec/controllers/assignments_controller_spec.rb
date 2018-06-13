@@ -7,59 +7,6 @@ RSpec.describe AssignmentsController, type: :controller do
     sign_in @user
   end
 
-  # Test new action
-  describe 'get #new' do
-    Given { FactoryGirl.create_list(:deliverer, 3) }
-    Given { FactoryGirl.create_list(:shift, 3) }
-
-    When { get :new }
-
-    Then { expect(assigns(:deliverers).count).to eq 3 }
-    And { expect(assigns(:shifts).count).to eq 3 }
-    And { expect(assigns(:assignment)).to be_a_new(Assignment) }
-  end
-
-  # Test create action
-  describe 'post #create' do
-    Given!(:deliverer) { FactoryGirl.create_list(:deliverer, 2) }
-    Given!(:shift) { FactoryGirl.create(:shift) }
-
-    context 'when no assignment param' do
-      When { post :create, params: {} }
-
-      Then { is_expected.to set_flash[:danger] }
-      And { is_expected.to redirect_to new_assignment_path }
-    end
-
-    context 'when assignment service failure' do
-      When do
-        post :create, params: {
-          assignment: {
-            deliverer_id: deliverer[0].id
-          }
-        }
-      end
-
-      Then { is_expected.to set_flash[:danger] }
-      And { is_expected.to redirect_to new_assignment_path }
-    end
-
-    context 'when assignment service success' do
-      When do
-        post :create,
-             params: {
-               assignment: {
-                 deliverer_id: deliverer[0].id,
-                 shift_id: shift.id
-               }
-             }
-      end
-
-      Then { is_expected.to set_flash[:success] }
-      And { is_expected.to redirect_to new_assignment_path }
-    end
-  end
-
   # Test index action
   describe 'get #index' do
     context 'when invalid date range' do
@@ -141,37 +88,112 @@ RSpec.describe AssignmentsController, type: :controller do
     end
   end
 
-  context '#date_range' do
-    Given!(:date1_hash) do
-      {
-        'date(3i)' => 23,
-        'date(2i)' => 0o5,
-        'date(1i)' => 2018
-      }
-    end
-    Given!(:date2_hash) do
-      {
-        'date(3i)' => 24,
-        'date(2i)' => 0o5,
-        'date(1i)' => 2018
-      }
+  # Test new action
+  describe 'get #new' do
+    Given { FactoryGirl.create_list(:deliverer, 3) }
+    Given { FactoryGirl.create_list(:shift, 3) }
+
+    When { get :new }
+
+    Then { expect(assigns(:deliverers).count).to eq 3 }
+    And { expect(assigns(:shifts).count).to eq 3 }
+    And { expect(assigns(:assignment)).to be_a_new(Assignment) }
+  end
+
+  # Test create action
+  describe 'post #create' do
+    Given!(:deliverers) { FactoryGirl.create_list(:deliverer, 2) }
+    Given!(:shift) { FactoryGirl.create(:shift) }
+
+    context 'when no assignment param' do
+      When { post :create, params: {} }
+
+      Then { is_expected.to set_flash[:danger] }
+      And { is_expected.to redirect_to new_assignment_path }
     end
 
-    When(:date1) do
-      Time.zone.parse(
-        "#{date1_hash['date(3i)']}-#{date1_hash['date(2i)']}-#{date1_hash['date(1i)']}"
-      )
-    end
-    When(:date2) do
-      Time.zone.parse(
-        "#{date2_hash['date(3i)']}-#{date2_hash['date(2i)']}-#{date2_hash['date(1i)']}"
-      )
+    context 'when assignment service failure' do
+      When do
+        post :create, params: {
+          assignment: {
+            deliverer_id: deliverers[0].id
+          }
+        }
+      end
+
+      Then { is_expected.to set_flash[:danger] }
+      And { is_expected.to redirect_to new_assignment_path(deliverer_id: deliverers[0].id) }
     end
 
-    Then do
-      expect(controller.date_range(date1_hash, date2_hash)).to(
-        eq(date1.at_beginning_of_day..date2.at_end_of_day)
-      )
+    context 'when assignment service success' do
+      When do
+        post :create,
+             params: {
+               assignment: {
+                 deliverer_id: deliverers[0].id,
+                 shift_id: shift.id
+               }
+             }
+      end
+
+      Then { is_expected.to set_flash[:success] }
+      And do
+        is_expected.to redirect_to new_assignment_path(
+          deliverer_id: deliverers[0].id, shift_id: shift.id
+        )
+      end
+    end
+  end
+
+  # Test destroy action
+  describe 'delete #destroy' do
+    Given!(:deliverer) { FactoryGirl.create(:deliverer) }
+    Given!(:shift) { FactoryGirl.create(:shift) }
+    Given!(:assignment) do
+      FactoryGirl.create(:assignment, deliverer_id: deliverer.id, shift_id: shift.id)
+    end
+
+    context 'when successful destroy' do
+      When do
+        delete :destroy,
+               params: {
+                 id: assignment.id,
+                 range1: '24-05-2018',
+                 range2: '24-05-2018'
+               }
+      end
+
+      Then { expect(Assignment.count).to eq(0) }
+      And { is_expected.to set_flash[:success].to('Successfully undo an assignment') }
+      And do
+        is_expected.to redirect_to assignments_path(
+          range1_destroy: '24-05-2018', range2_destroy: '24-05-2018'
+        )
+      end
+    end
+
+    context 'when unsuccessful destroy' do
+      Given do
+        allow(Assignment).to receive(:find).and_return(assignment)
+        allow(assignment).to receive(:destroy).and_return(false)
+      end
+
+      When do
+        delete :destroy,
+               params: {
+                 id: assignment.id,
+                 range1: '24-05-2018',
+                 range2: '24-05-2018'
+               }
+      end
+
+      Then { expect(Assignment.count).to eq(1) }
+      And { is_expected.to set_flash[:danger].to('Error in undoing assignment!') }
+      And do
+        is_expected.to redirect_to assignments_path(
+          range1_destroy: '24-05-2018', range2_destroy: '24-05-2018'
+        )
+      end
     end
   end
 

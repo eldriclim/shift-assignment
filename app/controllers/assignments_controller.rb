@@ -2,7 +2,7 @@ class AssignmentsController < ApplicationController
   def index
     @range = set_range(params)
 
-    if @range.blank?
+    if @range.max.blank?
       flash[:danger] = 'Invalid date range!'
       redirect_to assignments_path
     end
@@ -16,9 +16,13 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.new
   end
 
+  # :reek:TooManyStatements
+  # rubocop:disable Metrics/AbcSize
   def create
     if !params.has_key?(:assignment)
       flash[:danger] = 'No assignment received'
+
+      redirect_to new_assignment_path
     else
 
       shift_assignment_service = ShiftAssignmentService.new(deliverer_id, shift_id)
@@ -29,24 +33,15 @@ class AssignmentsController < ApplicationController
       else
         flash[:danger] = shift_assignment_service.errors
       end
+
+      redirect_to new_assignment_path(deliverer_id: deliverer_id, shift_id: shift_id)
     end
-
-    redirect_to new_assignment_path
   end
-
-  def delete
-    @range = set_range(params)
-
-    if @range.blank?
-      flash[:danger] = 'Invalid date range!'
-      redirect_to assignments_path
-    end
-
-    @shifts = retrieve_shift_in_range(@range)
-  end
+  # rubocop:enable Metrics/AbcSize
 
   def destroy
     unassign = Assignment.find(params[:id])
+    debugger
 
     if unassign.destroy
       flash[:success] = 'Successfully undo an assignment'
@@ -54,7 +49,7 @@ class AssignmentsController < ApplicationController
       flash[:danger] = 'Error in undoing assignment!'
     end
 
-    redirect_to delete_assignments_path(
+    redirect_to assignments_path(
       range1_destroy: params[:range1], range2_destroy: params[:range2]
     )
   end

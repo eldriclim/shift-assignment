@@ -12,7 +12,7 @@ class ShiftAssignmentService
   def perform
     # Terminate when variables are not found
     if @deliverer_id.blank? || @shift_id.blank?
-      @errors << 'Please create some Deliverers and Shifts first.'
+      @errors << 'Please specify a Deliverer and Shift.'
       return false
     end
 
