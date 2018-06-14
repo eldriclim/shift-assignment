@@ -17,7 +17,8 @@ class ShiftsController < ApplicationController
       errors = @shift.errors unless @shift.valid?
 
       flash[:danger] = errors.full_messages
-      redirect_to new_shift_path
+
+      redirect_to new_shift_path(shift_params)
     end
   end
 

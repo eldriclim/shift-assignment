@@ -14,22 +14,25 @@
         </tr>
         <tr>
           <td><%= f.datetime_select :start_time,
-  	              class: 'form-control' %></td>
+  	              :order => [:day, :month, :year],
+                  class: 'form-control' %></td>
         </tr>
         <tr>
           <td><%= f.label :end_time %></td>
         </tr>
         <tr>
           <td><%= f.datetime_select :end_time,
-   	              class: 'form-control' %></td>
+                  :order => [:day, :month, :year],
+                  class: 'form-control' %></td>
         </tr>
         <tr>
-          <td><%= f.label :max_count %></td>
+          <td><%= f.label :max_count%></td>
         </tr>
         <tr>
           <td><%= f.text_field :max_count,
                   placeholder: 'max',
-       	          class: 'form-control' %></td>
+       	          class: 'form-control',
+                  value: params[:max_count]  %></td>
         </tr>
       </table>
 

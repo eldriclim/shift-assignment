@@ -9,6 +9,7 @@ class ShiftAssignmentService
   end
 
   # :reek:TooManyStatements
+  # rubocop:disable AbcSize
   def perform
     # Terminate when variables are not found
     if @deliverer_id.blank? || @shift_id.blank?
@@ -35,6 +36,12 @@ class ShiftAssignmentService
     )
 
     if assignment.save
+      AssignmentMailer.with(
+        user: Deliverer.find(@deliverer_id),
+        shift: Shift.find(@shift_id),
+        assignment: assignment
+      ).assignment_notice.deliver_now
+
       @success << 'A new assignment has been made!'
 
       return true
@@ -44,4 +51,5 @@ class ShiftAssignmentService
       return false
     end
   end
+  # rubocop:enable AbcSize
 end
