@@ -9,21 +9,26 @@
       <%= bootstrap_form_for(@deliverer) do |f| %>
 
 
-        <%= f.label :name %>
-        <%= f.text_field :name,
-	           placeholder: 'name',
-	           class: 'form-control' %>
+      <%= f.label :name %>
+      <%= f.text_field :name,
+           placeholder: 'name',
+           class: 'form-control' %>
 
-        <%= f.label :phone %>
-        <%= f.text_field :phone,
-	           placeholder: 'phone',
-	           class: 'form-control' %>
+      <%= f.label :phone %>
+      <%= f.text_field :phone,
+           placeholder: 'phone',
+           class: 'form-control' %>
 
-        <%= f.label :vehicle %>
-        <%= f.select :vehicle, Deliverer.vehicles.keys.map { |w| [w.capitalize, w] } %>
+      <%= f.label :email %>
+      <%= f.text_field :email,
+           placeholder: 'email',
+           class: 'form-control'%>
 
-        <%= f.label :active %>
-        <%= f.check_box :active %>
+      <%= f.label :vehicle %>
+      <%= f.select :vehicle, Deliverer.vehicles.keys.map { |w| [w.capitalize, w] } %>
+
+      <%= f.label :active %>
+      <%= f.check_box :active %>
 
 
         <%= f.submit 'Create', class: 'btn sign-up-button' %>

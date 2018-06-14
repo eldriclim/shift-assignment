@@ -11,18 +11,27 @@
         <%= f.label :name %>
         <%= f.text_field :name,
 	           placeholder: 'name',
-	           class: 'form-control' %>
+	           class: 'form-control',
+             value: params[:name] %>
 
         <%= f.label :phone %>
         <%= f.text_field :phone,
 	           placeholder: 'phone',
-	           class: 'form-control' %>
+	           class: 'form-control',
+             value: params[:phone] %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email,
+     	       placeholder: 'email',
+     	       class: 'form-control',
+             value: params[:email] %>
 
         <%= f.label :vehicle %>
-        <%= f.select :vehicle, Deliverer.vehicles.keys.map { |w| [w.capitalize, w] } %>
+        <%= f.select :vehicle, Deliverer.vehicles.keys.map { |w| [w.capitalize, w] },
+              selected: params[:vehicle] %>
 
         <%= f.label :active %>
-        <%= f.check_box :active %>
+        <%= f.check_box :active, checked: (params[:active] == "1") %>
 
 
         <%= f.submit 'Create', class: 'btn sign-up-button' %>

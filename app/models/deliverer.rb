@@ -8,6 +8,9 @@ class Deliverer < ApplicationRecord
   validates :phone, presence: { message: 'Phone field is empty' },
                     numericality: { only_integer: true, message: 'Phone has to be an integer' },
                     uniqueness: { message: 'Phone already in used' }
+  validates :email, presence: { message: 'Email field is empty' },
+                    format: { with: Devise.email_regexp, message: 'Invalid Email format' },
+                    uniqueness: { message: 'Email already in used' }
 
   enum vehicle: { motorbike: 0, bicycle: 1, scooter: 2 }
 

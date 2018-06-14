@@ -25,7 +25,7 @@ class DeliverersController < ApplicationController
 
       flash[:danger] = errors.full_messages
 
-      redirect_to new_deliverer_path
+      redirect_to new_deliverer_path(deliverer_params)
     end
   end
 
@@ -56,6 +56,6 @@ class DeliverersController < ApplicationController
   private
 
   def deliverer_params
-    params.require(:deliverer).permit(:name, :phone, :vehicle, :active)
+    params.require(:deliverer).permit(:name, :phone, :vehicle, :active, :email)
   end
 end
