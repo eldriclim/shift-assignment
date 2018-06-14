@@ -1,3 +1,7 @@
+require 'action_mailer'
+require 'email_spec'
+require 'email_spec/rspec'
+
 require 'coveralls'
 require 'simplecov'
 
@@ -104,4 +108,7 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
 end
