@@ -17,8 +17,18 @@ class ShiftUnassignmentService
       return false
     end
 
+    deliverer = unassign.deliverer
+    shift = unassign.shift
+
     if unassign.destroy
       @success << 'Successfully undo an assignment'
+
+      AssignmentMailer.with(
+        user: deliverer,
+        shift: shift,
+        assignment_id: @assignment_id
+      ).unassignment_notice.deliver_later
+
       return true
     else
       @errors << 'Error in undoing assignment!'

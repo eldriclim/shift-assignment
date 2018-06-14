@@ -11,4 +11,15 @@ class AssignmentMailer < ApplicationMailer
       subject: 'Notice: You have been assigned a new shift!'
     )
   end
+
+  def unassignment_notice
+    @user = params[:user]
+    @shift = params[:shift]
+    @assignment_id = params[:assignment_id]
+
+    mail(
+      to: @user.email,
+      subject: 'Notice: You have been unassigned a shift'
+    )
+  end
 end

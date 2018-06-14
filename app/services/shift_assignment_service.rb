@@ -40,7 +40,7 @@ class ShiftAssignmentService
         user: Deliverer.find(@deliverer_id),
         shift: Shift.find(@shift_id),
         assignment: assignment
-      ).assignment_notice.deliver_now
+      ).assignment_notice.deliver_later
 
       @success << 'A new assignment has been made!'
 
