@@ -40,12 +40,13 @@ class AssignmentsController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def destroy
-    unassign = Assignment.find(params[:id])
+    shift_unassignment_service = ShiftUnassignmentService.new(params[:id])
 
-    if unassign.destroy
-      flash[:success] = 'Successfully undo an assignment'
+    if shift_unassignment_service.perform
+      flash[:success] = shift_unassignment_service.success
+
     else
-      flash[:danger] = 'Error in undoing assignment!'
+      flash[:danger] = shift_unassignment_service.errors
     end
 
     redirect_to assignments_path(

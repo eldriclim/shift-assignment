@@ -164,7 +164,7 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       Then { expect(Assignment.count).to eq(0) }
-      And { is_expected.to set_flash[:success].to('Successfully undo an assignment') }
+      And { is_expected.to set_flash[:success] }
       And do
         is_expected.to redirect_to assignments_path(
           range1_destroy: '24-05-2018', range2_destroy: '24-05-2018'
@@ -188,7 +188,7 @@ RSpec.describe AssignmentsController, type: :controller do
       end
 
       Then { expect(Assignment.count).to eq(1) }
-      And { is_expected.to set_flash[:danger].to('Error in undoing assignment!') }
+      And { is_expected.to set_flash[:danger] }
       And do
         is_expected.to redirect_to assignments_path(
           range1_destroy: '24-05-2018', range2_destroy: '24-05-2018'
