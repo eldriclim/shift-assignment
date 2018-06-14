@@ -76,7 +76,13 @@ RSpec.describe ShiftsController, type: :controller do
 
       Then { expect(Shift.count).to eq 0 }
       And { is_expected.to set_flash[:danger] }
-      And { is_expected.to redirect_to new_shift_path }
+      And do
+        is_expected.to redirect_to new_shift_path(
+          max_count: 'a',
+          start_time: '2018-05-23 10:00:00',
+          end_time: '2018-05-23 12:00:00'
+        )
+      end
     end
   end
 

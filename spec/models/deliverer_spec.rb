@@ -39,6 +39,17 @@ RSpec.describe Deliverer, type: :model do
       with_message('Phone already in used')
   }
 
+  # Test email attribute
+  it {
+    is_expected.to validate_presence_of(:email).
+      with_message('Email field is empty')
+  }
+
+  it {
+    is_expected.to validate_uniqueness_of(:email).
+      with_message('Email already in used')
+  }
+
   # Test instance methods
 
   Given!(:deliverer) { Deliverer.new }

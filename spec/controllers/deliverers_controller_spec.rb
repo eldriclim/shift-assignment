@@ -78,7 +78,14 @@ RSpec.describe DeliverersController, type: :controller do
 
       Then { expect(Deliverer.count).to eq 0 }
       And { is_expected.to set_flash[:danger] }
-      And { is_expected.to redirect_to new_deliverer_path }
+      And do
+        is_expected.to redirect_to new_deliverer_path(
+          name: 'My Name',
+          vehicle: 1,
+          phone: 'a',
+          active: false
+        )
+      end
     end
   end
 
