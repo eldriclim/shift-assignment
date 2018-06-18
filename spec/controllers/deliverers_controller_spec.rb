@@ -73,24 +73,24 @@ RSpec.describe DeliverersController, type: :controller do
     context 'when query contains name partial' do
       When { get :index, params: { query: { name_cont: 'le' } } }
 
-      Then { expect(assigns(:deliverers).first).to eql deliverer_to_search }
+      Then { expect(assigns(:deliverers)).to eq [deliverer_to_search] }
     end
     context 'when query contains phone partial' do
       When { get :index, params: { query: { phone_cont: '23' } } }
 
-      Then { expect(assigns(:deliverers).first).to eql deliverer_to_search }
+      Then { expect(assigns(:deliverers)).to eq [deliverer_to_search] }
     end
 
     context 'when query contains vehicle value' do
       When { get :index, params: { query: { vehicle_eq: 2 } } }
 
-      Then { expect(assigns(:deliverers).first).to eql deliverer_to_search }
+      Then { expect(assigns(:deliverers)).to eq [deliverer_to_search] }
     end
 
     context 'when query contains active value' do
       When { get :index, params: { query: { active_eq: 'true' } } }
 
-      Then { expect(assigns(:deliverers).first).to eql deliverer_to_search }
+      Then { expect(assigns(:deliverers)).to eq [deliverer_to_search] }
     end
   end
 
