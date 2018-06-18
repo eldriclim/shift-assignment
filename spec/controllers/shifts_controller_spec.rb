@@ -37,7 +37,7 @@ RSpec.describe ShiftsController, type: :controller do
           expect(response.body).to match(s.id.to_s)
           expect(response.body).to match(s.start_time_to_s.to_s)
           expect(response.body).to match(s.end_time_to_s.to_s)
-          expect(response.body).to match("#{s.deliverers.count}/#{s.max_count}")
+          expect(response.body).to match("#{s.deliverers_count}/#{s.max_count}")
         end
       end
     end

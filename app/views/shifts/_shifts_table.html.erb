@@ -14,7 +14,7 @@
       <th><%= shift.id %></th>
       <td><%= link_to shift.start_time_to_s, edit_shift_path(shift) %></td>
       <td><%= shift.end_time_to_s %></td>
-      <td><%= "#{shift.deliverers.count}/#{shift.max_count}" %></td>
+      <td><%= "#{shift.deliverers_count}/#{shift.max_count}" %></td>
     </tr>
   <% end %>
 </table>

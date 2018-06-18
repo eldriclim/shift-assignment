@@ -10,7 +10,7 @@
         <%= f.select :deliverer_id, @deliverers.map{ |d| ["#{d.id} - #{d.name} - #{d.phone}", d.id] } %>
         <%= f.select :shift_id,
           @shifts.map{ |s|
-            ["#{s.id} - #{s.start_time_to_s} (#{s.deliverers.count}/#{s.max_count})", s.id]
+            ["#{s.id} - #{s.start_time_to_s} (#{s.deliverers_count}/#{s.max_count})", s.id]
           }
         %>
 
