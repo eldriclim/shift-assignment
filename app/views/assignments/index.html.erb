@@ -47,7 +47,7 @@
       <%= form_tag assignments_path(), method: :get, id: 'limit_form' do %>
         <label>Per Page</label>
 
-        <%= select_tag :limit, options_for_select([3, 25, 50, 100], selected: @limit) %>
+        <%= select_tag :limit, options_for_select([10, 25, 50, 100], selected: @limit) %>
 
         <% if params.has_key?(:range1) && params.has_key?(:range2)  %>
           <%= hidden_field_tag "range1[date(3i)]", "#{params[:range1]["date(3i)"]}" %>
@@ -61,11 +61,9 @@
       <% end %>
 
       <script type="text/javascript" >
-        $(function(){
-          $('#limit').change(
-            function() {
-              $('#limit_form').submit();
-          });
+        $('#limit').change(
+          function() {
+            $('#limit_form').submit();
         });
       </script>
     </div>

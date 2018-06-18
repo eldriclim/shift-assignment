@@ -61,7 +61,7 @@
       <%= form_tag deliverers_path, method: :get, id: 'limit_form' do %>
         <label>Per Page</label>
 
-        <%= select_tag :limit, options_for_select([3, 25, 50, 100], selected: @limit) %>
+        <%= select_tag :limit, options_for_select([10, 25, 50, 100], selected: @limit) %>
 
         <% if params.has_key?(:query) %>
           <%= hidden_field_tag "query[name_cont]", "#{params[:query][:name_cont]}" %>
@@ -72,11 +72,9 @@
       <% end %>
 
       <script type="text/javascript" >
-        $(function(){
-          $('#limit').change(
-            function() {
-              $('#limit_form').submit();
-          });
+        $('#limit').change(
+          function() {
+            $('#limit_form').submit();
         });
       </script>
     </div>
