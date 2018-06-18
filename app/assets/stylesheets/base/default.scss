@@ -4,6 +4,7 @@
 
 html {
   font-size: 62.5%;
+  overflow-y: scroll;
 }
 
 body {
@@ -20,7 +21,6 @@ h1 {
 i {
   width: 26px;
 }
-
 
 a:hover, a:active, a:link, a:visited {
   text-decoration: none;
