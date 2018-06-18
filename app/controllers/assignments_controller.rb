@@ -67,6 +67,6 @@ class AssignmentsController < ApplicationController
 
   # :reek:UtilityFunction
   def retrieve_shift_in_range(range)
-    Shift.where(start_time: range).where(end_time: range)
+    Shift.where(start_time: range).where(end_time: range).includes(:deliverers)
   end
 end
