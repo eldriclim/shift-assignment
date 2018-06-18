@@ -9,5 +9,6 @@ FactoryGirl.define do
         (n * 2).hours).strftime('%Y-%m-%d %T')
     end
     max_count 2
+    deliverers_count 0
   end
 end

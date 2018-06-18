@@ -120,6 +120,9 @@ RSpec.describe AssignmentsController, type: :controller do
         And { expect(response.body).to match(shift.start_time_to_s.to_s) }
         And { expect(response.body).to match(shift.end_time_to_s.to_s) }
         And do
+          # Reloads shift to get updated counter cache (0 -> 1)
+          # since Assignment is created at a later point
+          shift.reload
           expect(response.body).to match(
             "#{shift.deliverers_count}/#{shift.max_count}"
           )

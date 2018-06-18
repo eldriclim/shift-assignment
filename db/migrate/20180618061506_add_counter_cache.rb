@@ -1,7 +1,7 @@
 class AddCounterCache < ActiveRecord::Migration[5.1]
   def change
-    add_column :deliverers, :shifts_count, :integer
-    add_column :shifts, :deliverers_count, :integer
+    add_column :deliverers, :shifts_count, :integer, default: 0
+    add_column :shifts, :deliverers_count, :integer, default: 0
 
     reversible do |dir|
       dir.up do

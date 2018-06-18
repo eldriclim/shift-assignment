@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180618061506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
-    t.integer "shifts_count"
+    t.integer "shifts_count", default: 0
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20180618061506) do
     t.integer "max_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "deliverers_count"
+    t.integer "deliverers_count", default: 0
   end
 
   create_table "users", force: :cascade do |t|
