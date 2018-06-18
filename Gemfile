@@ -38,14 +38,15 @@ gem 'jbuilder', '~> 2.5'
 
 # Added for project
 gem 'devise'
-gem 'shoulda-matchers', '~> 3.0'
-gem 'rspec-rails', '~> 3.6'
-gem 'rspec-given'
-gem 'factory_girl_rails'
-gem 'database_cleaner'
-gem 'rails-controller-testing'
-gem 'coveralls'
-gem 'bullet'
+gem 'scout_apm'
+gem 'bullet',                       group: [:development, :test]
+gem 'shoulda-matchers', '~> 3.0',   group: :test
+gem 'rspec-rails', '~> 3.6',        group: :test
+gem 'rspec-given',                  group: :test
+gem 'factory_girl_rails',           group: :test
+gem 'database_cleaner',             group: :test
+gem 'rails-controller-testing',     group: :test
+gem 'coveralls',                    group: :test
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
