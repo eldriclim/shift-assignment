@@ -13,13 +13,7 @@ class Deliverer < ApplicationRecord
   enum status: { active: true, inactive: false }
 
   def active_to_s
-    case active
-    when true
-      'Active'
-    when false
-      'Inactive'
-    else
-      'ERROR'
-    end
+    return 'Active' if active
+    'Inactive'
   end
 end
