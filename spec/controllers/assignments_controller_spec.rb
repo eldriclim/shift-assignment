@@ -104,7 +104,7 @@ RSpec.describe AssignmentsController, type: :controller do
               'date(1i)' => '2018'
             },
             range2: {
-              'date(3i)' => '24',
+              'date(3i)' => '26',
               'date(2i)' => '5',
               'date(1i)' => '2018'
             }
@@ -112,24 +112,29 @@ RSpec.describe AssignmentsController, type: :controller do
         end
 
         Then { is_expected.not_to set_flash }
+        And { expect(assigns(:shifts)).to eq shifts[0..24] }
         And { expect(response).to render_template('assignments/index') }
         And { expect(response.body).to match('22 May 2018') }
-        And { expect(response.body).to match('24 May 2018') }
+        And { expect(response.body).to match('26 May 2018') }
 
         # Match Shift info
-        And { expect(response.body).to match(shifts[0].id.to_s) }
-        And { expect(response.body).to match(shifts[0].start_time_to_s.to_s) }
-        And { expect(response.body).to match(shifts[0].end_time_to_s.to_s) }
         And do
-          expect(response.body).to match(
-            "#{shifts[0].deliverers.count}/#{shifts[0].max_count}"
-          )
+          shifts.each_with_index do |s, index|
+            break if index == 25
+
+            expect(response.body).to match(s.id.to_s)
+            expect(response.body).to match(s.start_time_to_s)
+            expect(response.body).to match(s.end_time_to_s)
+            expect(response.body).to match(
+              "#{s.deliverers.count}/#{s.max_count}"
+            )
+          end
         end
 
         # Match Deliverer info within Shift
         And { expect(response.body).to match(deliverer.id.to_s) }
-        And { expect(response.body).to match(deliverer.name.to_s) }
-        And { expect(response.body).to match(deliverer.phone.to_s) }
+        And { expect(response.body).to match(deliverer.name) }
+        And { expect(response.body).to match(deliverer.phone) }
       end
 
       context 'check for page 2' do
@@ -152,13 +157,13 @@ RSpec.describe AssignmentsController, type: :controller do
         end
 
         # Check for the 26th shift on the second page, since limit is 25
-        Then { expect(assigns(:shifts).count).to eq 1 }
+        Then { expect(assigns(:shifts)).to eq [shifts[25]] }
         And { expect(response).to render_template('assignments/index') }
 
         # Match Shift info
         And { expect(response.body).to match(shifts[25].id.to_s) }
-        And { expect(response.body).to match(shifts[25].start_time_to_s.to_s) }
-        And { expect(response.body).to match(shifts[25].end_time_to_s.to_s) }
+        And { expect(response.body).to match(shifts[25].start_time_to_s) }
+        And { expect(response.body).to match(shifts[25].end_time_to_s) }
       end
 
       context 'when no date specified' do

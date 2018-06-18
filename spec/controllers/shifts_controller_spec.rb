@@ -19,8 +19,8 @@ RSpec.describe ShiftsController, type: :controller do
       When { get :index }
 
       # Check for view partials
-      Then { expect(response).to render_template('shifts/index') }
-
+      Then { expect(assigns(:shifts)).to eq shifts[0..24] }
+      And { expect(response).to render_template('shifts/index') }
       And { expect(response).to render_template(partial: 'shifts/_shifts_table') }
 
       # Identify Shifts info in view
@@ -30,8 +30,8 @@ RSpec.describe ShiftsController, type: :controller do
           break if index == 25
 
           expect(response.body).to match(s.id.to_s)
-          expect(response.body).to match(s.start_time_to_s.to_s)
-          expect(response.body).to match(s.end_time_to_s.to_s)
+          expect(response.body).to match(s.start_time_to_s)
+          expect(response.body).to match(s.end_time_to_s)
           expect(response.body).to match("#{s.deliverers.count}/#{s.max_count}")
         end
       end
@@ -46,15 +46,15 @@ RSpec.describe ShiftsController, type: :controller do
       end
 
       # Check for the 26th shift on the second page, since limit is 25
-      Then { expect(assigns(:shifts).count).to eq 1 }
+      Then { expect(assigns(:shifts)).to eq [shifts[25]] }
 
       And { expect(response).to render_template('shifts/index') }
       And { expect(response).to render_template(partial: 'shifts/_shifts_table') }
 
       # Match Shift info
       And { expect(response.body).to match(shifts[25].id.to_s) }
-      And { expect(response.body).to match(shifts[25].start_time_to_s.to_s) }
-      And { expect(response.body).to match(shifts[25].end_time_to_s.to_s) }
+      And { expect(response.body).to match(shifts[25].start_time_to_s) }
+      And { expect(response.body).to match(shifts[25].end_time_to_s) }
       And do
         expect(response.body).to match(
           "#{shifts[25].deliverers.count}/#{shifts[25].max_count}"

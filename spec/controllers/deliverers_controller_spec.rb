@@ -19,8 +19,8 @@ RSpec.describe DeliverersController, type: :controller do
       When { get :index }
 
       # Check for view partials
-      Then { expect(response).to render_template('deliverers/index') }
-
+      Then { expect(assigns(:deliverers)).to eq deliverers[0..24] }
+      And { expect(response).to render_template('deliverers/index') }
       And { expect(response).to render_template(partial: '_deliverers_table') }
 
       # Identify Deliverers info in view
@@ -47,7 +47,7 @@ RSpec.describe DeliverersController, type: :controller do
       end
 
       # Check for the 26th deliverer on the second page, since limit is 25
-      Then { expect(assigns(:deliverers).count).to eq 1 }
+      Then { expect(assigns(:deliverers)).to eq [deliverers[25]] }
 
       And { expect(response).to render_template('deliverers/index') }
       And { expect(response).to render_template(partial: '_deliverers_table') }
