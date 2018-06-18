@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180523022601) do
+ActiveRecord::Schema.define(version: 20180618061506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,10 +25,12 @@ ActiveRecord::Schema.define(version: 20180523022601) do
   create_table "deliverers", force: :cascade do |t|
     t.string "name"
     t.integer "vehicle"
-    t.integer "phone"
+    t.string "phone"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.integer "shifts_count"
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -37,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180523022601) do
     t.integer "max_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "deliverers_count"
   end
 
   create_table "users", force: :cascade do |t|
