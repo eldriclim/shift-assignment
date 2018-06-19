@@ -123,4 +123,32 @@ RSpec.describe ShiftsController, type: :controller do
       And { is_expected.to redirect_to edit_shift_path }
     end
   end
+
+  # Test /api/available_shifts
+  describe 'get #available_shifts' do
+    Given!(:shift) { FactoryGirl.create(:shift) }
+
+    context 'missing params' do
+      When { get :available_shifts }
+      When(:json) { JSON.parse(response.body) }
+
+      Then { expect(json['status']).to eq 'Error: Missing arguments' }
+    end
+
+    context 'successful call' do
+      When do
+        get :available_shifts,
+            params: {
+              start_time: '2016-05-23',
+              end_time: '2019-05-23'
+            }
+      end
+
+      When(:json) { JSON.parse(response.body) }
+
+      # ID comparison is used as expected json object is result of render
+      Then { expect(json['status']).to eq 'OK' }
+      And { expect(json['shifts'][0]['id']).to eq shift.id }
+    end
+  end
 end

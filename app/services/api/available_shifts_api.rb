@@ -19,6 +19,7 @@ class AvailableShiftsApi
     # Extract shifts in range
     shifts = Shift.where(start_time: range).where(end_time: range)
     shifts = shifts.reject(&:max?)
+
     { status: 'OK', shifts: shifts }
   end
 end
