@@ -1,7 +1,15 @@
 class DeliverersController < ApplicationController
-  # GET /deliverers/show
+  # GET /deliverers
   def index
     @deliverers = Deliverer.all
+  end
+
+  # GET /deliverers/show
+  def show
+    @deliverer = Deliverer.find(params[:id])
+    today = Time.zone.today
+    @range = (today - 29).at_beginning_of_day..today.at_end_of_day
+    @shifts = @deliverer.shifts.where(start_time: @range).order('start_time ASC').to_a
   end
 
   # GET /deliverers/new

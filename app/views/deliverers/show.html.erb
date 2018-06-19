@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row top-buffer">
+    <div class="col-md-offset-2 col-md-8">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= @deliverer.name %>
+          </h3>
+        </div>
+        <div class="panel-body">
+
+          <table class="table borderless" style="width:auto;">
+            <tr>
+              <td>Phone:</td>
+              <td><%= @deliverer.phone %></td>
+            </tr>
+            <tr>
+              <td>Vehicle:</td>
+              <td><%= @deliverer.vehicle %></td>
+            </tr>
+            <tr>
+              <td>Status:</td>
+              <td><%= @deliverer.active_to_s %></td>
+            </tr>
+          </table>
+
+        </div>
+
+        <%= render 'show_shifts'%>
+
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get 'signup', to: 'devise/registrations#new'
   end
 
-  resources :deliverers, only: %i[index new create edit update]
+  resources :deliverers, only: %i[index new create edit update show]
   resources :shifts, only: %i[index new create edit update]
 
   resources :assignments, only: %i[index new create]

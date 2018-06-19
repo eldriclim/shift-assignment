@@ -1,0 +1,28 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>Last 30 days</th>
+      <th>Shifts</th>
+      <th class="text-center">Duration (Hr)</th>
+    </tr>
+  </thead>
+
+  <% total_time_taken = time_taken(@shifts) %>
+
+  <% month_range.each do |day|%>
+    <tr>
+      <th><%= day.strftime("%e %b")%></th>
+      <td>
+        <% current = shifts_on_date(@shifts, day) %>
+        <%= time_range_to_s(current).join(tag.br).html_safe %>
+      </td>
+      <td class="text-center">
+        <%= time_taken(current) %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <th colspan=2 align=right>Total</th>
+    <td class="text-center"><%= total_time_taken %></td>
+  </tr>
+</table>
