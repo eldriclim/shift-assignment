@@ -46,7 +46,7 @@ RSpec.describe AvailableShiftsApi do
       end
 
       context 'all maxed' do
-        # Stub to for #max? to return true
+        # Stub for #max? to return true
         When { allow_any_instance_of(Shift).to receive(:max?).and_return(true) }
         When(:output) { AvailableShiftsApi.new('2018-05-25', '2018-05-25').perform }
 

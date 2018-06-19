@@ -1,4 +1,6 @@
 class ShiftsController < ApplicationController
+  skip_before_action :authenticate_user!, only: :available_shifts
+
   def index
     @shifts = Shift.all
   end
