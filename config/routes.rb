@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   resources :shifts, only: %i[index new create edit update]
 
   resources :assignments, only: %i[index new create]
+
+  get '/api/available_shifts', to: 'shifts#available_shifts'
 end

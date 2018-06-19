@@ -1,4 +1,24 @@
 class AssignmentsController < ApplicationController
+  # rubocop:disable Metrics/AbcSize
+  # :reek:TooManyStatements
+  # :reek:NilCheck
+  # :reek:DuplicateMethodCall
+  def index
+    @range = if !params.has_key?(:range1) || !params.has_key?(:range2)
+               Time.zone.today.at_beginning_of_day..Time.zone.today.at_end_of_day
+             else
+               date_range(params[:range1], params[:range2])
+             end
+
+    if @range.max == nil
+      flash[:danger] = 'Invalid date range!'
+      redirect_to assignments_path
+    end
+
+    @shifts = retrieve_shift_in_range(@range)
+  end
+  # rubocop:enable Metrics/AbcSize
+
   def new
     @deliverers = Deliverer.order(name: :asc, phone: :asc).all
     @shifts = Shift.order(start_time: :asc).all
@@ -22,26 +42,6 @@ class AssignmentsController < ApplicationController
 
     redirect_to new_assignment_path
   end
-
-  # rubocop:disable Metrics/AbcSize
-  # :reek:TooManyStatements
-  # :reek:NilCheck
-  # :reek:DuplicateMethodCall
-  def index
-    @range = if !params.has_key?(:range1) || !params.has_key?(:range2)
-               Time.zone.today.at_beginning_of_day..Time.zone.today.at_end_of_day
-             else
-               date_range(params[:range1], params[:range2])
-             end
-
-    if @range.max == nil
-      flash[:danger] = 'Invalid date range!'
-      redirect_to assignments_path
-    end
-
-    @shifts = retrieve_shift_in_range(@range)
-  end
-  # rubocop:enable Metrics/AbcSize
 
   def deliverer_id
     params[:assignment][:deliverer_id]

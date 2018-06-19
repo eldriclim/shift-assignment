@@ -40,6 +40,16 @@ class ShiftsController < ApplicationController
     end
   end
 
+  def available_shifts
+    if !params.has_key?(:start_time) || !params.has_key?(:end_time)
+      render json: { status: 'Error: Missing arguments' }
+      return
+    end
+
+    api = AvailableShiftsApi.new(params[:start_time], params[:end_time])
+    render json: api.perform, except: [:created_at, :updated_at]
+  end
+
   private
 
   def shift_params
