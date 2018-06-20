@@ -53,7 +53,7 @@ class DeliverersController < ApplicationController
     if @deliverer.update(deliverer_params)
       flash[:success] = 'Successfully updated a deliverer!'
 
-      redirect_to deliverers_path
+      redirect_to deliverer_path(params[:id])
     else
       errors = @deliverer.errors unless @deliverer.valid?
 
