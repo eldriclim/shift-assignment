@@ -12,7 +12,7 @@
   <% @deliverers.each do |deliverer| %>
     <tr>
       <th><%= deliverer.id %></th>
-      <td><%= link_to deliverer.name, edit_deliverer_path(deliverer) %></td>
+      <td><%= link_to deliverer.name, deliverer_path(deliverer) %></td>
       <td><%= deliverer.phone %></td>
       <td><%= deliverer.vehicle.capitalize %></td>
       <td><%= deliverer.active_to_s %></td>

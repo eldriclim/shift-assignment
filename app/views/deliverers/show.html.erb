@@ -14,6 +14,11 @@
             <tr>
               <td>Phone:</td>
               <td><%= @deliverer.phone %></td>
+              <td width=100% class="text-center">
+                <%= button_to edit_deliverer_path(@deliverer), method: :get, class: "btn-xs" do %>
+                  <span class="glyphicon glyphicon-edit"></span> Edit
+                <% end %>
+              </td>
             </tr>
             <tr>
               <td>Vehicle:</td>
