@@ -74,8 +74,8 @@ RSpec.describe DeliverersController, type: :controller do
 
       # Inspect view element
       And { expect(response.body).to match(deliverer.name) }
-      And { expect(response.body).to match(deliverer.phone) }
-      And { expect(response.body).to match(deliverer.vehicle) }
+      And { expect(response.body).to match(deliverer.phone.to_s) }
+      And { expect(response.body).to match(deliverer.vehicle.capitalize.to_s) }
       And { expect(response.body).to match(deliverer.active_to_s) }
       And do
         expect(response.body).to(
