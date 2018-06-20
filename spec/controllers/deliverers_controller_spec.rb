@@ -26,10 +26,7 @@ RSpec.describe DeliverersController, type: :controller do
 
       # Check for view partials
       Then { expect(response).to render_template('deliverers/index') }
-
-      And do
-        expect(response).to render_template(partial: '_deliverers_table')
-      end
+      And { expect(response).to render_template(partial: '_deliverers_table') }
 
       # Identify Deliverers info in view
       And do
@@ -40,6 +37,61 @@ RSpec.describe DeliverersController, type: :controller do
           expect(response.body).to match(d.vehicle.capitalize.to_s)
           expect(response.body).to match(d.active_to_s.to_s)
         end
+      end
+    end
+  end
+
+  # Test show action
+  describe 'get #show' do
+    render_views
+
+    context 'check contents' do
+      Given!(:deliverer) { FactoryGirl.create(:deliverer) }
+      Given!(:shift_in_range) do
+        time = Time.zone.now - 2.days
+        FactoryGirl.create(:shift, start_time: time, end_time: time + 2.hours)
+      end
+      Given!(:shift_beyond_range) do
+        # Time is deliberately set to beyond 30 day range and hour offset is to
+        # differentiate from shift_in_range since only time portion is displayed in view
+        time = Time.zone.now - 50.days - 1.hour
+        FactoryGirl.create(:shift, start_time: time, end_time: time + 2.hours)
+      end
+
+      # Assigns both shifts to deliverer
+      Given do
+        Assignment.create(deliverer_id: deliverer.id, shift_id: shift_in_range.id)
+        Assignment.create(deliverer_id: deliverer.id, shift_id: shift_beyond_range.id)
+      end
+
+      When { get :show, params: { id: deliverer.id } }
+
+      Then { expect(assigns(:deliverer)).to eq deliverer }
+
+      # Check for view partials
+      And { expect(response).to render_template('deliverers/show') }
+      And { expect(response).to render_template(partial: '_show_shifts') }
+
+      # Inspect view element
+      And { expect(response.body).to match(deliverer.name) }
+      And { expect(response.body).to match(deliverer.phone) }
+      And { expect(response.body).to match(deliverer.vehicle) }
+      And { expect(response.body).to match(deliverer.active_to_s) }
+      And do
+        expect(response.body).to(
+          match(
+            "#{shift_in_range.start_time.strftime('%H:%M %p')} " +
+            "- #{shift_in_range.end_time.strftime('%H:%M %p')}"
+          )
+        )
+      end
+      And do
+        expect(response.body).not_to(
+          match(
+            "#{shift_beyond_range.start_time.strftime('%H:%M %p')} " +
+            "- #{shift_beyond_range.end_time.strftime('%H:%M %p')}"
+          )
+        )
       end
     end
   end

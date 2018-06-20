@@ -9,6 +9,8 @@ class DeliverersController < ApplicationController
     @deliverer = Deliverer.find(params[:id])
     today = Time.zone.today
     @range = (today - 29).at_beginning_of_day..today.at_end_of_day
+
+    # To use as queue
     @shifts = @deliverer.shifts.where(start_time: @range).order('start_time ASC').to_a
   end
 
