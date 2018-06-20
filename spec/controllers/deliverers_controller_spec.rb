@@ -157,7 +157,7 @@ RSpec.describe DeliverersController, type: :controller do
               as: :json
       end
 
-      Then { is_expected.to redirect_to deliverers_path }
+      Then { is_expected.to redirect_to deliverer_path(deliverer.id) }
     end
 
     context 'with invalid attributes' do

@@ -51,7 +51,7 @@ class DeliverersController < ApplicationController
     @deliverer = Deliverer.find(params[:id])
 
     if @deliverer.update(deliverer_params)
-      flash[:success] = 'Successfully updated a deliverer!'
+      flash[:success] = 'Successfully updated deliverer\'s info!'
 
       redirect_to deliverer_path(params[:id])
     else
