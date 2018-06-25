@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20180613084110) do
   create_table "deliverers", force: :cascade do |t|
     t.string "name"
     t.integer "vehicle"
-    t.string "phone"
+    t.integer "phone"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
