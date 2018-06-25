@@ -4,23 +4,6 @@ module DeliverersHelper
     (today - 29)..today
   end
 
-  # :reek:TooManyStatements
-  def shifts_on_date(queue, date)
-    shifts = []
-
-    # Dequeue shifts on given date
-    while !queue.empty?
-      head = queue.first
-
-      # Break when head element is after given date
-      break if head.start_time >= date.at_end_of_day
-
-      shifts << queue.shift
-    end
-
-    shifts
-  end
-
   def time_range_to_s(shifts)
     shifts.map do |shift|
       "#{shift.start_time.strftime('%H:%M %p')} - #{shift.end_time.strftime('%H:%M %p')}"

@@ -7,13 +7,11 @@
     </tr>
   </thead>
 
-  <% total_time_taken = time_taken(@shifts) %>
-
-  <% month_range.each do |day|%>
+  <% month_range.each_with_index do |day, index|%>
     <tr>
       <th><%= day.strftime("%e %b")%></th>
       <td>
-        <% current = shifts_on_date(@shifts, day) %>
+        <% current = @shift_groups[index] || [] %>
         <%= time_range_to_s(current).join(tag.br).html_safe %>
       </td>
       <td class="text-center">
@@ -23,6 +21,6 @@
   <% end %>
   <tr>
     <th colspan=2 align=right>Total</th>
-    <td class="text-center"><%= total_time_taken %></td>
+    <td class="text-center"><%= time_taken(@shift_groups.values.flatten) %></td>
   </tr>
 </table>

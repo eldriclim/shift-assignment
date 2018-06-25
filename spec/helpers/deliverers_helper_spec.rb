@@ -1,23 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe DeliverersHelper, type: :helper do
-  describe '#shifts_on_date' do
-    Given!(:shift_today) do
-      time = Time.zone.now - 2.days
-      FactoryGirl.create(:shift, start_time: time, end_time: time + 2.hours)
-    end
-    Given!(:shift_tomorrow) do
-      time = Time.zone.now - 1.day
-      FactoryGirl.create(:shift, start_time: time, end_time: time + 2.hours)
-    end
-
-    Then do
-      expect(
-        shifts_on_date([shift_today, shift_tomorrow], (Time.zone.today - 2.days))
-      ).to eq [shift_today]
-    end
-  end
-
   describe '#time_range_to_s' do
     Given!(:shifts) { FactoryGirl.create_list(:shift, 2) }
 
