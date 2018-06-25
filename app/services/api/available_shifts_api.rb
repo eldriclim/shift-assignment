@@ -1,7 +1,7 @@
 class AvailableShiftsApi
-  def initialize(to_input, from_input)
-    @to_input = to_input
+  def initialize(from_input, to_input)
     @from_input = from_input
+    @to_input = to_input
   end
 
   # :reek:TooManyStatements
@@ -9,7 +9,7 @@ class AvailableShiftsApi
   def perform
     # Catch invalid input
     begin
-      range = Date.parse(@to_input).at_beginning_of_day..Date.parse(@from_input).at_end_of_day
+      range = Date.parse(@from_input).at_beginning_of_day..Date.parse(@to_input).at_end_of_day
     rescue ArgumentError
       return { status: 'Error: Invalid arguments' }
     end
